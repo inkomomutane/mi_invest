@@ -1,0 +1,21 @@
+# generate a docker-compose file for development of an laravel app using
+# nginx to reverse port 8000 to 80
+# using traffic to handle http in port 80  https is not needed
+# for search we use typesense
+# and all necessary services for laravel development
+
+services:
+  traefik:
+     image: traefik:3.5
+  node:
+    image: node:latest
+  server:
+     image: nginx:latest
+  typesense:
+    image: typesense/typesense:30.0.rc6
+  # traefik
+  # nginx
+  # node
+  # vite
+  # queue:listen
+  #
