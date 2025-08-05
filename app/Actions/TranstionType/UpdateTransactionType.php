@@ -2,17 +2,15 @@
 
 namespace App\Actions\TranstionType;
 
-use App\Models\ImovelFor;
+use App\Models\PropertyPurpose;
 use App\Support\Enums\SystemRoles;
 use Illuminate\Validation\Rule;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class UpdateTransactionType
 {
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -23,20 +21,20 @@ class UpdateTransactionType
         );
     }
 
-    public function asController(ImovelFor $transactionType)
+    public function __invoke(PropertyFor $transactionType)
     {
-        $validated = request()->validate([
-            'name' => ['required', Rule::unique(ImovelFor::class, 'name')->ignore($transactionType->id, 'id')],
-            'slug_text' => ['required', Rule::unique(ImovelFor::class, 'slug_text')->ignore($transactionType->id, 'id')],
+        $validated = $request->validate([
+            'name' => ['required', Rule::unique(PropertyPurpose::class, 'name')->ignore($transactionType->id, 'id')],
+            'slug_text' => ['required', Rule::unique(PropertyPurpose::class, 'slug_text')->ignore($transactionType->id, 'id')],
         ]);
 
         try {
             $transactionType->name = $validated['name'];
             $transactionType->slug_text = $validated['slug_text'];
             $transactionType->save();
-            flash()->addSuccess('Tipo de transação actualizada com sucesso.');
+            flash()->addSuccess(__('messages.action_success'));
         } catch (\Throwable $th) {
-            flash()->addError('Erro na actualização do tipo de transação.');
+            flash()->addError(__('messages.action_error'));
         }
 
         return \redirect()->back();

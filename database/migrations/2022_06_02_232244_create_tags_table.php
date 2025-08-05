@@ -19,7 +19,8 @@ class CreateTagsTable extends Migration
             $table->json('slug');
             $table->string('type')->nullable();
             $table->integer('order_column')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

@@ -6,12 +6,12 @@ import { PropType, watch } from "vue";
 import { ref } from "vue";
 import { FlasherResponse } from "@flasher/flasher";
 import Flasher, { tooltip } from "@/helprs";
-import { ImovelTypes } from "@/types/index";
-import UploadImovelType from "./UploadImovelType.vue";
-import DeleteImovelType from "./DeleteImovelType.vue";
-import EditImovelType from "./EditImovelType.vue";
+import { PropertyTypes } from "@/types/index";
+import UploadPropertyType from "./UploadPropertyType.vue";
+import DeletePropertyType from "./DeletePropertyType.vue";
+import EditPropertyType from "./EditPropertyType.vue";
 const props = defineProps({
-    imovelTypes: Object as PropType<ImovelTypes>,
+    propertyTypes: Object as PropType<PropertyTypes>,
     messages: Object as PropType<FlasherResponse>,
     search: String,
 });
@@ -30,10 +30,10 @@ watch(
     }
 );
 
-const links = ref(props.imovelTypes?.links);
+const links = ref(props.propertyTypes?.links);
 
 watch(
-    () => props.imovelTypes?.links,
+    () => props.propertyTypes?.links,
     (value) => {
         links.value = value;
     }
@@ -41,41 +41,41 @@ watch(
 
 watch(searchTerm, (value) => {
     router.visit(
-        route("imovel_type.all", {
+        route("property_type.all", {
             search: value ?? "",
         }),
         {
-            only: ["imovelTypes"],
+            only: ["propertyTypes"],
             replace: false,
             preserveState: true,
         }
     );
 });
 
-const editingImovelTypeTrigger = ref(false);
-const editingImovelType = ref<App.Data.ImovelTypeData | null>(null);
+const editingPropertyTypeTrigger = ref(false);
+const editingPropertyType = ref<App.Data.PropertyTypeData | null>(null);
 
-const deletingImovelTypeTrigger = ref(false);
-const deletingImovelType = ref<App.Data.ImovelTypeData | null>(null);
+const deletingPropertyTypeTrigger = ref(false);
+const deletingPropertyType = ref<App.Data.PropertyTypeData | null>(null);
 
-function openEditImovelTypeModal(imovel_type: App.Data.ImovelTypeData) {
-    editingImovelType.value = imovel_type;
-    editingImovelTypeTrigger.value = true;
+function openEditPropertyTypeModal(property_type: App.Data.PropertyTypeData) {
+    editingPropertyType.value = property_type;
+    editingPropertyTypeTrigger.value = true;
 }
 
-function closeEditImovelTypeModal() {
-    editingImovelType.value = null;
-    editingImovelTypeTrigger.value = false;
+function closeEditPropertyTypeModal() {
+    editingPropertyType.value = null;
+    editingPropertyTypeTrigger.value = false;
 }
 
-function openDeleteImovelTypeModal(city: App.Data.ImovelTypeData) {
-    deletingImovelType.value = city;
-    deletingImovelTypeTrigger.value = true;
+function openDeletePropertyTypeModal(city: App.Data.PropertyTypeData) {
+    deletingPropertyType.value = city;
+    deletingPropertyTypeTrigger.value = true;
 }
 
-function closeDeleteImovelTypeModal() {
-    deletingImovelType.value = null;
-    deletingImovelTypeTrigger.value = false;
+function closeDeletePropertyTypeModal() {
+    deletingPropertyType.value = null;
+    deletingPropertyTypeTrigger.value = false;
 }
 </script>
 
@@ -126,7 +126,7 @@ function closeDeleteImovelTypeModal() {
                     <div
                         class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0"
                     >
-                        <UploadImovelType />
+                        <UploadPropertyType />
                     </div>
                 </div>
                 <div class="overflow-x-auto">
@@ -150,26 +150,26 @@ function closeDeleteImovelTypeModal() {
                         <tbody>
                             <tr
                                 class="border-b dark:border-gray-700"
-                                v-for="imovel_type in imovelTypes?.data"
-                                :key="(imovel_type.id as number)"
+                                v-for="property_type in propertyTypes?.data"
+                                :key="(property_type.id as number)"
                             >
                                 <th
                                     scope="row"
                                     class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                 >
                                     <SpatieResponsiveImage
-                                        :responsive="imovel_type.icon"
+                                        :responsive="property_type.icon"
                                         class-name="w-10"
                                     />
                                 </th>
                                 <td class="px-4 py-3">
-                                    {{ imovel_type.name }}
+                                    {{ property_type.name }}
                                 </td>
                                 <td class="px-4 py-3 w-32">
                                     <button
                                         type="button"
                                         @click="
-                                            openEditImovelTypeModal(imovel_type)
+                                            openEditPropertyTypeModal(property_type)
                                         "
                                         class="flex items-center justify-center text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded text-sm px-4 py-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800"
                                     >
@@ -205,8 +205,8 @@ function closeDeleteImovelTypeModal() {
                                     <button
                                         type="button"
                                         @click="
-                                            openDeleteImovelTypeModal(
-                                                imovel_type
+                                            openDeletePropertyTypeModal(
+                                                property_type
                                             )
                                         "
                                         class="flex items-center justify-center text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-slate-300 font-medium rounded text-sm px-4 py-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800"
@@ -249,13 +249,13 @@ function closeDeleteImovelTypeModal() {
                 >
                     Showing
                     <span class="font-semibold text-gray-900 dark:text-white">{{
-                        `${imovelTypes?.meta.from ?? 0}-${
-                            imovelTypes?.meta.to ?? 0
+                        `${propertyTypes?.meta.from ?? 0}-${
+                            propertyTypes?.meta.to ?? 0
                         }`
                     }}</span>
                     of
                     <span class="font-semibold text-gray-900 dark:text-white">
-                        {{ imovelTypes?.meta.total }}</span
+                        {{ propertyTypes?.meta.total }}</span
                     >
                 </span>
                 <ul class="inline-flex items-stretch -space-x-px">
@@ -321,18 +321,18 @@ function closeDeleteImovelTypeModal() {
                     </li>
                 </ul>
             </nav>
-            <DeleteImovelType
-                v-if="deletingImovelType"
-                :imovel-type="deletingImovelType"
-                :openModal="deletingImovelTypeTrigger"
-                :close="closeDeleteImovelTypeModal"
+            <DeletePropertyType
+                v-if="deletingPropertyType"
+                :property-type="deletingPropertyType"
+                :openModal="deletingPropertyTypeTrigger"
+                :close="closeDeletePropertyTypeModal"
             />
 
-            <EditImovelType
-                v-if="editingImovelType"
-                :imovel-type="editingImovelType"
-                :openModal="editingImovelTypeTrigger"
-                :close="closeEditImovelTypeModal"
+            <EditPropertyType
+                v-if="editingPropertyType"
+                :property-type="editingPropertyType"
+                :openModal="editingPropertyTypeTrigger"
+                :close="closeEditPropertyTypeModal"
             />
         </template>
     </AuthenticatedLayout>

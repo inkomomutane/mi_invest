@@ -6,16 +6,12 @@ use App\Data\IntermediationRuleData;
 use App\Models\IntermediationRule;
 use App\Support\Enums\SystemRoles;
 use Inertia\Inertia;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class GetIntermediationRules
 {
-    use AsAction;
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -35,12 +31,12 @@ class GetIntermediationRules
                     ->orWhere('percentage', 'like', '%'.$search.'%');
             })->orderBy('created_at', 'desc')->paginate(5)->withQueryString();
 
-        return IntermediationRuleData::collection(
+        return IntermediationRuleData::collect(
             $intermediations
         );
     }
 
-    public function AsController()
+    public function __invoke()
     {
         return Inertia::render(
             'Intermediation/Index',

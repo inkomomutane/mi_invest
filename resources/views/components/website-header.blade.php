@@ -103,14 +103,14 @@
 
                     <li>
                         <a
-                            href="@if (Request::routeIs('post.imovel.show'))
+                            href="@if (Request::routeIs('post.property.show'))
                              {{ Request::url() }}
                             @else
                             {{ route('imoveis') }}
                             @endif "
-                            class="{{ (Request::routeIs('imoveis') || Request::routeIs('post.imovel.show')) ? $activeLinkCss : $linkCss }}"
+                            class="{{ (Request::routeIs('imoveis') || Request::routeIs('post.property.show')) ? $activeLinkCss : $linkCss }}"
                             >
-                            @if (Request::routeIs('post.imovel.show'))
+                            @if (Request::routeIs('post.property.show'))
                                 Imóvel
                             @else
                                 Todos imóveis
@@ -166,7 +166,7 @@
                                         ? $activeLinkCss
                                         : $linkCss }}
                                 "
-                                >Politicas de privacidade</
+                                >Politicas de privacity</
                             ></a>
                         </li>
                         @endif

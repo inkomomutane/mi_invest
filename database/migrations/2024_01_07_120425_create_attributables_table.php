@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('attributables', function (Blueprint $table) {
             $table->foreignId('attribute_id')->references('id')->on('attributes');
             $table->morphs('attributable');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

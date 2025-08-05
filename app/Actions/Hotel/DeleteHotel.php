@@ -3,13 +3,8 @@
 namespace App\Actions\Hotel;
 
 use App\Models\HotelMetaData;
-use Lorisleiva\Actions\Concerns\AsAction;
-
 class DeleteHotel
-{
-    use AsAction;
-
-    public function handle(HotelMetaData $hotel): bool
+{public function handle(HotelMetaData $hotel): bool
     {
         try {
             $hotel->delete();
@@ -24,11 +19,11 @@ class DeleteHotel
     public function asController(HotelMetaData $hotel): \Illuminate\Http\RedirectResponse
     {
         if ($this->handle($hotel)) {
-            flash()->addSuccess('Hotel excluído com sucesso');
+            flash()->addSuccess(__('messages.hotel_deleted_success'));
 
             return redirect()->back();
         }
-        flash()->addError('Erro ao excluir hotel');
+        flash()->addError(__('messages.hotel_delete_error'));
 
         return redirect()->back();
     }

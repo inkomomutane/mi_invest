@@ -6,17 +6,12 @@ use App\Models\User;
 use App\Support\Enums\SystemRoles;
 use Auth;
 use Hash;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
 class CreateUser
 {
-    use AsAction;
-    use AsController;
-
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -56,13 +51,15 @@ class CreateUser
         ];
     }
 
-    public function AsController(ActionRequest $request)
+    public function __invoke(Request $request)
     {
+        $validated = $request->validate($this->rules());
+
         try {
-            $this->handle($request->validated());
-            flash()->addSuccess('Usuario criado com sucesso.');
+            $this->handle($validated);
+            flash()->addSuccess(__('messages.user_created_success'));
         } catch (\Throwable $th) {
-            flash()->addError('Erro ao criar usuário.');
+            flash()->addError(__('messages.user_create_error'));
         }
 
         return \redirect()->back();

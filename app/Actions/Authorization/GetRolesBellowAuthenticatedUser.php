@@ -4,12 +4,10 @@ namespace App\Actions\Authorization;
 
 use App\Support\Enums\SystemRoles;
 use Auth;
-use Lorisleiva\Actions\Concerns\AsAction;
 use Spatie\Permission\Models\Role;
 
 class GetRolesBellowAuthenticatedUser
 {
-    use AsAction;
 
     public function handle()
     {
@@ -22,7 +20,7 @@ class GetRolesBellowAuthenticatedUser
             SystemRoles::REALSTATEAGENT => 5,
         ];
 
-        $minRoleId = $roleMapping[SystemRoles::REALSTATEAGENT]; // Default value for unknown roles
+        $minRoleId = $roleMapping[SystemRoles::REALSTATEAGENT];
 
         foreach ($roleMapping as $role => $minId) {
             if ($user?->hasRole($role)) {

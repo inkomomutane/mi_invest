@@ -10,13 +10,13 @@ const authorized = () => {
 <template>
     <Link
         v-if="authorized()"
-        :href="route('mimovel')"
+        :href="route('mproperty')"
         v-tooltip.value="tooltip('Mimóvel páginas')"
     >
         <li
             class="px-3 py-2 rounded mb-0.5 last:mb-0"
             :class="
-                route().current('mimovel')
+                route().current('mproperty')
                     ? ' bg-slate-950'
                     : 'hover:bg-slate-900'
             "

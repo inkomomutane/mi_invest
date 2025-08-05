@@ -15,11 +15,12 @@ class CreateRatingsTable extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('rating', 10, 0)->nullable()->default(5);
-            $table->timestamps();
+            $table->decimal('rating', 3, 2)->nullable()->default(5.00);
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->string('ip', 45)->nullable();
-            $table->string('nome')->nullable();
-            $table->unsignedBigInteger('imovel_id')->index('fk_ratings_imovels1_idx');
+            $table->string('name')->nullable();
+            $table->unsignedBigInteger('property_id')->index('fk_ratings_properties1_idx');
         });
     }
 

@@ -7,7 +7,7 @@ import InputError from "@/Components/InputError.vue";
 import ResponsiveImage from "@/Components/ResponsiveImage.vue";
 
 const props = defineProps({
-    imovelType: Object as PropType<App.Data.ImovelTypeData>,
+    propertyType: Object as PropType<App.Data.PropertyTypeData>,
     close: {
         type: Function,
         required: true,
@@ -18,45 +18,45 @@ const props = defineProps({
     },
 });
 
-const uploadImovelTypes = ref(false);
+const uploadPropertyTypes = ref(false);
 const nomeInput = ref();
-const uploadImovelTypesProgress = ref(false);
+const uploadPropertyTypesProgress = ref(false);
 const form = useForm({
     images: [],
-    nome: props.imovelType?.name,
+    nome: props.propertyType?.name,
 });
 
-const uploadImovelTypesTrigger = () => {
-    uploadImovelTypes.value = true;
+const uploadPropertyTypesTrigger = () => {
+    uploadPropertyTypes.value = true;
 };
 
-const closeUloadImovelTypesModal = () => {
-    uploadImovelTypes.value = false;
-    uploadImovelTypesProgress.value = false;
+const closeUloadPropertyTypesModal = () => {
+    uploadPropertyTypes.value = false;
+    uploadPropertyTypesProgress.value = false;
     form.reset();
 };
 
 const uploadImges = () =>
     form.post(
-        route("imovel_type.update", {
-            imovelType: props.imovelType?.id as number,
+        route("property_type.update", {
+            propertyType: props.propertyType?.id as number,
         }),
         {
             forceFormData: true,
-            onProgress: () => (uploadImovelTypesProgress.value = true),
+            onProgress: () => (uploadPropertyTypesProgress.value = true),
             onSuccess: () => {
-                closeUloadImovelTypesModal();
+                closeUloadPropertyTypesModal();
                 props.close();
                 form.reset();
             },
-            onError: () => (uploadImovelTypesProgress.value = true),
+            onError: () => (uploadPropertyTypesProgress.value = true),
         }
     );
 </script>
 <template>
     <button
         type="button"
-        @click="uploadImovelTypesTrigger"
+        @click="uploadPropertyTypesTrigger"
         class="flex items-center justify-center text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded text-sm px-4 py-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800"
     >
         <svg
@@ -147,7 +147,7 @@ const uploadImges = () =>
                             :disabledUpload="true"
                             :disabledCancel="true"
                             mediaType="image/*"
-                            :progressUploadImage="uploadImovelTypesProgress"
+                            :progressUploadImage="uploadPropertyTypesProgress"
                         >
                             <template v-slot:files>
                                 <div
@@ -155,7 +155,7 @@ const uploadImges = () =>
                                 >
                                     <div class="flex-shrink-0">
                                         <ResponsiveImage
-                                            :responsive="imovelType?.icon"
+                                            :responsive="propertyType?.icon"
                                             class-name="shadow-2 h-16 object-cover"
                                         />
                                     </div>
@@ -163,7 +163,7 @@ const uploadImges = () =>
                                         <p
                                             class="text-sm font-medium text-justify text-gray-900 truncate dark:text-white"
                                         >
-                                            {{ imovelType?.name }}
+                                            {{ propertyType?.name }}
                                         </p>
                                     </div>
                                     <div class="flex-1 min-w-0"></div>

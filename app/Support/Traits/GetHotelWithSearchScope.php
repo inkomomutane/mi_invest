@@ -22,13 +22,13 @@ trait GetHotelWithSearchScope
                 $query->where('title', 'like', "%{$term}%")
                     ->orWhere('address', 'like', "%{$term}%")
                     ->orWhere('description', 'like', "%{$term}%")
-                    ->orWhereRelation('bairro', 'nome',
+                    ->orWhereRelation('neighborhood', 'nome',
                         'like', "%{$term}%");
             })->with([
-                'tipoDeImovel',
-                'condicao',
+                'tipoDeProperty',
+                'condition',
                 'status',
-                'bairro',
+                'neighborhood',
                  'attributes'
             ]);
 

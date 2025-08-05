@@ -4,34 +4,29 @@ namespace App\Actions\Hotel\Rooms;
 
 use App\Models\Hotel;
 use Exception;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
+use Illuminate\Http\Request;
 
 class UpdateRoomOfHotel
 {
-
-    use AsAction;
-
-    public  function rules(): array
+    public function rules(): array
     {
-        return  [
+        return [
             'title' => ['required', 'string', 'max:125'],
             'description' => ['required', 'string'],
             'price' => ['required', 'numeric']
         ];
     }
 
-    public function asController(Hotel $room, ActionRequest $request): \Illuminate\Http\RedirectResponse
+    public function __invoke(Hotel $room, Request $request): \Illuminate\Http\RedirectResponse
     {
+        $validated = $request->validate($this->rules());
+
         try {
-
             $room->update([
-                'title' => $request->title,
-                'description' => $request->description,
-                'price' => $request->price
+                'title' => $validated['title'],
+                'description' => $validated['description'],
+                'price' => $validated['price']
             ]);
-
-            $room->refresh();
 
             if ($request['images'] && is_array($request['images'])) {
                 foreach ($request['images'] as $image) {
@@ -39,11 +34,10 @@ class UpdateRoomOfHotel
                 }
             }
 
-            flash()->addSuccess('Quarto actualizado com sucesso.');
-
+            flash()->addSuccess(__('messages.room_updated_success'));
             return redirect()->back();
         } catch (Exception) {
-            flash()->addError('Erro ao actualizar o quarto.');
+            flash()->addError(__('messages.room_update_error'));
             return redirect()->back();
         }
     }

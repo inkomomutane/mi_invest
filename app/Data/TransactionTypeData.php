@@ -5,7 +5,7 @@ namespace App\Data;
 use Spatie\LaravelData\Data;
 
 /** @typescript */
-class TransactionTypeData extends Data
+class PropertyPurposeData extends Data
 {
     public function __construct(
         public readonly ?int $id,

@@ -2,36 +2,32 @@
 
 namespace App\Actions\City;
 
-use App\Models\Cidade;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use App\Models\City;
 
 class DeleteCity
 {
-    use AsAction;
-    use AsController;
 
-    public function handle(Cidade $city): bool
+    public function handle(City $city): bool
     {
-        if ($city->bairros->isEmpty()) {
+        if ($city->neighborhoods->isEmpty()) {
             try {
                 $city->delete();
-                flash()->addSuccess('Cidade deletada com sucesso.');
+                flash()->addSuccess(__('messages.action_success'));
 
                 return true;
             } catch (\Throwable $e) {
-                flash()->addError('Erro ao deletar: " Contacte o administrador do sistema.".');
+                flash()->addError(__('messages.action_error'));
 
                 return false;
             }
         } else {
-            flash()->addError('Erro ao deletar: Não pode deletar Cidade que possuí bairros!');
+            flash()->addError(__('messages.action_error'));
 
             return false;
         }
     }
 
-    public function AsController(Cidade $city)
+    public function __invoke(City $city)
     {
         $this->handle($city);
 

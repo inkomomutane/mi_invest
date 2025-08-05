@@ -5,16 +5,12 @@ namespace App\Actions\Legal;
 use App\Models\Politica;
 use App\Support\Enums\SystemRoles;
 use Inertia\Inertia;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class GetPolicy
 {
-    use AsAction;
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -36,7 +32,7 @@ class GetPolicy
         return Politica::first()->getData();
     }
 
-    public function asController()
+    public function __invoke()
     {
         return Inertia::render('Legal/Policy', [
             'policy' => $this->handle(),

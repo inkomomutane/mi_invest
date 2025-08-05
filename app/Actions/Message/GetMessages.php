@@ -6,13 +6,9 @@ use App\Data\AgendaData;
 use App\Models\Agenda;
 use Auth;
 use Inertia\Inertia;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
 
 class GetMessages
 {
-    use AsAction;
-    use AsController;
 
     public function handle()
     {
@@ -20,17 +16,17 @@ class GetMessages
         $user = Auth::user();
 
         if ($user->hasAnyRole('Admin', 'Super-Admin')) {
-            return AgendaData::collection(
-                Agenda::with('imovel')->orderBy('is_readed', 'asc')->
+            return AgendaData::collect(
+                Agenda::with('property')->orderBy('is_readed', 'asc')->
             orderBy('updated_at', 'desc')->paginate(7));
         } else {
-            return AgendaData::collection(
-                Agenda::whereCorretorId(Auth::user()->id)->with('imovel')->orderBy('is_readed', 'asc')->
+            return AgendaData::collect(
+                Agenda::whereCorretorId(Auth::user()->id)->with('property')->orderBy('is_readed', 'asc')->
             orderBy('updated_at', 'desc')->paginate(7));
         }
     }
 
-    public function asController()
+    public function __invoke()
     {
         return Inertia::render('Message/Index', [
             'messages_agendas' => $this->handle(),

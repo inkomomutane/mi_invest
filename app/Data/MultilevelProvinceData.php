@@ -13,7 +13,7 @@ class MultilevelProvinceData extends Data
         public readonly int $id,
         public readonly string $name,
         /** @var CityData[] */
-        public readonly Lazy|DataCollection $cidades
+        public readonly Lazy|DataCollection $cities
     ) {
     }
 }

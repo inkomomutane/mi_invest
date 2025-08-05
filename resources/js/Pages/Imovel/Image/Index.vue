@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { ImovelImages } from "@/types";
+import { PropertyImages } from "@/types";
 import SpatieResponsiveImage from "@/Components/ResponsiveImage.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
-import UploadImovelImage from "./UploadImovelImage.vue";
+import UploadPropertyImage from "./UploadPropertyImage.vue";
 import { PropType, watch } from "vue";
 import { ref } from "vue";
 import { FlasherResponse } from "@flasher/flasher";
 import Flasher from "@/helprs";
 import { useConfirm } from "primevue/useconfirm";
-import DeleteImovelImage from "./DeleteImovelImage.vue";
+import DeletePropertyImage from "./DeletePropertyImage.vue";
 const props = defineProps({
-    images: Object as PropType<ImovelImages>,
-    imovel: {
+    images: Object as PropType<PropertyImages>,
+    property: {
         type: String,
         required: true,
     },
@@ -60,12 +60,12 @@ const showTemplate = () => {
     });
 };
 
-function openDeleteImovelImageModal(banner: App.Data.MediaData) {
+function openDeletePropertyImageModal(banner: App.Data.MediaData) {
     deletingImage.value = banner;
     deletingImageTrigger.value = true;
 }
 
-function closeDeleteImovelImageModal() {
+function closeDeletePropertyImageModal() {
     deletingImage.value = null;
     deletingImageTrigger.value = false;
 }
@@ -75,7 +75,7 @@ function closeDeleteImovelImageModal() {
     <Head title="Images publicitários" />
     <AuthenticatedLayout>
         <template v-slot:content>
-            <UploadImovelImage :imovel="imovel" />
+            <UploadPropertyImage :property="property" />
 
             <div
                 class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mt-5"
@@ -87,7 +87,7 @@ function closeDeleteImovelImageModal() {
                 >
                     <button
                         class="relative group hover:ring-2 hover:ring-red-400 rounded-md"
-                        @click="openDeleteImovelImageModal(media)"
+                        @click="openDeletePropertyImageModal(media)"
                     >
                         <SpatieResponsiveImage
                             class-name="w-screen h-60 object-cover rounded-md hover:bg-slate-900 hover:opacity-90 hover:shadow-lg"
@@ -199,12 +199,12 @@ function closeDeleteImovelImageModal() {
                     </li>
                 </ul>
             </nav>
-            <DeleteImovelImage
+            <DeletePropertyImage
                 v-if="deletingImage"
                 :image="deletingImage"
-                :imovel="imovel"
+                :property="property"
                 :openModal="deletingImageTrigger"
-                :close="closeDeleteImovelImageModal"
+                :close="closeDeletePropertyImageModal"
             />
         </template>
     </AuthenticatedLayout>

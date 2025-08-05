@@ -3,15 +3,14 @@
 namespace App\Actions\Media;
 
 use App\Support\Enums\SystemRoles;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
+
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class DeleteBanners
 {
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -22,13 +21,13 @@ class DeleteBanners
         );
     }
 
-    public function AsController(Media $media)
+    public function __invoke(Media $media)
     {
         try {
             $media->delete();
-            flash()->addSuccess('Banner deletado com sucesso.');
+            flash()->addSuccess(__('messages.banner_deleted_success'));
         } catch (\Throwable $th) {
-            flash()->addError('Erro ao deletar banner!');
+            flash()->addError(__('messages.banner_delete_error'));
         }
 
         return redirect()->back();

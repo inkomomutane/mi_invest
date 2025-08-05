@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Actions\Property;
+
+use App\Http\Requests\UpdatePropertyRequest;
+use App\Models\Property;
+
+class UpdateProperty
+{
+
+    public function __invoke(Property $property, UpdatePropertyRequest $actionRequest)
+    {
+        $data = collect($actionRequest->all())
+            ->put('published_at', now())
+            ->except('images')->toArray();
+        try {
+            $property->update($data);
+            if (request()->hasFile('images')) {
+                foreach ($actionRequest->images as $image) {
+                    $property->addMedia($image)->toMediaCollection('posts', 'posts');
+                }
+            }
+            flash()->addSuccess(__('messages.property_updated_success'));
+
+            return to_route($property->approved ? 'property.all' : 'property.not.approved.all');
+        } catch (\Throwable $e) {
+            throw $e;
+            flash()->addError(__('messages.property_update_error'));
+
+            return back();
+        }
+    }
+}

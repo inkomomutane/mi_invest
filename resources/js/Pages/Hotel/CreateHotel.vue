@@ -29,8 +29,8 @@ import {RoomHotel} from "@/types";
 import ResponsiveImage from "@/Components/ResponsiveImage.vue";
 const props = defineProps({
     provinces: Array<App.Data.MultilevelProvinceData>,
-    imovelsTypes: Array<App.Data.ImovelTypeData>,
-    imovelConditions: Array<App.Data.CondicaoData>,
+    propertiesTypes: Array<App.Data.PropertyTypeData>,
+    propertyConditions: Array<App.Data.ConditionData>,
     attributes: {
         type: Array<App.Data.AttributeData>,
         required: true,
@@ -44,16 +44,16 @@ const province = ref<App.Data.MultilevelProvinceData | null>(null);
 
 const cities = ref<Array<App.Data.CityData> | null>(null);
 const city = ref<App.Data.CityData | null>(null);
-const bairros = ref<Array<App.Data.BairroData> | null>(null);
+const neighborhoods = ref<Array<App.Data.NeighborhoodData> | null>(null);
 
 const form = useForm({
     title: "",
     price: null,
-    bairro_id: null,
+    neighborhood_id: null,
     address: "",
     description: "",
-    condicao_id: null,
-    tipo_de_imovel_id: null,
+    condition_id: null,
+    tipo_de_property_id: null,
     status_id: null,
     rooms: [],
     attributes: [],
@@ -64,9 +64,9 @@ watch(
     (e) => {
         province.value =
             provinces.value?.findLast((prov) => prov.id == e?.id ?? -1) ?? null;
-        cities.value = province.value?.cidades ?? null;
-        bairros.value = null;
-        form.bairro_id = null;
+        cities.value = province.value?.cities ?? null;
+        neighborhoods.value = null;
+        form.neighborhood_id = null;
     }
 );
 
@@ -75,8 +75,8 @@ watch(
     (e) => {
         city.value =
             cities.value?.findLast((cty) => cty.id == e?.id ?? -1) ?? null;
-        bairros.value = city.value?.bairros ?? null;
-        form.bairro_id = null;
+        neighborhoods.value = city.value?.neighborhoods ?? null;
+        form.neighborhood_id = null;
     }
 );
 
@@ -255,13 +255,13 @@ const removeImageFromRoom = (id :string,index:number)  => {
                         <label
                             for="province_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >Cidade</label
+                        >City</label
                         >
                         <Dropdown
                             v-model="city"
                             :options="cities ?? []"
                             optionLabel="nome"
-                            placeholder="Cidade"
+                            placeholder="City"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                         >
                             <template #option="slotProps">
@@ -280,23 +280,23 @@ const removeImageFromRoom = (id :string,index:number)  => {
                     </div>
                     <div>
                         <label
-                            for="bairro_id"
+                            for="neighborhood_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >Bairro</label
+                        >Neighborhood</label
                         >
                         <Dropdown
-                            v-model="form.bairro_id"
-                            :options="bairros ?? []"
+                            v-model="form.neighborhood_id"
+                            :options="neighborhoods ?? []"
                             optionValue="id"
                             optionLabel="nome"
-                            placeholder="Bairro"
+                            placeholder="Neighborhood"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                         >
                             <template #option="slotProps">
                                 <div
                                     class="bg-slate-100 dark:bg-slate-600 dark:text-slate-200 px-4 py-2 hover:bg-slate-600 dark:hover:bg-slate-800 hover:text-white"
                                     :class="
-                                        bairro == slotProps.option
+                                        neighborhood == slotProps.option
                                             ? 'bg-slate-800 dark:bg-slate-900 text-white'
                                             : ''
                                     "
@@ -305,7 +305,7 @@ const removeImageFromRoom = (id :string,index:number)  => {
                                 </div>
                             </template>
                         </Dropdown>
-                        <InputError :message="form.errors.bairro_id ?? ''" />
+                        <InputError :message="form.errors.neighborhood_id ?? ''" />
                     </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-1 gap-2 py-2">
@@ -361,8 +361,8 @@ const removeImageFromRoom = (id :string,index:number)  => {
                             >Tipo de hotel</label
                         >
                         <Dropdown
-                            v-model="form.tipo_de_imovel_id"
-                            :options="imovelsTypes"
+                            v-model="form.tipo_de_property_id"
+                            :options="propertiesTypes"
                             optionValue="id"
                             optionLabel="name"
                             placeholder="Tipo de Quarto"
@@ -372,7 +372,7 @@ const removeImageFromRoom = (id :string,index:number)  => {
                                 <div
                                     class="bg-slate-100 dark:bg-slate-600 dark:text-slate-200 px-4 py-2 hover:bg-slate-600 dark:hover:bg-slate-800 hover:text-white"
                                     :class="
-                                        form.tipo_de_imovel_id ==
+                                        form.tipo_de_property_id ==
                                         slotProps.option.id
                                             ? 'bg-slate-800 dark:bg-slate-900 text-white'
                                             : ''
@@ -383,18 +383,18 @@ const removeImageFromRoom = (id :string,index:number)  => {
                             </template>
                         </Dropdown>
                         <InputError
-                            :message="form.errors.tipo_de_imovel_id ?? ''"
+                            :message="form.errors.tipo_de_property_id ?? ''"
                         />
                     </div>
                     <div>
                         <label
-                            for="condicao_id"
+                            for="condition_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                             >Condição do Quarto</label
                         >
                         <Dropdown
-                            v-model="form.condicao_id"
-                            :options="imovelConditions ?? []"
+                            v-model="form.condition_id"
+                            :options="propertyConditions ?? []"
                             optionValue="id"
                             optionLabel="nome"
                             placeholder="Condição do Quarto"
@@ -404,7 +404,7 @@ const removeImageFromRoom = (id :string,index:number)  => {
                                 <div
                                     class="bg-slate-100 dark:bg-slate-600 dark:text-slate-200 px-4 py-2 hover:bg-slate-600 dark:hover:bg-slate-800 hover:text-white"
                                     :class="
-                                        form.condicao_id == slotProps.option.id
+                                        form.condition_id == slotProps.option.id
                                             ? 'bg-slate-800 dark:bg-slate-900 text-white'
                                             : ''
                                     "
@@ -413,7 +413,7 @@ const removeImageFromRoom = (id :string,index:number)  => {
                                 </div>
                             </template>
                         </Dropdown>
-                        <InputError :message="form.errors.condicao_id ?? ''" />
+                        <InputError :message="form.errors.condition_id ?? ''" />
                     </div>
                     <div>
                         <label

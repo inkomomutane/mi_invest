@@ -6,16 +6,12 @@ use App\Data\MediaData;
 use App\Models\Banner;
 use App\Support\Enums\SystemRoles;
 use Inertia\Inertia;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class GetBanners
 {
-    use AsAction;
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -32,7 +28,7 @@ class GetBanners
             Banner::create([]);
         }
 
-        return MediaData::collection(
+        return MediaData::collect(
             Banner::first()->media()
                 ->where('collection_name', 'banners')
                 ->orderBy('updated_at', 'desc')
@@ -40,7 +36,7 @@ class GetBanners
         );
     }
 
-    public function asController()
+    public function __invoke()
     {
         return Inertia::render('Banner/Index', [
             'banners' => $this->handle(),

@@ -13,7 +13,7 @@ final class Pages
 {
     public final const HOME = 'home';
 
-    public final const IMOVELS = 'imovels';
+    public final const IMOVELS = 'properties';
 
     public final const ABOUT = 'about';
 

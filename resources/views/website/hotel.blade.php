@@ -140,7 +140,7 @@
                     </li>
                 @endforeach
             </ul>
-            <!--- Start::Latest-Imovels-Slide-that shown only on small screens -->
+            <!--- Start::Latest-Propertys-Slide-that shown only on small screens -->
             @if($hotel->description)
                 <div class="bg-white rounded-sm p-4 px-8 mb-2 w-full" >
                     <h1 class="text-xl font-semibold py-2 first-letter:uppercase lowercase">
@@ -246,7 +246,7 @@
                                 </div>
                                 <div class="mb-2">
                                     <label for="email">Teu email</label>
-                                    <input type="text" name="email" id="email" class="h-10 border mt-1  rounded p-6 px-4 w-full  focus:ring-1 focus:ring-gray-500 border-gray-500 focus:border-gray-500" value="" placeholder="Exemplo@mimovel.com" />
+                                    <input type="text" name="email" id="email" class="h-10 border mt-1  rounded p-6 px-4 w-full  focus:ring-1 focus:ring-gray-500 border-gray-500 focus:border-gray-500" value="" placeholder="Exemplo@mproperty.com" />
                                     @error('email')
                                     <span class="text-red-500 text-sm font-semibold ">{{ $message }}</span>
                                     @enderror
@@ -307,5 +307,5 @@
 
 @push('js')
     @vite(['resources/js/website/welcomeBanner.ts',
-    'resources/js/website/gallery.js','resources/js/website/imovel.ts'])
+    'resources/js/website/gallery.js','resources/js/website/property.ts'])
 @endpush

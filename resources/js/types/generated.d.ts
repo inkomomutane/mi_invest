@@ -15,7 +15,7 @@ declare namespace App.Data {
         description: string;
         image: any | App.Data.MediaData | null;
     };
-    export type BairroData = {
+    export type NeighborhoodData = {
         id: number | null;
         nome: string;
         city: any | App.Data.CityData | null;
@@ -24,9 +24,9 @@ declare namespace App.Data {
         id: number | null;
         nome: string;
         province: any | App.Data.ProvinceData | null;
-        bairros: Array<App.Data.BairroData> | null;
+        neighborhoods: Array<App.Data.NeighborhoodData> | null;
     };
-    export type CondicaoData = {
+    export type ConditionData = {
         id: number | null;
         nome: string | null;
     };
@@ -49,15 +49,15 @@ declare namespace App.Data {
         address: string | null;
         description: string | null;
         slug: string | null;
-        imovelTypeData: any | App.Data.ImovelTypeData;
-        condicaoData: any | App.Data.CondicaoData | null;
+        propertyTypeData: any | App.Data.PropertyTypeData;
+        conditionData: any | App.Data.ConditionData | null;
         statusData: any | App.Data.StatusData | null;
-        bairroData: any | App.Data.BairroData | null;
+        neighborhoodData: any | App.Data.NeighborhoodData | null;
         hotels: Array<App.Data.HotelData> | null;
         media: Array<App.Data.MediaData> | null;
         attributes: Array<App.Data.AttributeData> | null;
     };
-    export type ImovelData = {
+    export type PropertyData = {
         id: any | number | null;
         titulo: any | string | null;
         descricao: any | string | null;
@@ -75,20 +75,20 @@ declare namespace App.Data {
         endereco: any | string | null;
         mapa: any | string | null;
         views: any | number | null;
-        condicao: App.Data.CondicaoData | null;
-        bairro: any | App.Data.BairroData | null;
-        tipo_de_imovel: any | App.Data.ImovelTypeData | null;
+        condition: App.Data.ConditionData | null;
+        neighborhood: any | App.Data.NeighborhoodData | null;
+        tipo_de_property: any | App.Data.PropertyTypeData | null;
         status: any | App.Data.StatusData | null;
         corretor: any | App.Data.UserData | null;
         slug: any | string | null;
         for_rent: any | boolean | null;
-        regra_de_negocio: any | App.Data.RegraDeNegocioData | null;
-        imovel_for: any | App.Data.TransactionTypeData | null;
+        regra_de_business: any | App.Data.BusinessRuleData | null;
+        property_for: any | App.Data.TransactionTypeData | null;
         intermediation_rule: any | App.Data.IntermediationRuleData | null;
         media: App.Data.MediaData | null;
         images: Array<App.Data.MediaData> | null;
     };
-    export type ImovelTypeData = {
+    export type PropertyTypeData = {
         id: number;
         name: string;
         icon: any | App.Data.MediaData;
@@ -118,7 +118,7 @@ declare namespace App.Data {
     export type MultilevelProvinceData = {
         id: number;
         name: string;
-        cidades: Array<App.Data.CityData>;
+        cities: Array<App.Data.CityData>;
     };
     export type PageData = {
         id: number | null;
@@ -133,7 +133,7 @@ declare namespace App.Data {
         tiktok: string | null;
         contacts: Array<any> | null;
         homeMedia: App.Data.MediaData | any | null;
-        imovelsMedia: App.Data.MediaData | any | null;
+        propertiesMedia: App.Data.MediaData | any | null;
         aboutMedia: App.Data.MediaData | any | null;
         contactMedia: App.Data.MediaData | any | null;
         termsMedia: App.Data.MediaData | any | null;
@@ -147,14 +147,14 @@ declare namespace App.Data {
         id: number | null;
         name: string;
     };
-    export type RegraDeNegocioData = {
+    export type BusinessRuleData = {
         id: number | null;
         name: string | null;
     };
     export type RequestFiltersData = {
-        imovelTypes: null | Array<number>;
+        propertyTypes: null | Array<number>;
         title: string | null;
-        bairros: Array<any> | null;
+        neighborhoods: Array<any> | null;
     };
     export type ResponsiveImageData = {
         media_library_original: App.Data.MediaLibraryOriginalData | null;

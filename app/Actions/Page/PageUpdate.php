@@ -5,14 +5,12 @@ namespace App\Actions\Page;
 use App\Models\Page;
 use App\Support\Enums\Pages;
 use App\Support\Enums\SystemRoles;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class PageUpdate
 {
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -41,8 +39,8 @@ class PageUpdate
             'homeMedia' => 'nullable',
             'homeMedia.*' => 'nullable|image|max:15360',
 
-            'imovelsMedia' => 'nullable',
-            'imovelsMedia.*' => 'nullable|image|max:15360',
+            'propertiesMedia' => 'nullable',
+            'propertiesMedia.*' => 'nullable|image|max:15360',
 
             'aboutMedia' => 'nullable',
             'aboutMedia.*' => 'nullable|image|max:15360',
@@ -61,7 +59,7 @@ class PageUpdate
         ];
     }
 
-    public function asController(ActionRequest $actionRequest)
+    public function __invoke(Request $actionRequest)
     {
         try {
 
@@ -85,9 +83,9 @@ class PageUpdate
 
             }
 
-            if ($actionRequest->file('imovelsMedia')) {
+            if ($actionRequest->file('propertiesMedia')) {
 
-                foreach ($actionRequest->file('imovelsMedia') as $file) {
+                foreach ($actionRequest->file('propertiesMedia') as $file) {
                     $page->addMedia($file)
                         ->toMediaCollection(Pages::IMOVELS, 'pages');
                 }
@@ -137,13 +135,13 @@ class PageUpdate
                         ->toMediaCollection(Pages::LOGO, 'pages');
                 }
             }
-            flash()->addSuccess('Dados globais do site actualizados com sucesso.');
+            flash()->addSuccess(__('messages.action_success'));
 
         } catch (\Throwable $th) {
             throw $th;
             flash()->addErro('Erro ao actualizar dados globais do site.');
         }
 
-         return to_route('mimovel');
+         return to_route('mproperty');
     }
 }

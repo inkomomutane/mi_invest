@@ -16,10 +16,10 @@ class HotelMetaDataDtoData extends Data
         public readonly ?string $address,
         public readonly ?string $description,
         public readonly ?string $slug,
-        public readonly Lazy|ImovelTypeData $imovelTypeData,
-        public readonly Lazy|CondicaoData|null $condicaoData,
+        public readonly Lazy|PropertyTypeData $propertyTypeData,
+        public readonly Lazy|ConditionData|null $conditionData,
         public readonly Lazy|StatusData|null $statusData,
-        public readonly Lazy|BairroData|null $bairroData,
+        public readonly Lazy|NeighborhoodData|null $neighborhoodData,
         /** @var HotelData[] $hotels */
         public readonly Lazy|null|DataCollection $hotels,
         /** @var MediaData[] * */
@@ -38,25 +38,25 @@ class HotelMetaDataDtoData extends Data
             address: $hotelMetaData->address,
             description: $hotelMetaData->description,
             slug: $hotelMetaData->slug,
-            imovelTypeData: Lazy::whenLoaded(
-                'tipoDeImovel',
+            propertyTypeData: Lazy::whenLoaded(
+                'tipoDeProperty',
                 $hotelMetaData,
-                static   fn () => $hotelMetaData->tipoDeImovel->getData()
+                static   fn () => $hotelMetaData->tipoDeProperty->getData()
             ),
-            condicaoData: Lazy::whenLoaded(
-                'condicao',
+            conditionData: Lazy::whenLoaded(
+                'condition',
                 $hotelMetaData,
-                static   fn () => $hotelMetaData->condicao->getData()
+                static   fn () => $hotelMetaData->condition->getData()
             ),
             statusData: Lazy::whenLoaded(
                 'status',
                 $hotelMetaData,
                 static   fn () => $hotelMetaData->status->getData()
             ),
-            bairroData: Lazy::whenLoaded(
-                'bairro',
+            neighborhoodData: Lazy::whenLoaded(
+                'neighborhood',
                 $hotelMetaData,
-                static fn () => $hotelMetaData->bairro->getData()
+                static fn () => $hotelMetaData->neighborhood->getData()
             ),
             hotels: Lazy::whenLoaded(
                 'hotels',
@@ -75,7 +75,7 @@ class HotelMetaDataDtoData extends Data
             attributes: Lazy::whenLoaded(
                 'attributes',
                 $hotelMetaData,
-                static fn () => AttributeData::collection($hotelMetaData->attributes)
+                static fn () => AttributeData::collect($hotelMetaData->attributes)
             ),
         );
     }

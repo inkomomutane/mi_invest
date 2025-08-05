@@ -87,7 +87,7 @@ function closeDeleteCityModal() {
 </script>
 
 <template>
-    <Head title="Cidades" />
+    <Head title="Cities" />
     <AuthenticatedLayout>
         <template v-slot:content>
             <div class="mx-auto max-w-screen-xl">
@@ -150,7 +150,7 @@ function closeDeleteCityModal() {
                                     </th>
                                     <th scope="col" class="px-4 py-3">
                                         <div class="flex items-center">
-                                            Nome da cidade
+                                            Nome da city
                                         </div>
                                     </th>
                                     <th scope="col" class="px-4 py-3">

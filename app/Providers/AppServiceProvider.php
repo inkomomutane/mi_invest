@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Actions\Page\GetPage;
-use App\Models\TipoDeImovel;
+use App\Models\PropertyType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Arr;
@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         Schema::defaultStringLength(125);
-        Sanctum::ignoreMigrations();
+      #  Sanctum::ignoreMigrations();
     }
 
     /**
@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFive();
         view()->share([
             'globals' => GetPage::run()?->getData(),
-            'imovelTypes' => TipoDeImovel::all(),
+            'propertyTypes' => PropertyType::all(),
         ]);
 
         Builder::macro('whereLike', function ($attributes, string $searchTerm) {

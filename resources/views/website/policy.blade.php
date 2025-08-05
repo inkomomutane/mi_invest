@@ -12,7 +12,7 @@
     {{ $page->img()->attributes(['class' => 'absolute object-cover inset-0 w-full h-full']) }}
     @else
         <img src="{{Vite::asset('resources/js/images/placeholder.svg')}}"
-        alt="Politicas de privacidade"  class="absolute object-cover inset-0 w-full h-full">
+        alt="Politicas de privacity"  class="absolute object-cover inset-0 w-full h-full">
     @endif
 
 </x-slot:coverImage>
@@ -23,7 +23,7 @@
         <div
             class="p-32 text-center m-auto font-extrabold text-4xl text-white md:text-5xl sm:px-16 xl:px-48 dark:text-gray-400"
         >
-            Políticas de privacidade
+            Políticas de privacity
         </div>
     </div>
 </x-slot:content>

@@ -5,36 +5,36 @@ import UploadImage from "@/Components/UploadImage.vue";
 import { Link, useForm } from "@inertiajs/vue3";
 
 const props = defineProps({
-    imovel: {
+    property: {
         type: String,
         required: true,
     },
 });
 
-const uploadImovelImages = ref(false);
-const uploadImovelImagesProgress = ref(false);
+const uploadPropertyImages = ref(false);
+const uploadPropertyImagesProgress = ref(false);
 const form = useForm({ images: [] });
 
-const uploadImovelImagesTrigger = () => {
-    uploadImovelImages.value = true;
+const uploadPropertyImagesTrigger = () => {
+    uploadPropertyImages.value = true;
 };
 
-const closeUloadImovelImagesModal = () => {
-    uploadImovelImages.value = false;
-    uploadImovelImagesProgress.value = false;
+const closeUloadPropertyImagesModal = () => {
+    uploadPropertyImages.value = false;
+    uploadPropertyImagesProgress.value = false;
     form.reset();
 };
 
 const uploadImges = () =>
     form.post(
-        route("imovel.image.store", {
-            imovel: props.imovel,
+        route("property.image.store", {
+            property: props.property,
         }),
         {
             forceFormData: true,
-            onProgress: () => (uploadImovelImagesProgress.value = true),
+            onProgress: () => (uploadPropertyImagesProgress.value = true),
             onSuccess: () => {
-                closeUloadImovelImagesModal();
+                closeUloadPropertyImagesModal();
                 form.reset();
             },
         }
@@ -48,7 +48,7 @@ const backLink = () => window.history.back();
     >
         <button
             type="button"
-            @click="uploadImovelImagesTrigger"
+            @click="uploadPropertyImagesTrigger"
             class="w-fit flex items-center justify-center text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded text-sm px-4 py-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800"
         >
             <svg
@@ -73,7 +73,7 @@ const backLink = () => window.history.back();
                 />
             </svg>
 
-            <span class="mx-4">Carregar Imagens do imovel</span>
+            <span class="mx-4">Carregar Imagens do property</span>
         </button>
         <button
             @click="backLink"
@@ -106,12 +106,12 @@ const backLink = () => window.history.back();
         </button>
     </div>
 
-    <Modal :show="uploadImovelImages" @close="closeUloadImovelImagesModal">
+    <Modal :show="uploadPropertyImages" @close="closeUloadPropertyImagesModal">
         <div class="relative bg-white rounded shadow dark:bg-gray-700">
             <button
                 type="button"
                 class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                @click="closeUloadImovelImagesModal"
+                @click="closeUloadPropertyImagesModal"
             >
                 <svg
                     aria-hidden="true"
@@ -136,7 +136,7 @@ const backLink = () => window.history.back();
                     :disabledUpload="false"
                     :disabledCancel="false"
                     mediaType="image/*"
-                    :progressUploadImage="uploadImovelImagesProgress"
+                    :progressUploadImage="uploadPropertyImagesProgress"
                 />
             </div>
         </div>

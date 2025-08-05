@@ -22,58 +22,8 @@ use Spatie\Tags\HasTags;
 use Spatie\Tags\Tag;
 use Vite;
 
-/**
- * App\Models\HotelMetaData
- *
- * @property int $id
- * @property string|null $title
- * @property string|null $address
- * @property string|null $description
- * @property int $tipo_de_imovel_id
- * @property int $condicao_id
- * @property int $status_id
- * @property int $bairro_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read Bairro $bairro
- * @property-read Condicao $condicao
- * @property-read Collection<int, \App\Models\Hotel> $hotels
- * @property-read int|null $hotels_count
- * @property-read Status $status
- * @property-read TipoDeImovel $tipoDeImovel
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData query()
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData whereAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData whereBairroId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData whereCondicaoId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData whereStatusId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData whereTipoDeImovelId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData whereUpdatedAt($value)
- * @property string|null $slug
- * @property Collection<int, Tag> $tags
- * @property-read int|null $tags_count
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData withAllTags(\ArrayAccess|Tag|array|string $tags, ?string $type = null)
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData withAllTagsOfAnyType($tags)
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData withAnyTags(\ArrayAccess|Tag|array|string $tags, ?string $type = null)
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData withAnyTagsOfAnyType($tags)
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData withoutTags(\ArrayAccess|Tag|array|string $tags, ?string $type = null)
- * @property float $price
- * @property-read Collection<int, Attribute> $attributes
- * @property-read int|null $attributes_count
- * @property-read MediaCollection<int, Media> $media
- * @property-read int|null $media_count
- * @method static \Illuminate\Database\Eloquent\Builder|HotelMetaData wherePrice($value)
- * @mixin \Eloquent
- */
 class HotelMetaData extends Model implements HasMedia
 {
-    use HasFactory;
     use HasSlug;
     use HasTags;
     use WithData;
@@ -83,10 +33,10 @@ class HotelMetaData extends Model implements HasMedia
         'title',
         'address',
         'description',
-        'tipo_de_imovel_id',
-        'condicao_id',
+        'property_type_id',
+        'condition_id',
         'status_id',
-        'bairro_id',
+        'neighborhood_id',
         'slug',
     ];
 
@@ -94,14 +44,15 @@ class HotelMetaData extends Model implements HasMedia
 
     protected $table = 'hotel_meta_datas';
 
-    public function tipoDeImovel(): BelongsTo
+
+    public function propertyType(): BelongsTo
     {
-        return $this->belongsTo(TipoDeImovel::class);
+        return $this->belongsTo(PropertyType::class);
     }
 
-    public function condicao(): BelongsTo
+    public function condition(): BelongsTo
     {
-        return $this->belongsTo(Condicao::class);
+        return $this->belongsTo(Condition::class);
     }
 
     public function status(): BelongsTo
@@ -109,10 +60,10 @@ class HotelMetaData extends Model implements HasMedia
         return $this->belongsTo(Status::class);
     }
 
-    public function bairro(): BelongsTo
+    public function neighborhood(): BelongsTo
     {
         return $this->belongsTo(
-            Bairro::class
+            Neighborhood::class
         );
     }
 
@@ -149,7 +100,7 @@ class HotelMetaData extends Model implements HasMedia
 
     //    public function toSitemapTag(): Url|string|array
     //    {
-    //        return Url::create(route('post.imovel.show', $this))
+    //        return Url::create(route('post.property.show', $this))
     //            ->setLastModificationDate(Carbon::create($this->updated_at))
     //            ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
     //            ->addImage($this->hasMedia('posts') ? $this->getFirstMedia('posts')->getUrl('social-media') : Vite::asset('resources/js/images/placeholder.svg'))

@@ -10,13 +10,13 @@ const authorized = () => {
 <template>
     <Link
         v-if="authorized()"
-        :href="route('negocio.all')"
+        :href="route('business.all')"
         v-tooltip.value="tooltip('Regras de negociação')"
     >
         <li
             class="px-3 py-2 rounded mb-0.5 last:mb-0"
             :class="
-                route().current('negocio.all')
+                route().current('business.all')
                     ? 'bg-slate-950'
                     : 'hover:bg-slate-900'
             "

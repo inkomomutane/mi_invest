@@ -16,7 +16,7 @@ namespace App\Actions\Authorization;
 class GetRolesBellowAuthenticatedUser
 {
 }
-namespace App\Actions\Bairro;
+namespace App\Actions\Neighborhood;
 
 /**
  * @method static \Lorisleiva\Actions\Decorators\JobDecorator|\Lorisleiva\Actions\Decorators\UniqueJobDecorator makeJob(array $city)
@@ -29,21 +29,21 @@ namespace App\Actions\Bairro;
  * @method static dispatchAfterResponse(array $city)
  * @method static mixed run(array $city)
  */
-class CreateBairro
+class CreateNeighborhood
 {
 }
 /**
- * @method static \Lorisleiva\Actions\Decorators\JobDecorator|\Lorisleiva\Actions\Decorators\UniqueJobDecorator makeJob(\App\Models\Bairro $bairro)
- * @method static \Lorisleiva\Actions\Decorators\UniqueJobDecorator makeUniqueJob(\App\Models\Bairro $bairro)
- * @method static \Illuminate\Foundation\Bus\PendingDispatch dispatch(\App\Models\Bairro $bairro)
- * @method static \Illuminate\Foundation\Bus\PendingDispatch|\Illuminate\Support\Fluent dispatchIf(bool $boolean, \App\Models\Bairro $bairro)
- * @method static \Illuminate\Foundation\Bus\PendingDispatch|\Illuminate\Support\Fluent dispatchUnless(bool $boolean, \App\Models\Bairro $bairro)
- * @method static dispatchSync(\App\Models\Bairro $bairro)
- * @method static dispatchNow(\App\Models\Bairro $bairro)
- * @method static dispatchAfterResponse(\App\Models\Bairro $bairro)
- * @method static bool run(\App\Models\Bairro $bairro)
+ * @method static \Lorisleiva\Actions\Decorators\JobDecorator|\Lorisleiva\Actions\Decorators\UniqueJobDecorator makeJob(\App\Models\Neighborhood $bairro)
+ * @method static \Lorisleiva\Actions\Decorators\UniqueJobDecorator makeUniqueJob(\App\Models\Neighborhood $bairro)
+ * @method static \Illuminate\Foundation\Bus\PendingDispatch dispatch(\App\Models\Neighborhood $bairro)
+ * @method static \Illuminate\Foundation\Bus\PendingDispatch|\Illuminate\Support\Fluent dispatchIf(bool $boolean, \App\Models\Neighborhood $bairro)
+ * @method static \Illuminate\Foundation\Bus\PendingDispatch|\Illuminate\Support\Fluent dispatchUnless(bool $boolean, \App\Models\Neighborhood $bairro)
+ * @method static dispatchSync(\App\Models\Neighborhood $bairro)
+ * @method static dispatchNow(\App\Models\Neighborhood $bairro)
+ * @method static dispatchAfterResponse(\App\Models\Neighborhood $bairro)
+ * @method static bool run(\App\Models\Neighborhood $bairro)
  */
-class DeleteBairro
+class DeleteNeighborhood
 {
 }
 /**
@@ -57,12 +57,12 @@ class DeleteBairro
  * @method static dispatchAfterResponse(string $term = null)
  * @method static mixed run(string $term = null)
  */
-class GetBairros
+class GetNeighborhoods
 {
 }
 /**
  */
-class UpdateBairro
+class UpdateNeighborhood
 {
 }
 namespace App\Actions\City;

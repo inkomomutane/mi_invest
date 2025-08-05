@@ -3,8 +3,8 @@ import Modal from "@/Components/Modal.vue";
 import { PropType } from "vue";
 
 const props = defineProps({
-    imovel: {
-        type: Object as PropType<App.Data.ImovelData>,
+    property: {
+        type: Object as PropType<App.Data.PropertyData>,
         required: true,
     },
     close: {
@@ -44,41 +44,41 @@ const props = defineProps({
                 <h3
                     class="mb-4 text-lg font-medium text-gray-900 dark:text-white"
                 >
-                    Visualizar imovel
+                    Visualizar property
                 </h3>
                 <div class="">
                     <ul>
                         <li class="p-2 text-sm capitalize odd:bg-slate-50">
-                            <strong>Titulo</strong>: {{ imovel.titulo ?? "" }}
+                            <strong>Titulo</strong>: {{ property.titulo ?? "" }}
                         </li>
                         <li
                             class="p-2 text-sm capitalize odd:bg-slate-50 font-semibold"
                         >
-                            <strong>Preço</strong>: {{ imovel.preco ?? "" }}
+                            <strong>Preço</strong>: {{ property.preco ?? "" }}
                         </li>
                         <li class="p-2 text-sm capitalize odd:bg-slate-50">
                             <strong>Negociação</strong>:
-                            {{ imovel.regra_de_negocio?.name ?? "" }}
+                            {{ property.regra_de_business?.name ?? "" }}
                         </li>
                         <li class="p-2 text-sm capitalize odd:bg-slate-50">
                             <strong>Intermediação</strong>:
-                            {{ imovel.intermediation_rule?.name ?? "" }} |
+                            {{ property.intermediation_rule?.name ?? "" }} |
                             <strong class="text-sm font-bold"
                                 >{{
-                                    imovel.intermediation_rule?.percentage ?? ""
+                                    property.intermediation_rule?.percentage ?? ""
                                 }}
                                 %
                             </strong>
                             |
                             <span class="uppercase">{{
-                                imovel.intermediation_rule?.code ?? ""
+                                property.intermediation_rule?.code ?? ""
                             }}</span>
                         </li>
                         <li class="p-2 text-sm capitalize odd:bg-slate-50">
                             <strong>Localização : </strong>:
-                            {{ imovel.bairro?.nome ?? "" }} |
-                            {{ imovel.bairro?.city.nome ?? "" }} |
-                            {{ imovel.bairro?.city?.province?.name ?? "" }}
+                            {{ property.neighborhood?.nome ?? "" }} |
+                            {{ property.neighborhood?.city.nome ?? "" }} |
+                            {{ property.neighborhood?.city?.province?.name ?? "" }}
                         </li>
                         <li
                             class="p-2 text-sm capitalize odd:bg-slate-50 font-semibold"
@@ -86,8 +86,8 @@ const props = defineProps({
                             <div>
                                 <strong>Localização no Mapa: </strong>
                                 <div
-                                    v-if="imovel.mapa"
-                                    v-html="imovel.mapa"
+                                    v-if="property.mapa"
+                                    v-html="property.mapa"
                                     class="aspect-video"
                                 ></div>
                                 <span v-else class="text-sm font-thin">
@@ -101,8 +101,8 @@ const props = defineProps({
                             <div>
                                 <strong>Detailhes do imóvel: </strong>
                                 <div
-                                    v-if="imovel.details"
-                                    v-html="imovel.details"
+                                    v-if="property.details"
+                                    v-html="property.details"
                                     class="aspect-video"
                                 ></div>
                                 <span v-else class="text-sm font-thin">

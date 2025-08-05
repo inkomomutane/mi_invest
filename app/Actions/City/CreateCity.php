@@ -2,33 +2,29 @@
 
 namespace App\Actions\City;
 
-use App\Models\Cidade;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use App\Models\City;
+use Illuminate\Http\Request;
 
 class CreateCity
 {
-    use AsAction;
-    use AsController;
 
     public function handle(array $city)
     {
-        return Cidade::create($city);
+        return City::create($city);
     }
 
     public function rules()
     {
         return [
-            'nome' => 'required|unique:cidades,nome',
+            'nome' => 'required|unique:cities,nome',
             'province_id' => 'required|numeric',
         ];
     }
 
-    public function AsController(ActionRequest $request)
+    public function __invoke(Request $request)
     {
         $this->handle($request->validated());
-        flash()->addSuccess('Cidade criada com sucesso.');
+        flash()->addSuccess(__('messages.city_created_success'));
 
         return \redirect()->back();
     }

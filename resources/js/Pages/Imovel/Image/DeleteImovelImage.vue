@@ -8,7 +8,7 @@ const props = defineProps({
         type: Object as PropType<App.Data.MediaData>,
         required: true,
     },
-    imovel: {
+    property: {
         type: String,
         required: true,
     },
@@ -26,7 +26,7 @@ const form = useForm({ id: props.image.id });
 
 const deleteImage = () => {
     form.delete(
-        route("imovel.image.delete", {
+        route("property.image.delete", {
             media: props.image.id as number,
         }),
         {

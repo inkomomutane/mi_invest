@@ -11,7 +11,7 @@ const authorized = () => {
     <Link
         v-if="authorized()"
         :href="route('legal.policy')"
-        v-tooltip.value="tooltip('Políticas de privacidade')"
+        v-tooltip.value="tooltip('Políticas de privacity')"
     >
         <li
             class="px-3 py-2 rounded mb-0.5 last:mb-0"
@@ -39,7 +39,7 @@ const authorized = () => {
                         </svg>
                         <span
                             class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
-                            >Políticas de privacidade</span
+                            >Políticas de privacity</span
                         >
                     </div>
                 </div>

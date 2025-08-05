@@ -345,8 +345,8 @@ const deleteMessage = (mail: App.Data.AgendaData) => {
                                 "
                                 :href="
                                     loadedMessage?.url
-                                        ? route('post.imovel.show', {
-                                              imovel: loadedMessage?.url,
+                                        ? route('post.property.show', {
+                                              property: loadedMessage?.url,
                                           })
                                         : ''
                                 "

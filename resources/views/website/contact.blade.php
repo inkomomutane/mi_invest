@@ -139,7 +139,7 @@
               <label for="email">Teu email</label>
               <input type="text" name="email" id="email" class="h-10 border mt-1
                rounded-sm p-6 px-4 w-full bg-orange-50 focus:ring-1
-              focus:ring-orange-400 border-orange-400 focus:border-orange-400" value="" placeholder="Exemplo@mimovel.com" />
+              focus:ring-orange-400 border-orange-400 focus:border-orange-400" value="" placeholder="Exemplo@mproperty.com" />
               @error('email')
                <span class="text-red-500 text-sm font-semibold ">{{ $message }}</span>
               @enderror

@@ -2,20 +2,16 @@
 
 namespace App\Actions\TranstionType;
 
-use App\Data\TransactionTypeData;
-use App\Models\ImovelFor;
+use App\Data\PropertyPurposeData;
+use App\Models\PropertyPurpose;
 use App\Support\Enums\SystemRoles;
 use Inertia\Inertia;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class GetTransactionTypes
 {
-    use AsAction;
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -28,8 +24,8 @@ class GetTransactionTypes
 
     public function handle(?string $term = null)
     {
-        return TransactionTypeData::collection(
-            ImovelFor::query()
+        return PropertyPurposeData::collect(
+            PropertyPurpose::query()
                 ->when($term, function ($query, $search) {
                     $query->where('name', 'like', '%'.$search.'%');
                 })->
@@ -37,7 +33,7 @@ class GetTransactionTypes
         );
     }
 
-    public function AsController(): \Inertia\Response
+    public function __invoke(): \Inertia\Response
     {
         return Inertia::render('TransactionType/Index', [
             'transactionTypes' => $this->handle(request()->search),

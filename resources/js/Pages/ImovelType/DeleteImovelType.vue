@@ -4,8 +4,8 @@ import { useForm } from "@inertiajs/vue3";
 import { PropType } from "vue";
 
 const props = defineProps({
-    imovelType: {
-        type: Object as PropType<App.Data.ImovelTypeData>,
+    propertyType: {
+        type: Object as PropType<App.Data.PropertyTypeData>,
         required: true,
     },
     close: {
@@ -18,12 +18,12 @@ const props = defineProps({
     },
 });
 
-const form = useForm({ id: props.imovelType.id });
+const form = useForm({ id: props.propertyType.id });
 
-const deleteImovelType = () => {
+const deletePropertyType = () => {
     form.delete(
-        route("imovel_type.delete", {
-            imovelType: props.imovelType.id as number,
+        route("property_type.delete", {
+            propertyType: props.propertyType.id as number,
         }),
         {
             preserveScroll: true,
@@ -65,7 +65,7 @@ const deleteImovelType = () => {
                 >
                     Tem certeza que quer excluir esse tipo de imóvel?
                 </h3>
-                <form class="space-y-6" @submit.prevent="deleteImovelType">
+                <form class="space-y-6" @submit.prevent="deletePropertyType">
                     <button
                         type="submit"
                         class="w-full text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded text-sm px-5 py-2.5 text-center dark:bg-slate-600 dark:hover:bg-slate-800 dark:focus:ring-slate-200"

@@ -23,7 +23,7 @@ class PageData extends Data
         public ?string $tiktok,
         public ?array $contacts,
         public null|MediaData|Lazy $homeMedia,
-        public null|MediaData|Lazy $imovelsMedia,
+        public null|MediaData|Lazy $propertiesMedia,
         public null|MediaData|Lazy $aboutMedia,
         public null|MediaData|Lazy $contactMedia,
         public null|MediaData|Lazy $termsMedia,
@@ -49,7 +49,7 @@ class PageData extends Data
             contacts: $page->contacts,
             homeMedia: Lazy::whenLoaded('media', $page, fn () => ! is_null($page->getFirstMedia(Pages::HOME)) ?
                 MediaData::fromModel($page->getFirstMedia(Pages::HOME)) : null),
-            imovelsMedia: Lazy::whenLoaded('media', $page, fn () => ! is_null($page->getFirstMedia(Pages::IMOVELS)) ?
+            propertiesMedia: Lazy::whenLoaded('media', $page, fn () => ! is_null($page->getFirstMedia(Pages::IMOVELS)) ?
                 MediaData::fromModel($page->getFirstMedia(Pages::IMOVELS)) : null),
             aboutMedia: Lazy::whenLoaded('media', $page, fn () => ! is_null($page->getFirstMedia(Pages::ABOUT)) ?
                 MediaData::fromModel($page->getFirstMedia(Pages::ABOUT)) : null),

@@ -11,7 +11,7 @@
         @if (!is_null($page?->img()))
             {{ $page->img()->attributes(['class' => 'absolute object-cover inset-0 w-full h-full']) }}
         @else
-            <img src="{{ Vite::asset('resources/js/images/placeholder.svg') }}" alt="Politicas de privacidade"
+            <img src="{{ Vite::asset('resources/js/images/placeholder.svg') }}" alt="Politicas de privacity"
                 class="absolute object-cover inset-0 w-full h-full">
         @endif
         <div class="relative bg-slate-950 bg-opacity-40 h-full pt-20">
@@ -40,7 +40,7 @@
                         <label for="name"
                             class="block mb-2 text-xs font-semibold text-gray-500 dark:text-white uppercase">Pesquisar </label>
                         <input id="title" name="title" type="text"
-                            placeholder="Tente pesquisar por zona, cidade ou tipo do imóvel"
+                            placeholder="Tente pesquisar por zona, city ou tipo do imóvel"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-gray-500 focus:border-gray-500 block w-full h-[38px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
                             autocomplete="title" />
                     </div>
@@ -58,7 +58,7 @@
 @endsection
 
 @section('content')
-    <!-- Start::Relevant-Imovels -->
+    <!-- Start::Relevant-Propertys -->
     <section class="py-8 px-2 sm:px-6 lg:px-24 bg-gradient-to-b from-gray-200 via-gray-100 to-gray-50 dark:bg-gray-700 font-['Open_Sans'] text-gray-700" itemscope
         itemtype="https://schema.org/ItemList">
         <h1 class="font-semibold text-2xl text-slate-700 dark:text-white mx-6" itemprop="name">
@@ -68,42 +68,42 @@
             Imóveis mais visitados do site.
         </p>
 
-        <div class="splide" id="relevant-imovels" data-splide='{"type":"loop","autoplay":true}'>
+        <div class="splide" id="relevant-properties" data-splide='{"type":"loop","autoplay":true}'>
             <!-- Additional required wrapper -->
             <div class="splide__track">
                 <!-- Slides -->
                 <ul class="splide__list">
-                    @foreach ($relevantImovels as $imovel)
+                    @foreach ($relevantPropertys as $property)
                         <li class="splide__slide p-5 group mr-0 grid justify-center items-center" itemprop="itemListElement"
                             itemscope itemtype="https://schema.org/ListItem">
-                            <a href="{{ route('post.imovel.show', [
-                                'imovel' => $imovel->slug,
+                            <a href="{{ route('post.property.show', [
+                                'property' => $property->slug,
                             ]) }}"
                                 itemprop="url">
                                 <article
                                     class="!w-full bg-white dark:bg-gray-700  dark:border-gray-700 transition-transform duration-300 transform-gpu hover:scale-105 hover:shadow-none hover:shadow-gray-400 hover:rounded">
 
                                     <header class="bg-gray-500">
-                                        <a href="{{ route('post.imovel.show', [ 'imovel' => $imovel->slug ]) }}">
-                                            @if ($imovel->getFirstMedia('posts'))
-                                                {{ $imovel->getFirstMedia('posts')
+                                        <a href="{{ route('post.property.show', [ 'property' => $property->slug ]) }}">
+                                            @if ($property->getFirstMedia('posts'))
+                                                {{ $property->getFirstMedia('posts')
                                                     ?->img()->attributes([
                                                         'class' => 'col-span-1 sm:col-span-3  h-64 w-full xl:h-72 object-cover rounded-t',
-                                                        'alt' => $imovel->titulo ?? '',
+                                                        'alt' => $property->titulo ?? '',
                                                     ])->lazy() }}
                                             @else
                                                 <img class="col-span-1 sm:col-span-3  h-64 xl:h-72 object-cover rounded-t"
                                                      src="{{ Vite::asset('resources/js/images/placeholder.svg') }}"
-                                                     alt="{{ $imovel->titulo ?? '' }}">
+                                                     alt="{{ $property->titulo ?? '' }}">
                                             @endif
                                         </a>
                                     </header>
 
                                     <div class="w-full p-4 pb-6 font-['Jost'] text-gray-500 grid justify-items-stretch col-span-3">
                                         <div class="flex justify-between">
-                                            <a href="{{ route('post.imovel.show', [ 'imovel' => $imovel->slug ]) }}">
+                                            <a href="{{ route('post.property.show', [ 'property' => $property->slug ]) }}">
                                                 <h1 class="text-lg font-semibold line-clamp-1 normal-case py-1 first-letter:uppercase">
-                                                    {{ $imovel->imovelFor?->slug_text }} {{ $imovel->titulo }}
+                                                    {{ $property->propertyFor?->slug_text }} {{ $property->titulo }}
                                                 </h1>
                                             </a>
                                         </div>
@@ -122,15 +122,15 @@
                                             </svg>
                                             <p class="line-clamp-1">
                                                 &nbsp;
-                                                {{ ($imovel->bairro?->nome ? $imovel->bairro?->nome . ', ' : '') .
-                                                    $imovel->bairro->cidade?->nome .
-                                                    ($imovel->endereco ? ', ' . $imovel->endereco : '') }}
+                                                {{ ($property->neighborhood?->nome ? $property->neighborhood?->nome . ', ' : '') .
+                                                    $property->neighborhood->city?->nome .
+                                                    ($property->endereco ? ', ' . $property->endereco : '') }}
                                             </p>
 
                                         </div>
                                         <div class="grid grid-cols-3 gap-8 mt-2">
 
-                                            <a href="{{ route('post.imovel.show', [ 'imovel' => $imovel->slug ]) }}"
+                                            <a href="{{ route('post.property.show', [ 'property' => $property->slug ]) }}"
                                                class="flex
                                        bg-orange-950  items-center justify-center
                                        text-center  rounded-sm text-orange-50
@@ -142,7 +142,7 @@
                                                 Ver mais
                                             </a>
                                             <div class="my-2 flex text-gray-500 col-span-2">
-                                                &nbsp; <strong>{{ $imovel->price }}</strong>
+                                                &nbsp; <strong>{{ $property->price }}</strong>
                                             </div>
                                         </div>
 
@@ -159,11 +159,11 @@
                 class="w-screen text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:ring-orange-300
                 font-bold text-sm py-2.5 mr-2 mb-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none
                  dark:focus:ring-slate-800 rounded text-center first-letter:uppercase">
-                Ver todos imóveis ( {{ $imovels_count}} )
+                Ver todos imóveis ( {{ $properties_count}} )
             </a>
         </div>
     </section>
-    <!-- End::Relevant-Imovels -->
+    <!-- End::Relevant-Propertys -->
 
     <!-- Start::Relevant Hotels -->
     <section class="pb-8 pt-8 px-2 sm:px-6 lg:px-24 bg-gradient-to-b from-gray-50 to-gray-100 dark:bg-gray-700 font-['Open_Sans']  " itemscope
@@ -174,7 +174,7 @@
         <p class="mx-6 mt-2 dark:text-white first-letter:uppercase">
             Quartos e hoteis
         </p>
-        <!--- End::Latest-Imovels-Slide-that shown only on small screens -->
+        <!--- End::Latest-Propertys-Slide-that shown only on small screens -->
         <div class="splide" id="relevantHotels" data-splide='{"type":"loop","autoplay":true}'>
             <!-- Additional required wrapper -->
             <div class="splide__track">
@@ -265,9 +265,9 @@
             </a>
         </div>
     </section>
-    <!--- Start::Latest-Imovels-Slide-that shown only on small screens -->
+    <!--- Start::Latest-Propertys-Slide-that shown only on small screens -->
 
-    <!-- Start::Latest-Imovels -->
+    <!-- Start::Latest-Propertys -->
     <section class="pb-8 pt-8 px-2 sm:px-6 lg:px-24 bg-gradient-to-b from-gray-100 to-gray-50 dark:bg-gray-700 font-['Open_Sans']  " itemscope
              itemtype="https://schema.org/ItemList">
         <h1 class="font-semibold text-2xl text-slate-700 dark:text-white mx-6 first-letter:uppercase">
@@ -276,43 +276,43 @@
         <p class="mx-6 mt-2 dark:text-white first-letter:uppercase">
             Imóveis publicados recentemente no website.
         </p>
-        <!--- End::Latest-Imovels-Slide-that shown only on small screens -->
+        <!--- End::Latest-Propertys-Slide-that shown only on small screens -->
         <div class="splide" id="new-added-houses" data-splide='{"type":"loop","autoplay":true}'>
             <!-- Additional required wrapper -->
             <div class="splide__track">
                 <!-- Slides -->
                 <ul class="splide__list">
-                    @foreach ($lastestImovels as $imovel)
+                    @foreach ($lastestPropertys as $property)
                         <li class="splide__slide p-5 group mr-0 grid justify-center items-center" itemprop="itemListElement"
                             itemscope itemtype="https://schema.org/ListItem">
-                            <a href="{{ route('post.imovel.show', [
-                                'imovel' => $imovel->slug,
+                            <a href="{{ route('post.property.show', [
+                                'property' => $property->slug,
                             ]) }}"
                                itemprop="url">
                                 <article
                                     class="!w-full bg-white dark:bg-gray-700  dark:border-gray-700 transition-transform duration-300 transform-gpu hover:scale-105 hover:shadow-none hover:shadow-gray-400 hover:rounded">
 
                                     <header class="bg-gray-500">
-                                        <a href="{{ route('post.imovel.show', [ 'imovel' => $imovel->slug ]) }}">
-                                            @if ($imovel->getFirstMedia('posts'))
-                                                {{ $imovel->getFirstMedia('posts')
+                                        <a href="{{ route('post.property.show', [ 'property' => $property->slug ]) }}">
+                                            @if ($property->getFirstMedia('posts'))
+                                                {{ $property->getFirstMedia('posts')
                                                     ?->img()->attributes([
                                                         'class' => 'col-span-1 sm:col-span-3 w-full h-64 xl:h-72 object-cover rounded-t',
-                                                        'alt' => $imovel->titulo ?? '',
+                                                        'alt' => $property->titulo ?? '',
                                                     ])->lazy() }}
                                             @else
                                                 <img class="col-span-1 sm:col-span-3  h-72 sm:h-40 md:h-64 object-cover rounded-t"
                                                      src="{{ Vite::asset('resources/js/images/placeholder.svg') }}"
-                                                     alt="{{ $imovel->titulo ?? '' }}">
+                                                     alt="{{ $property->titulo ?? '' }}">
                                             @endif
                                         </a>
                                     </header>
 
                                     <div class="w-full p-4 pb-6 font-['Jost'] text-gray-500 grid justify-items-stretch col-span-3">
                                         <div class="flex justify-between">
-                                            <a href="{{ route('post.imovel.show', [ 'imovel' => $imovel->slug ]) }}">
+                                            <a href="{{ route('post.property.show', [ 'property' => $property->slug ]) }}">
                                                 <h1 class="text-lg font-semibold line-clamp-1 normal-case py-1 first-letter:uppercase">
-                                                    {{ $imovel->imovelFor?->slug_text }} {{ $imovel->titulo }}
+                                                    {{ $property->propertyFor?->slug_text }} {{ $property->titulo }}
                                                 </h1>
                                             </a>
                                         </div>
@@ -331,15 +331,15 @@
                                             </svg>
                                             <p class="line-clamp-1">
                                                 &nbsp;
-                                                {{ ($imovel->bairro?->nome ? $imovel->bairro?->nome . ', ' : '') .
-                                                    $imovel->bairro->cidade?->nome .
-                                                    ($imovel->endereco ? ', ' . $imovel->endereco : '') }}
+                                                {{ ($property->neighborhood?->nome ? $property->neighborhood?->nome . ', ' : '') .
+                                                    $property->neighborhood->city?->nome .
+                                                    ($property->endereco ? ', ' . $property->endereco : '') }}
                                             </p>
 
                                         </div>
                                         <div class="grid grid-cols-3 gap-8 mt-2">
 
-                                            <a href="{{ route('post.imovel.show', [ 'imovel' => $imovel->slug ]) }}"
+                                            <a href="{{ route('post.property.show', [ 'property' => $property->slug ]) }}"
                                                class="flex
                                        bg-orange-950  items-center justify-center
                                        text-center  rounded-sm text-orange-50
@@ -351,7 +351,7 @@
                                                 Ver mais
                                             </a>
                                             <div class="my-2 flex text-gray-500 col-span-2">
-                                                &nbsp; <strong>{{ $imovel->price }}</strong>
+                                                &nbsp; <strong>{{ $property->price }}</strong>
                                             </div>
                                         </div>
 
@@ -363,21 +363,21 @@
                 </ul>
             </div>
         </div>
-        <!-- End::Latest-Imovels -->
+        <!-- End::Latest-Propertys -->
 
         <div class="flex mx-5 ">
             <a href="{{ route('imoveis') }}"
                class="w-screen text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:ring-orange-300 font-bold text-sm py-2.5 mr-2 mb-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800 rounded text-center">
-                Ver todos imóveis ( {{ $imovels_count}} )
+                Ver todos imóveis ( {{ $properties_count}} )
             </a>
         </div>
     </section>
-    <!--- Start::Latest-Imovels-Slide-that shown only on small screens -->
+    <!--- Start::Latest-Propertys-Slide-that shown only on small screens -->
 
     <!-- Start::Banner -->
     <section class="py-1 pb-0 px-2 sm:px-6 lg:px-24 bg-gradient-to-b from-gray-50  to-gray-100 dark:bg-gray-700 font-['Open_Sans']">
         <h1 class="font-semibold text-2xl text-slate-700 dark:text-white my-8 mt-4 first-letter:uppercase">
-            Publicidade
+            Publicity
         </h1>
         <div class="splide default" data-splide='{"type":"loop","autoplay":true}'>
             <!-- Additional required wrapper -->
@@ -408,7 +408,7 @@
     </section>
     <!-- End:Banner-->
 
-    <!-- Start::Type-of-Imovels -->
+    <!-- Start::Type-of-Propertys -->
     <section class="py-16 px-2 sm:px-6 lg:px-24 bg-gray-100 font-['Open_Sans']" itemscope
         itemtype="https://schema.org/ItemList">
         <h2 class="font-semibold text-2xl text-slate-700 mx-6 mb-2 first-letter:uppercase" itemprop="name">
@@ -417,9 +417,9 @@
         <div class="flex p-5">
             <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4  lg:grid-cols-5 xl:grid-cols-6 w-full justify-between">
 
-                @foreach ($imovelTypes as $type)
+                @foreach ($propertyTypes as $type)
                     <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement">
-                        <a href="{{ route('imoveis', ['imovel_types' => [$type->id]]) }}">
+                        <a href="{{ route('imoveis', ['property_types' => [$type->id]]) }}">
                             <article class="text-center bg-white w-fit mx-auto p-4 rounded-2xl">
                                 @if ($type->getFirstMedia('icons'))
                                     {{ $type->getFirstMedia('icons')
@@ -442,7 +442,7 @@
             </ul>
         </div>
     </section>
-    <!-- End::Type-of-Imovels -->
+    <!-- End::Type-of-Propertys -->
 
 @endsection
 @push('js')

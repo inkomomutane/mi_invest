@@ -21,7 +21,8 @@ class CreateSeoTable extends Migration
             $table->string('title')->nullable();
             $table->string('image')->nullable();
             $table->string('author')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             $table->index(['model_type', 'model_id']);
         });

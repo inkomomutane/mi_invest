@@ -2,15 +2,13 @@
 
 namespace App\Actions\Website;
 
-use Lorisleiva\Actions\Concerns\AsController;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Vite;
 
 class Contact
 {
-    use AsController;
 
-    public function asController()
+    public function __invoke()
     {
         return view('website.contact', [
             'seoData' => new SEOData(

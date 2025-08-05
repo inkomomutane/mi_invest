@@ -4,13 +4,8 @@ namespace App\Actions\Message;
 
 use App\Models\Agenda;
 use Auth;
-use Lorisleiva\Actions\Concerns\AsAction;
-
 class MessageCount
-{
-    use AsAction;
-
-    public function handle(): int
+{public function handle(): int
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();

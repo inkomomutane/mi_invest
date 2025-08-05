@@ -4,14 +4,12 @@ namespace App\Actions\Media;
 
 use App\Models\Banner;
 use App\Support\Enums\SystemRoles;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class UploadBanners
 {
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -30,7 +28,7 @@ class UploadBanners
         ];
     }
 
-    public function asController(ActionRequest $actionRequest)
+    public function __invoke(Request $actionRequest)
     {
         $banner = Banner::first();
 
@@ -45,9 +43,9 @@ class UploadBanners
                 }
             }
 
-            flash()->addSuccess('Imagens carregadas com sucesso');
+            flash()->addSuccess(__('messages.image_uploaded_success'));
         } catch (\Throwable $th) {
-            flash()->addError('Erro ao carregar imagens');
+            flash()->addError(__('messages.image_upload_error'));
         }
 
         return \redirect()->back();

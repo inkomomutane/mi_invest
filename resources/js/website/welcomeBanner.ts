@@ -2,7 +2,7 @@ import Splide from "@splidejs/splide";
 import "@splidejs/splide/css";
 window.addEventListener("load", function () {
     const thumb = this.document.getElementById("thumbnail-slide");
-    const relevantImovels = this.document.getElementById("relevant-imovels");
+    const relevantPropertys = this.document.getElementById("relevant-properties");
     const newAddedHouses  = this.document.getElementById("new-added-houses");
     const relatedHouses  = this.document.getElementById("relatedHouses");
     const relevantHotels = this.document.getElementById("relevantHotels");
@@ -44,8 +44,8 @@ window.addEventListener("load", function () {
 
 
 
-    if (relevantImovels != null) {
-        const relevantImovelsSlide = new Splide("#relevant-imovels", {
+    if (relevantPropertys != null) {
+        const relevantPropertysSlide = new Splide("#relevant-properties", {
             arrows: false,
             perPage: 4,
             gap: 5,
@@ -67,7 +67,7 @@ window.addEventListener("load", function () {
                 }
             }
         });
-        relevantImovelsSlide.mount();
+        relevantPropertysSlide.mount();
     }
     if(newAddedHouses !=null){
         const newAddedHousesSlide = new Splide("#new-added-houses", {

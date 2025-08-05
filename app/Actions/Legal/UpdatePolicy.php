@@ -5,16 +5,12 @@ namespace App\Actions\Legal;
 use App\Data\PolicyData;
 use App\Models\Politica;
 use App\Support\Enums\SystemRoles;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class UpdatePolicy
 {
-    use AsAction;
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -31,11 +27,11 @@ class UpdatePolicy
             $politica = Politica::first();
             $politica->politicas = $policy->politicas;
             $politica->save();
-            flash()->addSuccess('Politicas de privacidade actualizadas com sucesso.');
+            flash()->addSuccess(__('messages.action_success'));
 
             return $politica->getData();
         } catch (\Throwable $e) {
-            flash()->addError('Erro na actualização de politicas de privacidade.');
+            flash()->addError(__('messages.action_error'));
 
             return $politica->getData();
         }
@@ -53,7 +49,7 @@ class UpdatePolicy
         ];
     }
 
-    public function asController(ActionRequest $actionRequest)
+    public function __invoke(Request $actionRequest)
     {
         $this->handle(new PolicyData($actionRequest->politicas));
 

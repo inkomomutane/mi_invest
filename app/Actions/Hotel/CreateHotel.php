@@ -3,30 +3,28 @@
 namespace App\Actions\Hotel;
 
 use App\Data\AttributeData;
-use App\Data\CondicaoData;
-use App\Data\ImovelTypeData;
+use App\Data\ConditionData;
+use App\Data\PropertyTypeData;
 use App\Data\MultilevelProvinceData;
 use App\Data\StatusData;
 use App\Models\Attribute;
-use App\Models\Condicao;
+use App\Models\Condition;
 use App\Models\Province;
 use App\Models\Status;
-use App\Models\TipoDeImovel;
+use App\Models\PropertyType;
 use Inertia\Inertia;
-use Lorisleiva\Actions\Concerns\AsController;
 
 class CreateHotel
 {
-    use AsController;
 
-    public function AsController(): \Inertia\Response
+    public function __invoke(): \Inertia\Response
     {
         return Inertia::render('Hotel/CreateHotel', [
-            'provinces' => MultilevelProvinceData::collection(Province::with('cidades.bairros')->get()),
-            'imovelsTypes' => ImovelTypeData::collection(TipoDeImovel::all()),
-            'imovelConditions' => CondicaoData::collection(Condicao::all()),
-            'statuses' => StatusData::collection(Status::all()),
-            'attributes' => AttributeData::collection(Attribute::with('media')->get()),
+            'provinces' => MultilevelProvinceData::collect(Province::with('cities.neighborhoods')->get()),
+            'propertiesTypes' => PropertyTypeData::collect(PropertyType::all()),
+            'propertyConditions' => ConditionData::collect(Condition::all()),
+            'statuses' => StatusData::collect(Status::all()),
+            'attributes' => AttributeData::collect(Attribute::with('media')->get()),
         ]);
     }
 }

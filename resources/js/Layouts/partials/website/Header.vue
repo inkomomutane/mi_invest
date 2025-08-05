@@ -173,10 +173,10 @@ const linkCss = `block  tracking-wide text-base font-medium py-2 pr-4 pl-3 hover
 
                         <li>
                             <a
-                                v-if="route().current('post.imovel.*')"
+                                v-if="route().current('post.property.*')"
                                 href=""
                                 :class="
-                                    route().current('post.imovel.show')
+                                    route().current('post.property.show')
                                         ? activeLinkCss
                                         : linkCss
                                 "
@@ -236,7 +236,7 @@ const linkCss = `block  tracking-wide text-base font-medium py-2 pr-4 pl-3 hover
                                         ? activeLinkCss
                                         : linkCss
                                 "
-                                >Politicas de privacidade</a
+                                >Politicas de privacity</a
                             >
                         </li>
                     </ul>

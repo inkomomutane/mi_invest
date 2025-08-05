@@ -3,37 +3,22 @@
 namespace App\Actions\Attribute;
 
 use App\Models\Attribute;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class DeleteAttribute
 {
-    use AsAction;
-    use AsController;
-
-    public function handle(Attribute $attribute): bool
+    public function __invoke(Attribute $attribute, Request $request)
     {
         if ($attribute->hotels->isEmpty()) {
             try {
                 $attribute->delete();
-                flash()->addSuccess('Attributo deletado com sucesso.');
-
-                return true;
+                flash()->addSuccess(__('messages.attribute_deleted_success'));
             } catch (\Throwable $e) {
-                flash()->addError('Erro ao deletar attributo.');
-
-                return false;
+                flash()->addError(__('messages.attribute_delete_error'));
             }
         } else {
-            flash()->addError('Erro ao deletar: Não pode deletar attributo que possuí imóveis!');
-
-            return false;
+            flash()->addError(__('messages.attribute_delete_has_hotels'));
         }
-    }
-
-    public function asController(Attribute $attribute)
-    {
-        $this->handle($attribute);
 
         return redirect()->back();
     }

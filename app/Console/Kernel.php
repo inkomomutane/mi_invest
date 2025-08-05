@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Actions\ApproveAllImovels;
+use App\Actions\ApproveAllProperties;
 use App\Actions\Commands\BackupEmptyGoogleTrash;
 use App\Actions\Commands\SeedUsersTree;
 use App\Actions\SitemapGeneratorCommand;
@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
 {
     protected $commands = [
         SitemapGeneratorCommand::class,
-        ApproveAllImovels::class,
+        ApproveAllProperties::class,
         SeedUsersTree::class,
         BackupEmptyGoogleTrash::class,
     ];

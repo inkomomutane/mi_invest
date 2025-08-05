@@ -4,47 +4,33 @@ namespace App\Actions\Attribute;
 
 use App\Models\Attribute;
 use App\Support\Enums\SystemRoles;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class UploadAttributeImage
 {
-    use AsController;
-
-    public function authorize(ActionRequest $request): bool
+    public function __invoke(Attribute $attribute, Request $request): \Illuminate\Http\RedirectResponse
     {
         /** @var User $user */
         $user = $request->user();
 
-        return $user->hasAnyRole(
-            SystemRoles::SUPERADMIN,
-            SystemRoles::ADMIN
-        );
-    }
+        if (!$user->hasAnyRole(SystemRoles::SUPERADMIN, SystemRoles::ADMIN)) {
+            abort(403);
+        }
 
-    public function rules(): array
-    {
-        return [
+        $request->validate([
             'image' => 'required',
-        ];
-    }
-
-    public function asController(Attribute $attribute, ActionRequest $actionRequest): \Illuminate\Http\RedirectResponse
-    {
+        ]);
 
         try {
-
-            if ($actionRequest->hasFile('image') && count($actionRequest->image) > 0) {
-
-                $attribute->addMedia($actionRequest->image[0])
+            if ($request->hasFile('image') && count($request->image) > 0) {
+                $attribute->addMedia($request->image[0])
                     ->withResponsiveImages()
                     ->toMediaCollection('attributes', 'attributes');
             }
 
-            flash()->addSuccess('Imagem carregada com sucesso');
+            flash()->addSuccess(__('messages.image_uploaded_success'));
         } catch (\Throwable $th) {
-
-            flash()->addError('Erro ao carregar imagem');
+            flash()->addError(__('messages.image_upload_error'));
         }
 
         return \redirect()->back();

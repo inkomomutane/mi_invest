@@ -17,7 +17,8 @@ class CreatePagesTable extends Migration
             $table->bigIncrements('id');
             $table->string('route', 191)->nullable();
             $table->string('url', 191)->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

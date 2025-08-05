@@ -5,14 +5,12 @@ namespace App\Actions\Status;
 use App\Models\Status;
 use App\Support\Enums\SystemRoles;
 use Illuminate\Validation\Rule;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class UpdateStatus
 {
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -23,18 +21,18 @@ class UpdateStatus
         );
     }
 
-    public function asController(Status $status)
+    public function __invoke(Status $status, Request $request)
     {
-        $validated = request()->validate([
+        $validated = $request->validate([
             'nome' => ['required', Rule::unique(Status::class, 'nome')->ignore($status->id, 'id')],
         ]);
 
         try {
             $status->nome = $validated['nome'];
             $status->save();
-            flash()->addSuccess('Status actualizado com sucesso.');
+            flash()->addSuccess(__('messages.status_updated_success'));
         } catch (\Throwable $th) {
-            flash()->addError('Erro na actualização do status.');
+            flash()->addError(__('messages.status_update_error'));
         }
 
         return \redirect()->back();

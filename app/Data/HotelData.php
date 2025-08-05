@@ -18,7 +18,6 @@ class HotelData extends Data
         public readonly ?string $email,
         public readonly ?string $description,
         public readonly ?string $price,
-        public readonly ?float $preco,
         public readonly Lazy|HotelMetaDataDtoData|null $hotelMetaData,
         /** @var MediaData[] $images */
         public readonly Lazy|DataCollection|null $images,
@@ -36,8 +35,7 @@ class HotelData extends Data
             title: $hotel->title,
             contact: $hotel->contact, email: $hotel->email,
             description: $hotel->description,
-            price: $hotel->preco,
-            preco: $hotel->price,
+            price: $hotel->price,
             hotelMetaData: Lazy::whenLoaded(
                 'hotelMetaData',
                 $hotel,
@@ -47,7 +45,7 @@ class HotelData extends Data
                 'media',
                 $hotel,
                 static fn () => ! is_null($hotel->getMedia('hotels')) ?
-                    MediaData::collection($hotel->getMedia('hotels')) :
+                    MediaData::collect($hotel->getMedia('hotels')) :
                     null
             ),
             media: Lazy::whenLoaded(

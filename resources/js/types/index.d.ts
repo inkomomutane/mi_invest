@@ -48,24 +48,24 @@ export interface Cities extends Omit<PaginatedData, "data"> {
     data: Array<App.Data.CityData>;
 }
 
-export interface Bairros extends Omit<PaginatedData, "data"> {
-    data: Array<App.Data.BairroData>;
+export interface Neighborhoods extends Omit<PaginatedData, "data"> {
+    data: Array<App.Data.NeighborhoodData>;
 }
 
 export interface Mails extends Omit<PaginatedData, "data"> {
     data: Array<App.Data.AgendaData>;
 }
 
-export interface RegrasDeNegocioData extends Omit<PaginatedData, "data"> {
-    data: Array<App.Data.RegraDeNegocioData>;
+export interface BusinessRulesData extends Omit<PaginatedData, "data"> {
+    data: Array<App.Data.BusinessRuleData>;
 }
 
 export interface Statuses extends Omit<PaginatedData, "data"> {
     data: Array<App.Data.StatusData>;
 }
 
-export interface Condicaos extends Omit<PaginatedData, "data"> {
-    data: Array<App.Data.CondicaoData>;
+export interface Conditions extends Omit<PaginatedData, "data"> {
+    data: Array<App.Data.ConditionData>;
 }
 
 export interface Banners extends Omit<PaginatedData, "data"> {
@@ -80,17 +80,17 @@ export interface Users extends Omit<PaginatedData, "data"> {
     data: Array<App.Data.UserData>;
 }
 
-export interface ImovelTypes extends Omit<PaginatedData, "data"> {
-    data: Array<App.Data.ImovelTypeData>;
+export interface PropertyTypes extends Omit<PaginatedData, "data"> {
+    data: Array<App.Data.PropertyTypeData>;
 }
 export interface Intermediations extends Omit<PaginatedData, "data"> {
     data: Array<App.Data.IntermediationRuleData>;
 }
 
-export interface Imovels extends Omit<PaginatedData, "data"> {
-    data: Array<App.Data.ImovelData>;
+export interface Propertys extends Omit<PaginatedData, "data"> {
+    data: Array<App.Data.PropertyData>;
 }
-export interface ImovelImages extends Omit<PaginatedData, "data"> {
+export interface PropertyImages extends Omit<PaginatedData, "data"> {
     data: Array<App.Data.MediaData>;
 }
 
@@ -116,7 +116,7 @@ export type PageProps<
     trash: {
         type: Number;
     };
-    notAprrovedImovels: {
+    notAprrovedPropertys: {
         type: Number;
     };
     globals: App.Data.PageData;

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('agendas', function (Blueprint $table) {
             $table->string('email')->change()->nullable();
-            $table->bigInteger('imovel_id')->change()->nullable();
-            $table->unsignedBigInteger('corretor_id')->change()->nullable();
+            $table->bigInteger('property_id')->change()->nullable();
+            $table->unsignedBigInteger('broker_id')->change()->nullable();
         });
     }
 

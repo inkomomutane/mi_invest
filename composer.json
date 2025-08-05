@@ -10,6 +10,7 @@
         "guzzlehttp/guzzle": "^7.9.3",
         "inertiajs/inertia-laravel": "^v2.0.4",
         "kalnoy/nestedset": "^v6.0.6",
+        "laravel-lang/common": "^6.7",
         "laravel/breeze": "^v2.3.8",
         "laravel/framework": "^v12.21.0",
         "laravel/sanctum": "^v4.2.0",

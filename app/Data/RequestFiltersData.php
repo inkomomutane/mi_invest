@@ -8,10 +8,10 @@ use Spatie\LaravelData\Data;
 class RequestFiltersData extends Data
 {
     public function __construct(
-        /** @var null|int[] $imovelTypes */
-        public ?array $imovelTypes,
+        /** @var null|int[] $propertyTypes */
+        public ?array $propertyTypes,
         public ?string $title,
-        public ?array $bairros
+        public ?array $neighborhoods
     ) {
     }
 }

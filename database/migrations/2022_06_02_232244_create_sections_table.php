@@ -17,7 +17,8 @@ class CreateSectionsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('sectionable_id')->nullable();
             $table->string('sectionable_type', 191)->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->text('content')->nullable();
             $table->string('title')->nullable();
         });

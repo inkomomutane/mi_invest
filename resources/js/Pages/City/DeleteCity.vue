@@ -66,7 +66,7 @@ const deleteCity = () => {
                 <h3
                     class="mb-4 text-md font-medium text-gray-900 dark:text-white"
                 >
-                    Tem certeza que quer excluir essa cidade?
+                    Tem certeza que quer excluir essa city?
                 </h3>
                 <form class="space-y-6" @submit.prevent="deleteCity">
                     <button

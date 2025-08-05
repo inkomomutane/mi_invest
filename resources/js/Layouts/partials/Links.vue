@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import ProfileLink from "./Links/ProfileLink.vue";
-import ImovelsLink from "./Links/ImovelsLink.vue";
-import NotAprrovedImovelsLink from "./Links/NotAprrovedImovelsLink.vue";
-import ImovelsTrashLink from "./Links/ImovelsTrashLink.vue";
+import PropertysLink from "./Links/PropertysLink.vue";
+import NotAprrovedPropertysLink from "./Links/NotAprrovedPropertysLink.vue";
+import PropertysTrashLink from "./Links/PropertysTrashLink.vue";
 import PaginasLink from "./Links/PaginasLink.vue";
 import BannersLink from "./Links/BannersLink.vue";
 import UsersLink from "./Links/UsersLink.vue";
 import TransationTypesLink from "./Links/TransationTypesLink.vue";
 import IntermediationRulesLink from "./Links/IntermediationRulesLink.vue";
 import NegociationRulesLink from "./Links/NegociationRulesLink.vue";
-import ImovelConditionsLink from "./Links/ImovelConditionsLink.vue";
-import ImovelTypesLink from "./Links/ImovelTypesLink.vue";
-import ImovelStatusLink from "./Links/ImovelStatusLink.vue";
+import PropertyConditionsLink from "./Links/PropertyConditionsLink.vue";
+import PropertyTypesLink from "./Links/PropertyTypesLink.vue";
+import PropertyStatusLink from "./Links/PropertyStatusLink.vue";
 import ProvincesLink from "./Links/PovincesLink.vue";
 import CitiesLink from "./Links/CitiesLink.vue";
 import NeighborhoodsLink from "./Links/NeighborhoodsLink.vue";
@@ -37,10 +37,10 @@ import HotelsLink from "@/Layouts/partials/Links/HotelsLink.vue";
             </h3>
             <ul class="mt-3">
                 <ProfileLink />
-                <ImovelsLink />
+                <PropertysLink />
                 <HotelsLink/>
-                <NotAprrovedImovelsLink />
-                <ImovelsTrashLink />
+                <NotAprrovedPropertysLink />
+                <PropertysTrashLink />
                 <AttributesLink />
                 <MessagesLink />
                 <PaginasLink />
@@ -49,9 +49,9 @@ import HotelsLink from "@/Layouts/partials/Links/HotelsLink.vue";
                 <TransationTypesLink />
                 <IntermediationRulesLink />
                 <NegociationRulesLink />
-                <ImovelConditionsLink />
-                <ImovelTypesLink />
-                <ImovelStatusLink />
+                <PropertyConditionsLink />
+                <PropertyTypesLink />
+                <PropertyStatusLink />
                 <ProvincesLink />
                 <CitiesLink />
                 <NeighborhoodsLink />

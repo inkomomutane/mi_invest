@@ -17,69 +17,69 @@ import { onMounted } from "vue";
 import UploadedImageCover from "@/Components/UploadedImageCover.vue";
 
 const props = defineProps({
-    imovel: Object as PropType<App.Data.ImovelData>,
-    regrasDeNegocio: Array<App.Data.RegraDeNegocioData>,
+    property: Object as PropType<App.Data.PropertyData>,
+    regrasDeBusinessRule: Array<App.Data.BusinessRuleData>,
     transactionTypes: Array<App.Data.TransactionTypeData>,
     provinces: Array<App.Data.MultilevelProvinceData>,
-    imovelsTypes: Array<App.Data.ImovelTypeData>,
-    imovelConditions: Array<App.Data.CondicaoData>,
+    propertiesTypes: Array<App.Data.PropertyTypeData>,
+    propertyConditions: Array<App.Data.ConditionData>,
     intermediationRules: Array<App.Data.IntermediationRuleData>,
     statuses: Array<App.Data.StatusData>,
     messages: Object as PropType<FlasherResponse>,
 });
 
-const imovelrefs = ref(props.imovel);
+const propertyrefs = ref(props.property);
 
-const updateImovelProgress = ref(false);
+const updatePropertyProgress = ref(false);
 
-const regrasDeNegocio = ref(props.regrasDeNegocio);
+const regrasDeBusinessRule = ref(props.regrasDeBusinessRule);
 const transactionTypes = ref(props.transactionTypes);
 
 const provinces = ref(props.provinces);
 const province = ref<App.Data.MultilevelProvinceData | null>(
     provinces.value?.findLast(
-        (prov) => prov.id == imovelrefs.value?.bairro?.city?.province?.id ?? -1
+        (prov) => prov.id == propertyrefs.value?.neighborhood?.city?.province?.id ?? -1
     ) ?? null
 );
 const cities = ref<Array<App.Data.CityData> | null>(
-    province.value?.cidades ?? null
+    province.value?.cities ?? null
 );
 const city = ref<App.Data.CityData | null>(
     cities.value?.findLast(
-        (cty) => cty.id == imovelrefs.value?.bairro?.city?.id ?? -1
+        (cty) => cty.id == propertyrefs.value?.neighborhood?.city?.id ?? -1
     ) ?? null
 );
-const bairros = ref<Array<App.Data.BairroData> | null>(
-    city.value?.bairros ?? null
+const neighborhoods = ref<Array<App.Data.NeighborhoodData> | null>(
+    city.value?.neighborhoods ?? null
 );
-const bairro = ref<App.Data.BairroData | null>(
-    bairros.value?.findLast(
-        (bairro) => bairro.id == imovelrefs.value?.bairro?.id ?? -1
+const neighborhood = ref<App.Data.NeighborhoodData | null>(
+    neighborhoods.value?.findLast(
+        (neighborhood) => neighborhood.id == propertyrefs.value?.neighborhood?.id ?? -1
     ) ?? null
 );
 
 const form = useForm({
-    titulo: imovelrefs.value?.titulo ?? "",
-    preco: imovelrefs.value?.preco,
-    regra_de_negocio_id: imovelrefs.value?.regra_de_negocio?.id,
-    imovel_for_id: imovelrefs.value?.imovel_for?.id,
-    bairro_id: bairro?.value?.id,
-    endereco: imovelrefs.value?.endereco,
-    descricao: imovelrefs.value?.descricao ?? "",
-    details: imovelrefs.value?.details ?? "",
-    condicao_id: imovelrefs.value?.condicao?.id,
-    tipo_de_imovel_id: imovelrefs.value?.tipo_de_imovel?.id,
-    intermediation_rule_id: imovelrefs.value?.intermediation_rule?.id,
-    status_id: imovelrefs.value?.status?.id,
-    ano: imovelrefs.value?.ano,
-    andares: imovelrefs.value?.andares,
-    banheiros: imovelrefs.value?.banheiros,
-    area: imovelrefs.value?.area,
-    quartos: imovelrefs.value?.quartos,
-    suites: imovelrefs.value?.suites,
-    garagens: imovelrefs.value?.garagens,
-    piscinas: imovelrefs.value?.piscinas,
-    mapa: imovelrefs.value?.mapa ?? "",
+    titulo: propertyrefs.value?.titulo ?? "",
+    preco: propertyrefs.value?.preco,
+    regra_de_business_id: propertyrefs.value?.regra_de_business?.id,
+    property_for_id: propertyrefs.value?.property_for?.id,
+    neighborhood_id: neighborhood?.value?.id,
+    endereco: propertyrefs.value?.endereco,
+    descricao: propertyrefs.value?.descricao ?? "",
+    details: propertyrefs.value?.details ?? "",
+    condition_id: propertyrefs.value?.condition?.id,
+    tipo_de_property_id: propertyrefs.value?.tipo_de_property?.id,
+    intermediation_rule_id: propertyrefs.value?.intermediation_rule?.id,
+    status_id: propertyrefs.value?.status?.id,
+    ano: propertyrefs.value?.ano,
+    andares: propertyrefs.value?.andares,
+    banheiros: propertyrefs.value?.banheiros,
+    area: propertyrefs.value?.area,
+    quartos: propertyrefs.value?.quartos,
+    suites: propertyrefs.value?.suites,
+    garagens: propertyrefs.value?.garagens,
+    piscinas: propertyrefs.value?.piscinas,
+    mapa: propertyrefs.value?.mapa ?? "",
     images: [],
 });
 
@@ -88,9 +88,9 @@ watch(
     (e) => {
         province.value =
             provinces.value?.findLast((prov) => prov.id == e?.id ?? -1) ?? null;
-        cities.value = province.value?.cidades ?? null;
-        bairros.value = null;
-        form.bairro_id = null;
+        cities.value = province.value?.cities ?? null;
+        neighborhoods.value = null;
+        form.neighborhood_id = null;
     }
 );
 
@@ -99,18 +99,18 @@ watch(
     (e) => {
         city.value =
             cities.value?.findLast((cty) => cty.id == e?.id ?? -1) ?? null;
-        bairros.value = city.value?.bairros ?? null;
-        form.bairro_id = null;
+        neighborhoods.value = city.value?.neighborhoods ?? null;
+        form.neighborhood_id = null;
     }
 );
 
 watch(
-    () => bairro.value,
+    () => neighborhood.value,
     (e) => {
-        bairro.value =
-            bairros.value?.findLast((bairro) => bairro.id == e?.id ?? -1) ??
+        neighborhood.value =
+            neighborhoods.value?.findLast((neighborhood) => neighborhood.id == e?.id ?? -1) ??
             null;
-        form.bairro_id = bairro.value?.id;
+        form.neighborhood_id = neighborhood.value?.id;
     }
 );
 
@@ -119,10 +119,10 @@ onMounted(() => {
         Flasher.flash(element.notification.type, element.notification.message);
     });
 });
-const storeImovel = () =>
+const storeProperty = () =>
     form.post(
-        route("imovel.update", {
-            imovel: props.imovel?.slug,
+        route("property.update", {
+            property: props.property?.slug,
         }),
         {
             preserveScroll: true,
@@ -143,8 +143,8 @@ const storeImovel = () =>
             >
                 <Link
                     :href="
-                        route('imovel.image.all', {
-                            imovel: imovel?.slug,
+                        route('property.image.all', {
+                            property: property?.slug,
                         })
                     "
                     class="flex items-center justify-center text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded text-sm px-4 py-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800"
@@ -178,7 +178,7 @@ const storeImovel = () =>
                     <span class="mx-4">Gestor de media</span>
                 </Link>
                 <button
-                    @click="storeImovel()"
+                    @click="storeProperty()"
                     type="button"
                     class="flex items-center justify-center text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded text-sm px-4 py-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800"
                 >
@@ -242,14 +242,14 @@ const storeImovel = () =>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-2">
                     <div>
                         <label
-                            for="regra_de_negocio_id"
+                            for="regra_de_business_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                             >Regra de negociação</label
                         >
                         <Dropdown
-                            v-model="form.regra_de_negocio_id"
+                            v-model="form.regra_de_business_id"
                             optionValue="id"
-                            :options="regrasDeNegocio"
+                            :options="regrasDeBusinessRule"
                             optionLabel="name"
                             placeholder="Regra de negociação"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -258,7 +258,7 @@ const storeImovel = () =>
                                 <div
                                     class="bg-slate-100 dark:bg-slate-600 dark:text-slate-200 px-4 py-2 hover:bg-slate-600 dark:hover:bg-slate-800 hover:text-white"
                                     :class="
-                                        form.regra_de_negocio_id ==
+                                        form.regra_de_business_id ==
                                         slotProps.option.id
                                             ? 'bg-slate-800 dark:bg-slate-900 text-white'
                                             : ''
@@ -269,7 +269,7 @@ const storeImovel = () =>
                             </template>
                         </Dropdown>
                         <InputError
-                            :message="form.errors.regra_de_negocio_id"
+                            :message="form.errors.regra_de_business_id"
                         />
                     </div>
                     <div>
@@ -306,12 +306,12 @@ const storeImovel = () =>
                     </div>
                     <div>
                         <label
-                            for="imovel_for_id"
+                            for="property_for_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >Imovel para</label
+                            >Property para</label
                         >
                         <Dropdown
-                            v-model="form.imovel_for_id"
+                            v-model="form.property_for_id"
                             optionValue="id"
                             :options="transactionTypes"
                             optionLabel="name"
@@ -322,7 +322,7 @@ const storeImovel = () =>
                                 <div
                                     class="bg-slate-100 dark:bg-slate-600 dark:text-slate-200 px-4 py-2 hover:bg-slate-600 dark:hover:bg-slate-800 hover:text-white"
                                     :class="
-                                        form.imovel_for_id ==
+                                        form.property_for_id ==
                                         slotProps.option.id
                                             ? 'bg-slate-800 dark:bg-slate-900 text-white'
                                             : ''
@@ -332,7 +332,7 @@ const storeImovel = () =>
                                 </div>
                             </template>
                         </Dropdown>
-                        <InputError :message="form.errors.imovel_for_id" />
+                        <InputError :message="form.errors.property_for_id" />
                     </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-2">
@@ -367,13 +367,13 @@ const storeImovel = () =>
                         <label
                             for="province_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >Cidade</label
+                            >City</label
                         >
                         <Dropdown
                             v-model="city"
                             :options="cities ?? []"
                             optionLabel="nome"
-                            placeholder="Cidade"
+                            placeholder="City"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                         >
                             <template #option="slotProps">
@@ -392,22 +392,22 @@ const storeImovel = () =>
                     </div>
                     <div>
                         <label
-                            for="bairro_id"
+                            for="neighborhood_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >Bairro</label
+                            >Neighborhood</label
                         >
                         <Dropdown
-                            v-model="bairro"
-                            :options="bairros ?? []"
+                            v-model="neighborhood"
+                            :options="neighborhoods ?? []"
                             optionLabel="nome"
-                            placeholder="Bairro"
+                            placeholder="Neighborhood"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                         >
                             <template #option="slotProps">
                                 <div
                                     class="bg-slate-100 dark:bg-slate-600 dark:text-slate-200 px-4 py-2 hover:bg-slate-600 dark:hover:bg-slate-800 hover:text-white"
                                     :class="
-                                        bairro == slotProps.option
+                                        neighborhood == slotProps.option
                                             ? 'bg-slate-800 dark:bg-slate-900 text-white'
                                             : ''
                                     "
@@ -416,7 +416,7 @@ const storeImovel = () =>
                                 </div>
                             </template>
                         </Dropdown>
-                        <InputError :message="form.errors.bairro_id ?? ''" />
+                        <InputError :message="form.errors.neighborhood_id ?? ''" />
                     </div>
                 </div>
 
@@ -475,7 +475,7 @@ const storeImovel = () =>
                         <label
                             for="descricao"
                             class="block mb-2 text-sm font-medium bg-orange-400 dark:bg-orange-500 p-1 text-gray-900 dark:text-white"
-                            >Detalhes do imovel (Só para o corretor do imóvel)
+                            >Detalhes do property (Só para o corretor do imóvel)
                         </label>
                         <ckeditor
                             :editor="ClassicEditor"
@@ -489,13 +489,13 @@ const storeImovel = () =>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-2">
                     <div>
                         <label
-                            for="tipo_de_imovel_id"
+                            for="tipo_de_property_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >Tipo de imovel</label
+                            >Tipo de property</label
                         >
                         <Dropdown
-                            v-model="form.tipo_de_imovel_id"
-                            :options="imovelsTypes"
+                            v-model="form.tipo_de_property_id"
+                            :options="propertiesTypes"
                             optionValue="id"
                             optionLabel="name"
                             placeholder="Tipo de imóvel"
@@ -505,7 +505,7 @@ const storeImovel = () =>
                                 <div
                                     class="bg-slate-100 dark:bg-slate-600 dark:text-slate-200 px-4 py-2 hover:bg-slate-600 dark:hover:bg-slate-800 hover:text-white"
                                     :class="
-                                        form.tipo_de_imovel_id ==
+                                        form.tipo_de_property_id ==
                                         slotProps.option.id
                                             ? 'bg-slate-800 dark:bg-slate-900 text-white'
                                             : ''
@@ -516,18 +516,18 @@ const storeImovel = () =>
                             </template>
                         </Dropdown>
                         <InputError
-                            :message="form.errors.tipo_de_imovel_id ?? ''"
+                            :message="form.errors.tipo_de_property_id ?? ''"
                         />
                     </div>
                     <div>
                         <label
-                            for="condicao_id"
+                            for="condition_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                             >Condição do imóvel</label
                         >
                         <Dropdown
-                            v-model="form.condicao_id"
-                            :options="imovelConditions ?? []"
+                            v-model="form.condition_id"
+                            :options="propertyConditions ?? []"
                             optionValue="id"
                             optionLabel="nome"
                             placeholder="Condição do imóvel"
@@ -537,7 +537,7 @@ const storeImovel = () =>
                                 <div
                                     class="bg-slate-100 dark:bg-slate-600 dark:text-slate-200 px-4 py-2 hover:bg-slate-600 dark:hover:bg-slate-800 hover:text-white"
                                     :class="
-                                        form.condicao_id == slotProps.option.id
+                                        form.condition_id == slotProps.option.id
                                             ? 'bg-slate-800 dark:bg-slate-900 text-white'
                                             : ''
                                     "
@@ -546,7 +546,7 @@ const storeImovel = () =>
                                 </div>
                             </template>
                         </Dropdown>
-                        <InputError :message="form.errors.condicao_id ?? ''" />
+                        <InputError :message="form.errors.condition_id ?? ''" />
                     </div>
                     <div>
                         <label
@@ -598,7 +598,7 @@ const storeImovel = () =>
                         >
                             <template v-slot:files>
                                 <UploadedImageCover
-                                    v-for="image in imovel?.images"
+                                    v-for="image in property?.images"
                                     :image="(image as App.Data.MediaData)"
                                 />
                             </template>

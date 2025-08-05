@@ -2,7 +2,7 @@
 
 namespace App\Data;
 
-use App\Models\Cidade;
+use App\Models\City;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Lazy;
@@ -12,24 +12,24 @@ class CityData extends Data
 {
     public function __construct(
         public ?int $id,
-        public string $nome,
+        public string $name,
         public Lazy|ProvinceData|null $province,
-        /** @var BairroData[] */
-        public Lazy|null|DataCollection $bairros
+        /** @var NeighborhoodData[] */
+        public Lazy|null|DataCollection $neighborhoods
     ) {
     }
 
-    public static function fromModel(Cidade $cidade)
+    public static function fromModel(City $city)
     {
         return new self(
-            id: $cidade->id,
-            nome: $cidade->nome,
+            id: $city->id,
+            name: $city->name,
             province: Lazy::whenLoaded(
                 'province',
-                $cidade,
-                fn () => $cidade->province->getData()
+                $city,
+                fn () => $city->province->getData()
             ),
-            bairros: Lazy::whenLoaded('bairros', $cidade, fn () => BairroData::collection($cidade->bairros))
+            neighborhoods: Lazy::whenLoaded('neighborhoods', $city, fn () => NeighborhoodData::collect($city->neighborhoods))
         );
     }
 }

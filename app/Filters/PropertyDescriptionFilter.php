@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Filters;
+
+use Illuminate\Database\Eloquent\Builder;
+use Pricecurrent\LaravelEloquentFilters\AbstractEloquentFilter;
+
+class PropertyDescriptionFilter extends AbstractEloquentFilter
+{
+    protected string $description;
+
+    public function __construct(string $description)
+    {
+        $this->description = $description;
+    }
+
+    public function apply(Builder $query): Builder
+    {
+        return $query->orWhere('descricao', 'like', "%{$this->description}%");
+    }
+}

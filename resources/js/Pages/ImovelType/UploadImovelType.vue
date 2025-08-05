@@ -5,39 +5,39 @@ import UploadImage from "@/Components/UploadImage.vue";
 import { useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
 
-const uploadImovelTypes = ref(false);
+const uploadPropertyTypes = ref(false);
 const nomeInput = ref();
-const uploadImovelTypesProgress = ref(false);
+const uploadPropertyTypesProgress = ref(false);
 const form = useForm({
     images: [],
     nome: "",
 });
 
-const uploadImovelTypesTrigger = () => {
-    uploadImovelTypes.value = true;
+const uploadPropertyTypesTrigger = () => {
+    uploadPropertyTypes.value = true;
 };
 
-const closeUloadImovelTypesModal = () => {
-    uploadImovelTypes.value = false;
-    uploadImovelTypesProgress.value = false;
+const closeUloadPropertyTypesModal = () => {
+    uploadPropertyTypes.value = false;
+    uploadPropertyTypesProgress.value = false;
     form.reset();
 };
 
 const uploadImges = () =>
-    form.post(route("imovel_type.store"), {
+    form.post(route("property_type.store"), {
         forceFormData: true,
-        onProgress: () => (uploadImovelTypesProgress.value = true),
+        onProgress: () => (uploadPropertyTypesProgress.value = true),
         onSuccess: () => {
-            closeUloadImovelTypesModal();
+            closeUloadPropertyTypesModal();
             form.reset();
         },
-        onError: () => (uploadImovelTypesProgress.value = false),
+        onError: () => (uploadPropertyTypesProgress.value = false),
     });
 </script>
 <template>
     <button
         type="button"
-        @click="uploadImovelTypesTrigger"
+        @click="uploadPropertyTypesTrigger"
         class="flex items-center justify-center text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded text-sm px-4 py-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800"
     >
         <svg
@@ -68,12 +68,12 @@ const uploadImges = () =>
         <span class="mx-4">Criar novo tipo de imóvel</span>
     </button>
 
-    <Modal :show="uploadImovelTypes" @close="closeUloadImovelTypesModal">
+    <Modal :show="uploadPropertyTypes" @close="closeUloadPropertyTypesModal">
         <div class="relative bg-white rounded shadow dark:bg-gray-700">
             <button
                 type="button"
                 class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                @click="closeUloadImovelTypesModal"
+                @click="closeUloadPropertyTypesModal"
             >
                 <svg
                     aria-hidden="true"
@@ -128,7 +128,7 @@ const uploadImges = () =>
                             :disabledUpload="true"
                             :disabledCancel="true"
                             mediaType="image/*"
-                            :progressUploadImage="uploadImovelTypesProgress"
+                            :progressUploadImage="uploadPropertyTypesProgress"
                         />
 
                         <InputError :message="form.errors.images" />

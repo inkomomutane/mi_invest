@@ -5,16 +5,12 @@ namespace App\Actions\Legal;
 use App\Data\TermAndConditionData;
 use App\Models\Termo;
 use App\Support\Enums\SystemRoles;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class UpdateTermAndCondition
 {
-    use AsAction;
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -31,11 +27,11 @@ class UpdateTermAndCondition
             $termo = Termo::first();
             $termo->termos = $term->term;
             $termo->save();
-            flash()->addSuccess('Termos e condiçõs actualizadas com sucesso.');
+            flash()->addSuccess(__('messages.action_success'));
 
             return $termo->getData();
         } catch (\Throwable $e) {
-            flash()->addError('Erro na actualização de termos e condições');
+            flash()->addError(__('messages.action_error'));
 
             return $termo->getData();
         }
@@ -53,7 +49,7 @@ class UpdateTermAndCondition
         ];
     }
 
-    public function asController(ActionRequest $actionRequest)
+    public function __invoke(Request $actionRequest)
     {
         $this->handle(new TermAndConditionData($actionRequest->termos));
 

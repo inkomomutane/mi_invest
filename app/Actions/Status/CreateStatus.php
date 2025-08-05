@@ -4,17 +4,13 @@ namespace App\Actions\Status;
 
 use App\Data\StatusData;
 use App\Models\Status;
+use App\Models\User;
 use App\Support\Enums\SystemRoles;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class CreateStatus
 {
-    use AsAction;
-    use AsController;
-
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -37,10 +33,16 @@ class CreateStatus
         ];
     }
 
-    public function AsController(ActionRequest $request)
+    public function __invoke(Request $request)
     {
-        $this->handle(StatusData::from($request->validated()));
-        flash()->addSuccess('Status criado com sucesso.');
+        $validated = $request->validate($this->rules());
+        
+        try {
+            $this->handle(StatusData::from($validated));
+            flash()->addSuccess(__('messages.status_created_success'));
+        } catch (\Throwable $th) {
+            flash()->addError(__('messages.status_create_error'));
+        }
 
         return \redirect()->back();
     }

@@ -6,23 +6,20 @@ use App\Models\Hotel;
 use App\Models\HotelMetaData;
 use DB;
 use Illuminate\Validation\Rule;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class UpdateHotel
 {
-    use AsController;
 
-
-    public function asController(HotelMetaData $hotel, ActionRequest $actionRequest): \Illuminate\Http\RedirectResponse
+    public function __invoke(HotelMetaData $hotel, Request $actionRequest): \Illuminate\Http\RedirectResponse
     {
         $validated = request()?->validate([
             'nome' => ['required|string', Rule::unique(HotelMetaData::class, 'title')->ignore($hotel->id, 'id')],
             'description' => 'string|nullable',
             'address' => 'string|nullable',
-            'bairro_id' => 'required|numeric',
-            'condicao_id' => 'required|numeric',
-            'tipo_de_imovel_id' => 'required|numeric',
+            'neighborhood_id' => 'required|numeric',
+            'condition_id' => 'required|numeric',
+            'tipo_de_property_id' => 'required|numeric',
             'status_id' => 'numeric|required',
         ]);
         try {
@@ -39,11 +36,11 @@ class UpdateHotel
             }
 
             DB::commit();
-            flash()->addSuccess('Hotel actualizado com sucesso.');
+            flash()->addSuccess(__('messages.hotel_updated_success'));
             return to_route('hotel.all');
         } catch (\Throwable $e) {
             throw $e;
-            flash()->addError('Erro na actualização do Hotel.');
+            flash()->addError(__('messages.action_error'));
             return back();
         }
     }

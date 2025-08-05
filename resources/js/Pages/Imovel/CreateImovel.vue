@@ -16,17 +16,17 @@ import Flasher from "@/helprs";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const props = defineProps({
-    regrasDeNegocio: Array<App.Data.RegraDeNegocioData>,
+    regrasDeBusinessRule: Array<App.Data.BusinessRuleData>,
     transactionTypes: Array<App.Data.TransactionTypeData>,
     provinces: Array<App.Data.MultilevelProvinceData>,
-    imovelsTypes: Array<App.Data.ImovelTypeData>,
-    imovelConditions: Array<App.Data.CondicaoData>,
+    propertiesTypes: Array<App.Data.PropertyTypeData>,
+    propertyConditions: Array<App.Data.ConditionData>,
     intermediationRules: Array<App.Data.IntermediationRuleData>,
     statuses: Array<App.Data.StatusData>,
     messages: Object as PropType<FlasherResponse>,
 });
 
-const regrasDeNegocio = ref(props.regrasDeNegocio);
+const regrasDeBusinessRule = ref(props.regrasDeBusinessRule);
 const transactionTypes = ref(props.transactionTypes);
 
 const provinces = ref(props.provinces);
@@ -34,19 +34,19 @@ const province = ref<App.Data.MultilevelProvinceData | null>(null);
 
 const cities = ref<Array<App.Data.CityData> | null>(null);
 const city = ref<App.Data.CityData | null>(null);
-const bairros = ref<Array<App.Data.BairroData> | null>(null);
+const neighborhoods = ref<Array<App.Data.NeighborhoodData> | null>(null);
 
 const form = useForm({
     titulo: "",
     preco: null,
-    regra_de_negocio_id: null,
-    imovel_for_id: null,
-    bairro_id: null,
+    regra_de_business_id: null,
+    property_for_id: null,
+    neighborhood_id: null,
     endereco: "",
     descricao: "",
     details: "",
-    condicao_id: null,
-    tipo_de_imovel_id: null,
+    condition_id: null,
+    tipo_de_property_id: null,
     intermediation_rule_id: null,
     status_id: null,
     ano: null,
@@ -66,9 +66,9 @@ watch(
     (e) => {
         province.value =
             provinces.value?.findLast((prov) => prov.id == e?.id ?? -1) ?? null;
-        cities.value = province.value?.cidades ?? null;
-        bairros.value = null;
-        form.bairro_id = null;
+        cities.value = province.value?.cities ?? null;
+        neighborhoods.value = null;
+        form.neighborhood_id = null;
     }
 );
 
@@ -77,8 +77,8 @@ watch(
     (e) => {
         city.value =
             cities.value?.findLast((cty) => cty.id == e?.id ?? -1) ?? null;
-        bairros.value = city.value?.bairros ?? null;
-        form.bairro_id = null;
+        neighborhoods.value = city.value?.neighborhoods ?? null;
+        form.neighborhood_id = null;
     }
 );
 
@@ -87,8 +87,8 @@ onMounted(() => {
         Flasher.flash(element.notification.type, element.notification.message);
     });
 });
-const storeImovel = () =>
-    form.post(route("imovel.store"), {
+const storeProperty = () =>
+    form.post(route("property.store"), {
         preserveScroll: true,
         onSuccess: () => {
             form.reset();
@@ -104,7 +104,7 @@ const storeImovel = () =>
                 class="flex flex-col md:flex-row items-end justify-end space-b-3 md:space-y-0 md:space-x-4 p-4"
             >
                 <button
-                    @click="storeImovel()"
+                    @click="storeProperty()"
                     type="button"
                     class="flex items-center justify-center text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded text-sm px-4 py-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800"
                 >
@@ -168,14 +168,14 @@ const storeImovel = () =>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-2">
                     <div>
                         <label
-                            for="regra_de_negocio_id"
+                            for="regra_de_business_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                             >Regra de negociação</label
                         >
                         <Dropdown
-                            v-model="form.regra_de_negocio_id"
+                            v-model="form.regra_de_business_id"
                             optionValue="id"
-                            :options="regrasDeNegocio"
+                            :options="regrasDeBusinessRule"
                             optionLabel="name"
                             placeholder="Regra de negociação"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -184,7 +184,7 @@ const storeImovel = () =>
                                 <div
                                     class="bg-slate-100 dark:bg-slate-600 dark:text-slate-200 px-4 py-2 hover:bg-slate-600 dark:hover:bg-slate-800 hover:text-white"
                                     :class="
-                                        form.regra_de_negocio_id ==
+                                        form.regra_de_business_id ==
                                         slotProps.option.id
                                             ? 'bg-slate-800 dark:bg-slate-900 text-white'
                                             : ''
@@ -195,7 +195,7 @@ const storeImovel = () =>
                             </template>
                         </Dropdown>
                         <InputError
-                            :message="form.errors.regra_de_negocio_id"
+                            :message="form.errors.regra_de_business_id"
                         />
                     </div>
                     <div>
@@ -232,12 +232,12 @@ const storeImovel = () =>
                     </div>
                     <div>
                         <label
-                            for="imovel_for_id"
+                            for="property_for_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >Imovel para</label
+                            >Property para</label
                         >
                         <Dropdown
-                            v-model="form.imovel_for_id"
+                            v-model="form.property_for_id"
                             optionValue="id"
                             :options="transactionTypes"
                             optionLabel="name"
@@ -248,7 +248,7 @@ const storeImovel = () =>
                                 <div
                                     class="bg-slate-100 dark:bg-slate-600 dark:text-slate-200 px-4 py-2 hover:bg-slate-600 dark:hover:bg-slate-800 hover:text-white"
                                     :class="
-                                        form.imovel_for_id ==
+                                        form.property_for_id ==
                                         slotProps.option.id
                                             ? 'bg-slate-800 dark:bg-slate-900 text-white'
                                             : ''
@@ -258,7 +258,7 @@ const storeImovel = () =>
                                 </div>
                             </template>
                         </Dropdown>
-                        <InputError :message="form.errors.imovel_for_id" />
+                        <InputError :message="form.errors.property_for_id" />
                     </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-2">
@@ -293,13 +293,13 @@ const storeImovel = () =>
                         <label
                             for="province_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >Cidade</label
+                            >City</label
                         >
                         <Dropdown
                             v-model="city"
                             :options="cities ?? []"
                             optionLabel="nome"
-                            placeholder="Cidade"
+                            placeholder="City"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                         >
                             <template #option="slotProps">
@@ -318,16 +318,16 @@ const storeImovel = () =>
                     </div>
                     <div>
                         <label
-                            for="bairro_id"
+                            for="neighborhood_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >Bairro</label
+                            >Neighborhood</label
                         >
                         <Dropdown
-                            v-model="form.bairro_id"
-                            :options="bairros ?? []"
+                            v-model="form.neighborhood_id"
+                            :options="neighborhoods ?? []"
                             optionValue="id"
                             optionLabel="nome"
-                            placeholder="Bairro"
+                            placeholder="Neighborhood"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                         >
                             <template #option="slotProps">
@@ -343,7 +343,7 @@ const storeImovel = () =>
                                 </div>
                             </template>
                         </Dropdown>
-                        <InputError :message="form.errors.bairro_id ?? ''" />
+                        <InputError :message="form.errors.neighborhood_id ?? ''" />
                     </div>
                 </div>
 
@@ -403,7 +403,7 @@ const storeImovel = () =>
                         <label
                             for="descricao"
                             class="block mb-2 text-sm font-medium bg-orange-300 text-gray-900 dark:text-white"
-                            >Detalhes do imovel (Só para o corretor do imóvel)
+                            >Detalhes do property (Só para o corretor do imóvel)
                         </label>
                         <ckeditor
                             :editor="ClassicEditor"
@@ -417,13 +417,13 @@ const storeImovel = () =>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-2">
                     <div>
                         <label
-                            for="tipo_de_imovel_id"
+                            for="tipo_de_property_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >Tipo de imovel</label
+                            >Tipo de property</label
                         >
                         <Dropdown
-                            v-model="form.tipo_de_imovel_id"
-                            :options="imovelsTypes"
+                            v-model="form.tipo_de_property_id"
+                            :options="propertiesTypes"
                             optionValue="id"
                             optionLabel="name"
                             placeholder="Tipo de imóvel"
@@ -433,7 +433,7 @@ const storeImovel = () =>
                                 <div
                                     class="bg-slate-100 dark:bg-slate-600 dark:text-slate-200 px-4 py-2 hover:bg-slate-600 dark:hover:bg-slate-800 hover:text-white"
                                     :class="
-                                        form.tipo_de_imovel_id ==
+                                        form.tipo_de_property_id ==
                                         slotProps.option.id
                                             ? 'bg-slate-800 dark:bg-slate-900 text-white'
                                             : ''
@@ -444,18 +444,18 @@ const storeImovel = () =>
                             </template>
                         </Dropdown>
                         <InputError
-                            :message="form.errors.tipo_de_imovel_id ?? ''"
+                            :message="form.errors.tipo_de_property_id ?? ''"
                         />
                     </div>
                     <div>
                         <label
-                            for="condicao_id"
+                            for="condition_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                             >Condição do imóvel</label
                         >
                         <Dropdown
-                            v-model="form.condicao_id"
-                            :options="imovelConditions ?? []"
+                            v-model="form.condition_id"
+                            :options="propertyConditions ?? []"
                             optionValue="id"
                             optionLabel="nome"
                             placeholder="Condição do imóvel"
@@ -465,7 +465,7 @@ const storeImovel = () =>
                                 <div
                                     class="bg-slate-100 dark:bg-slate-600 dark:text-slate-200 px-4 py-2 hover:bg-slate-600 dark:hover:bg-slate-800 hover:text-white"
                                     :class="
-                                        form.condicao_id == slotProps.option.id
+                                        form.condition_id == slotProps.option.id
                                             ? 'bg-slate-800 dark:bg-slate-900 text-white'
                                             : ''
                                     "
@@ -474,7 +474,7 @@ const storeImovel = () =>
                                 </div>
                             </template>
                         </Dropdown>
-                        <InputError :message="form.errors.condicao_id ?? ''" />
+                        <InputError :message="form.errors.condition_id ?? ''" />
                     </div>
                     <div>
                         <label

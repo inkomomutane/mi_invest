@@ -3,19 +3,17 @@
 namespace App\Actions\Message;
 
 use App\Models\Agenda;
-use Lorisleiva\Actions\Concerns\AsController;
 
 class DeleteMessage
 {
-    use AsController;
 
-    public function AsController(Agenda $agenda)
+    public function __invoke(Agenda $agenda)
     {
         try {
             $agenda->delete();
-            flash()->addSuccess('Mensagem deletada com sucesso.');
+            flash()->addSuccess(__('messages.message_deleted_success'));
         } catch (\Throwable $th) {
-            flash()->addError('Erro ao deletar mensagem!');
+            flash()->addError(__('messages.message_delete_error'));
         }
 
         return back();

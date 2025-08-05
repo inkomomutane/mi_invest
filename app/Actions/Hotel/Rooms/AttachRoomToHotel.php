@@ -5,28 +5,28 @@ namespace App\Actions\Hotel\Rooms;
 use App\Models\Hotel;
 use App\Models\HotelMetaData;
 use Google\Exception;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
+use Illuminate\Http\Request;
 
 class AttachRoomToHotel
 {
-    use AsAction;
-    public  function rules() :array {
-        return  [
-            'title' => ['required','string','max:125'],
-            'description' => ['required','string'],
-            'price' => ['required','numeric']
+    public function rules(): array
+    {
+        return [
+            'title' => ['required', 'string', 'max:125'],
+            'description' => ['required', 'string'],
+            'price' => ['required', 'numeric']
         ];
     }
 
-    public function asController(HotelMetaData $hotel,ActionRequest $request): \Illuminate\Http\RedirectResponse
+    public function __invoke(HotelMetaData $hotel, Request $request): \Illuminate\Http\RedirectResponse
     {
-        try {
+        $validated = $request->validate($this->rules());
 
+        try {
             $room = $hotel->hotels()->create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'price' => $request->price
+                'title' => $validated['title'],
+                'description' => $validated['description'],
+                'price' => $validated['price']
             ]);
             $room = Hotel::whereId($room->id)->first();
 
@@ -36,10 +36,10 @@ class AttachRoomToHotel
                 }
             }
 
-            flash()->addSuccess('Quarto adicionado com sucesso.');
+            flash()->addSuccess(__('messages.room_attached_success'));
             return redirect()->back();
-        }catch (Exception){
-            flash()->addError('Erro ao adicionar quarto.');
+        } catch (Exception) {
+            flash()->addError(__('messages.room_attach_error'));
             return redirect()->back();
         }
     }

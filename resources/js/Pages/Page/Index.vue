@@ -29,7 +29,7 @@ const form = useForm({
     whatsapp: pageDatarefs.value?.whatsapp,
     instagram: pageDatarefs.value?.instagram,
     homeMedia: [],
-    imovelsMedia: [],
+    propertiesMedia: [],
     aboutMedia: [],
     contactMedia: [],
     termsMedia: [],
@@ -38,7 +38,7 @@ const form = useForm({
 });
 
 const updateGlobalSiteData = () =>
-    form.post(route("mimovel.update"), {
+    form.post(route("mproperty.update"), {
         onProgress: () => (updateGlobalSiteDataProgress.value = true),
         onSuccess: () => {
             form.reset();
@@ -51,7 +51,7 @@ const updateGlobalSiteData = () =>
             form.whatsapp = pageDatarefs.value?.whatsapp;
             form.instagram = pageDatarefs.value?.instagram;
             form.homeMedia = [];
-            form.imovelsMedia = [];
+            form.propertiesMedia = [];
             form.aboutMedia = [];
             form.contactMedia = [];
             form.termsMedia = [];
@@ -336,7 +336,7 @@ onMounted(() => {
                         >
                         <UploadImage
                             @update:images="
-                                (files:any) => (form.imovelsMedia = files)
+                                (files:any) => (form.propertiesMedia = files)
                             "
                             :multiple="false"
                             :disabledUpload="true"
@@ -347,14 +347,14 @@ onMounted(() => {
                         >
                             <template v-slot:files>
                                 <UploadedImageCover
-                                    v-if="pageDatarefs?.imovelsMedia"
-                                    :image="(pageDatarefs?.imovelsMedia as App.Data.MediaData)"
+                                    v-if="pageDatarefs?.propertiesMedia"
+                                    :image="(pageDatarefs?.propertiesMedia as App.Data.MediaData)"
                                 />
                             </template>
                         </UploadImage>
                         <InputError
-                            v-if="form.errors.imovelsMedia"
-                            :message="form.errors.imovelsMedia"
+                            v-if="form.errors.propertiesMedia"
+                            :message="form.errors.propertiesMedia"
                         />
                     </div>
 
@@ -454,7 +454,7 @@ onMounted(() => {
                             for="instagram"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                             >Imagem para slider da página politicas de
-                            privacidade</label
+                            privacity</label
                         >
                         <UploadImage
                             @update:images="
@@ -463,7 +463,7 @@ onMounted(() => {
                             :multiple="false"
                             :disabledUpload="true"
                             :disabledCancel="true"
-                            label-text="Imagem para slider da página politicas de privacidade"
+                            label-text="Imagem para slider da página politicas de privacity"
                             mediaType="image/*"
                             :progressUploadImage="false"
                         >

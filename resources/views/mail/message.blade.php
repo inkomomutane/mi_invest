@@ -63,9 +63,9 @@
                                                                 style="box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';font-size:16px;line-height:1.5em;margin-top:0;text-align:left">
                                                                 {{ $agenda->mensagem ?? '' }}
                                                             </p>
-                                                            @if (!is_null($agenda->imovel))
-                                                                <a href="{{ route('post.imovel.show', [
-                                                                    'imovel' => $agenda->imovel->slug,
+                                                            @if (!is_null($agenda->property))
+                                                                <a href="{{ route('post.property.show', [
+                                                                    'property' => $agenda->property->slug,
                                                                 ]) }}"
                                                                     rel="noopener"
                                                                     style="box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';border-radius:4px;color:#fff;display:inline-block;overflow:hidden;text-decoration:none;background-color:#2d3748;border-bottom:8px solid #2d3748;border-left:18px solid #2d3748;border-right:18px solid #2d3748;border-top:8px solid #2d3748">
@@ -83,7 +83,7 @@
                                                                 style="box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';font-size:16px;line-height:1.5em;margin-top:0;text-align:left">
 
                                                                 Este email foi enviado automaticamente pelo servidor do
-                                                                <a href="https://www.mimovel.com">Mimóvel</a>
+                                                                <a href="https://www.mproperty.com">Mimóvel</a>
                                                             </small>
                                                         </span>
                                                     </td>

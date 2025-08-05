@@ -4,22 +4,19 @@ namespace App\Actions\Image;
 
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Lorisleiva\Actions\Concerns\AsAction;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class DeleteImageAction
 {
-    use AsAction;
-
-    public function asController(Media $media): RedirectResponse
+    public function __invoke(Media $media): RedirectResponse
     {
         try {
             $media->delete();
-            flash()->addSuccess('Imagem excluída com sucesso');
+            flash()->addSuccess(__('messages.image_deleted_success'));
             return redirect()->back();
-        }catch (Exception) {
-           flash()->addError('Erro ao excluir a imagem');
-           return redirect()->back();
+        } catch (Exception) {
+            flash()->addError(__('messages.image_delete_error'));
+            return redirect()->back();
         }
     }
 }

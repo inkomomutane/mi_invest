@@ -4,14 +4,10 @@ namespace App\Actions\Province;
 
 use App\Data\ProvinceData;
 use App\Models\Province;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class CreateProvince
 {
-    use AsAction;
-    use AsController;
 
     public function handle(ProvinceData $province)
     {
@@ -25,10 +21,10 @@ class CreateProvince
         ];
     }
 
-    public function AsController(ActionRequest $request)
+    public function __invoke(Request $request)
     {
         $this->handle(ProvinceData::from($request->validated()));
-        flash()->addSuccess('Province created successfcul.');
+        flash()->addSuccess(__('messages.province_created_success'));
 
         return \redirect()->back();
     }

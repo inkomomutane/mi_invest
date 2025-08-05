@@ -3,35 +3,31 @@
 namespace App\Actions\Province;
 
 use App\Models\Province;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
 
 class DeleteProvince
 {
-    use AsAction;
-    use AsController;
 
     public function handle(Province $province): bool
     {
-        if ($province->cidades->isEmpty()) {
+        if ($province->cities->isEmpty()) {
             try {
                 $province->delete();
-                flash()->addSuccess('Província deletada com sucesso.');
+                flash()->addSuccess(__('messages.action_success'));
 
                 return true;
             } catch (\Throwable $e) {
-                flash()->addError('Erro ao deletar: " Contacte o administrador do sistema."');
+                flash()->addError(__('messages.action_error'));
 
                 return false;
             }
         } else {
-            flash()->addError('Erro ao deletar: Não pode deletar província que possuí cidades!');
+            flash()->addError(__('messages.action_error'));
 
             return false;
         }
     }
 
-    public function AsController(Province $province)
+    public function __invoke(Province $province)
     {
         $this->handle($province);
 

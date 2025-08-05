@@ -4,16 +4,11 @@ namespace App\Actions\User;
 
 use App\Models\User;
 use App\Support\Enums\SystemRoles;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class DeleteUser
 {
-    use AsAction;
-    use AsController;
-
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -41,18 +36,20 @@ class DeleteUser
         ];
     }
 
-    public function asController(User $user, ActionRequest $request)
+    public function __invoke(User $user, Request $request)
     {
+        $validated = $request->validate($this->rules());
 
         try {
-
-            if ($this->handle($user, $request->validated('status'))) {
-                flash()->addSuccess('Usuário habilitado com sucesso.');
+            if ($this->handle($user, $validated['status'])) {
+                flash()->addSuccess(__('messages.user_enabled_success'));
             } else {
-                flash()->addSuccess('Usuário desabilitado com sucesso.');
+                flash()->addSuccess(__('messages.user_disabled_success'));
             }
         } catch (\Throwable $th) {
-            flash()->addError('Erro ao traocar o estado do usuario'.$th);
+            flash()->addError(__('messages.user_status_change_error') . $th);
         }
+
+        return \redirect()->back();
     }
 }

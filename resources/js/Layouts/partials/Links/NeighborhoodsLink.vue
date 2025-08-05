@@ -16,13 +16,13 @@ const authorized = () => {
 <template>
     <Link
         v-if="authorized()"
-        :href="route('bairro.all')"
-        v-tooltip.value="tooltip('Bairros')"
+        :href="route('neighborhood.all')"
+        v-tooltip.value="tooltip('Neighborhoods')"
     >
         <li
             class="px-3 py-2 rounded mb-0.5 last:mb-0"
             :class="
-                route().current('bairro.all')
+                route().current('neighborhood.all')
                     ? ' bg-slate-950'
                     : 'hover:bg-slate-900'
             "
@@ -89,7 +89,7 @@ const authorized = () => {
                         </svg>
                         <span
                             class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
-                            >Bairros</span
+                            >Neighborhoods</span
                         >
                     </div>
                 </div>

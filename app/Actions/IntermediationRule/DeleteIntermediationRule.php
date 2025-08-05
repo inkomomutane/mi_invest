@@ -4,14 +4,12 @@ namespace App\Actions\IntermediationRule;
 
 use App\Models\IntermediationRule;
 use App\Support\Enums\SystemRoles;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class DeleteIntermediationRule
 {
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -22,18 +20,18 @@ class DeleteIntermediationRule
         );
     }
 
-    public function AsController(IntermediationRule $intermediation)
+    public function __invoke(IntermediationRule $intermediation)
     {
-        if ($intermediation->imovels->isEmpty()) {
+        if ($intermediation->properties->isEmpty()) {
             try {
                 $intermediation->delete();
-                flash()->addSuccess('Regra de intermediação deletada com sucesso.');
+                flash()->addSuccess(__('messages.action_success'));
             } catch (\Throwable $e) {
-                flash()->addError('Erro ao deletar: " Contacte o administrador do sistema.".');
+                flash()->addError(__('messages.action_error'));
             }
         } else {
 
-            flash()->addError('Erro ao deletar: Não pode deletar uma regra de intermediação que esta em uso!');
+            flash()->addError(__('messages.action_error'));
         }
 
         return redirect()->back();

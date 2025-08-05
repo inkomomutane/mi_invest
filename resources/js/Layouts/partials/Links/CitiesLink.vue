@@ -17,7 +17,7 @@ const authorized = () => {
     <Link
         v-if="authorized()"
         :href="route('city.all')"
-        v-tooltip.value="tooltip('Cidades')"
+        v-tooltip.value="tooltip('Cities')"
     >
         <li
             class="px-3 py-2 rounded mb-0.5 last:mb-0"
@@ -95,7 +95,7 @@ const authorized = () => {
                         </svg>
                         <span
                             class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
-                            >Cidades</span
+                            >Cities</span
                         >
                     </div>
                 </div>

@@ -1,9 +1,7 @@
 <?php
 
-use App\Models\Bairro;
-use App\Models\Condicao;
+
 use App\Models\Status;
-use App\Models\TipoDeImovel;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,12 +18,12 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('address')->nullable();
             $table->text('description')->nullable();
-            $table->foreignIdFor(TipoDeImovel::class)
+            $table->foreignIdFor(\App\Models\PropertyType::class)
                 ->constrained()
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
-            $table->foreignIdFor(Condicao::class)
+            $table->foreignIdFor(\App\Models\Condition::class)
                 ->constrained()
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
@@ -35,11 +33,12 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
-            $table->foreignIdFor(Bairro::class)
+            $table->foreignIdFor(\App\Models\Neighborhood::class)
                 ->constrained()
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

@@ -4,24 +4,22 @@ namespace App\Actions\Province;
 
 use App\Models\Province;
 use Illuminate\Validation\Rule;
-use Lorisleiva\Actions\Concerns\AsController;
 
 class UpdateProvince
 {
-    use AsController;
 
-    public function asController(Province $province)
+    public function __invoke(Province $province)
     {
-        $validated = request()->validate([
+        $validated = $request->validate([
             'name' => ['required', Rule::unique(Province::class, 'name')->ignore($province->id, 'id')],
         ]);
 
         try {
             $province->name = $validated['name'];
             $province->save();
-            flash()->addSuccess('Província actualizada com sucesso.');
+            flash()->addSuccess(__('messages.province_updated_success'));
         } catch (\Throwable $th) {
-            flash()->addError('Erro na actualização da província.');
+            flash()->addError(__('messages.action_error'));
         }
 
         return \redirect()->back();

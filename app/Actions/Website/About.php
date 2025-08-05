@@ -4,15 +4,14 @@ namespace App\Actions\Website;
 
 use App\Actions\Page\GetPage;
 use App\Support\Enums\Pages;
-use Lorisleiva\Actions\Concerns\AsController;
+
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Vite;
 
 class About
 {
-    use AsController;
 
-    public function asController()
+    public function __invoke()
     {
         return view('website.about', [
             'page' => GetPage::run()->with('media')

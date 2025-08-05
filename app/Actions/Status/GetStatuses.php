@@ -6,16 +6,12 @@ use App\Data\StatusData;
 use App\Models\Status;
 use App\Support\Enums\SystemRoles;
 use Inertia\Inertia;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class GetStatuses
 {
-    use AsAction;
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -28,7 +24,7 @@ class GetStatuses
 
     public function handle(?string $term = null)
     {
-        return StatusData::collection(
+        return StatusData::collect(
             Status::query()
                 ->when($term, function ($query, $search) {
                     $query->where('nome', 'like', '%'.$search.'%');
@@ -37,7 +33,7 @@ class GetStatuses
         );
     }
 
-    public function AsController(): \Inertia\Response
+    public function __invoke(): \Inertia\Response
     {
         return Inertia::render('Status/Index', [
             'statuses' => $this->handle(request()->search),

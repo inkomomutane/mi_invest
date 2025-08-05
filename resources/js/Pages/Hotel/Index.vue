@@ -162,7 +162,7 @@ const deleteHotel = (hotel : App.Data.HotelMetaDataDtoData) => useForm({}).delet
                                     </th>
                                     <th scope="col" class="px-4 py-3">
                                         <div class="flex items-center">
-                                            Bairro
+                                            Neighborhood
                                         </div>
                                     </th>
                                     <th scope="col" class="px-4 py-3">
@@ -198,7 +198,7 @@ const deleteHotel = (hotel : App.Data.HotelMetaDataDtoData) => useForm({}).delet
                                     </td>
 
                                     <td class="px-4 py-3">
-                                        {{ hotel.bairroData.nome }}
+                                        {{ hotel.neighborhoodData.nome }}
                                     </td>
                                     <td class="px-4 py-3 w-32">
                                         <Link

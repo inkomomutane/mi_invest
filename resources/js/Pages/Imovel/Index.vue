@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, router } from "@inertiajs/vue3";
-import { Imovels } from "@/types/index";
+import { Propertys } from "@/types/index";
 import { ref, watch, PropType } from "vue";
-import ViewImovel from "./ViewImovel.vue";
-import DeleteImovel from "./DeleteImovel.vue";
+import ViewProperty from "./ViewProperty.vue";
+import DeleteProperty from "./DeleteProperty.vue";
 import ResponsiveImage from "@/Components/ResponsiveImage.vue";
 import Flasher from "@/helprs";
 import { FlasherResponse } from "@flasher/flasher";
 import { onMounted } from "vue";
 
 const props = defineProps({
-    imovels: {
-        type: Object as PropType<Imovels>,
+    properties: {
+        type: Object as PropType<Propertys>,
         required: true,
     },
     search: String,
@@ -37,18 +37,18 @@ watch(
     }
 );
 
-const links = ref(props.imovels.links);
+const links = ref(props.properties.links);
 
-const editingImovelTrigger = ref(false);
-const editingImovel = ref<App.Data.ImovelData | null>(null);
+const editingPropertyTrigger = ref(false);
+const editingProperty = ref<App.Data.PropertyData | null>(null);
 
-const deletingImovelTrigger = ref(false);
-const deletingImovel = ref<App.Data.ImovelData | null>(null);
+const deletingPropertyTrigger = ref(false);
+const deletingProperty = ref<App.Data.PropertyData | null>(null);
 
 const searchTerm = ref("");
 
 watch(
-    () => props.imovels.links,
+    () => props.properties.links,
     (value) => {
         links.value = value;
     }
@@ -56,35 +56,35 @@ watch(
 
 watch(searchTerm, (value) => {
     router.visit(
-        route("imovel.all", {
+        route("property.all", {
             search: value ?? "",
         }),
         {
-            only: ["imovels"],
+            only: ["properties"],
             replace: false,
             preserveState: true,
         }
     );
 });
 
-function openViewImovelModal(imovel: App.Data.ImovelData) {
-    editingImovel.value = imovel;
-    editingImovelTrigger.value = true;
+function openViewPropertyModal(property: App.Data.PropertyData) {
+    editingProperty.value = property;
+    editingPropertyTrigger.value = true;
 }
 
-function closeViewImovelModal() {
-    editingImovel.value = null;
-    editingImovelTrigger.value = false;
+function closeViewPropertyModal() {
+    editingProperty.value = null;
+    editingPropertyTrigger.value = false;
 }
 
-function openDeleteImovelModal(imovel: App.Data.ImovelData) {
-    deletingImovel.value = imovel;
-    deletingImovelTrigger.value = true;
+function openDeletePropertyModal(property: App.Data.PropertyData) {
+    deletingProperty.value = property;
+    deletingPropertyTrigger.value = true;
 }
 
-function closeDeleteImovelModal() {
-    deletingImovel.value = null;
-    deletingImovelTrigger.value = false;
+function closeDeletePropertyModal() {
+    deletingProperty.value = null;
+    deletingPropertyTrigger.value = false;
 }
 </script>
 
@@ -137,7 +137,7 @@ function closeDeleteImovelModal() {
                             class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0"
                         >
                             <Link
-                                :href="route('imovel.create')"
+                                :href="route('property.create')"
                                 class="flex items-center justify-center text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded text-sm px-4 py-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800"
                             >
                                 <svg
@@ -246,7 +246,7 @@ function closeDeleteImovelModal() {
                                     </th>
                                     <th scope="col" class="px-4 py-3">
                                         <div class="flex items-center">
-                                            Cidade
+                                            City
                                         </div>
                                     </th>
                                     <th scope="col" class="px-4 py-3">
@@ -268,14 +268,14 @@ function closeDeleteImovelModal() {
                             <tbody>
                                 <tr
                                     class="border-b dark:border-gray-700"
-                                    v-for="imovel in imovels.data"
-                                    :key="(imovel.id as number)"
+                                    v-for="property in properties.data"
+                                    :key="(property.id as number)"
                                 >
                                     <th
                                         scope="row"
                                         class="flex justify-center px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                     >
-                                        {{ imovel.id }}
+                                        {{ property.id }}
                                     </th>
                                     <th
                                         scope="row"
@@ -283,29 +283,29 @@ function closeDeleteImovelModal() {
                                     >
                                         <ResponsiveImage
                                             :responsive="
-                                                imovel.media ?? undefined
+                                                property.media ?? undefined
                                             "
                                             class-name="h-8 w-16 rounded-sm object-cover"
                                         />
                                     </th>
 
                                     <td class="px-4 py-3">
-                                        {{ imovel.titulo }}
+                                        {{ property.titulo }}
                                     </td>
                                     <td class="px-4 py-3">
-                                        {{ imovel.bairro?.city?.nome }}
+                                        {{ property.neighborhood?.city?.nome }}
                                     </td>
                                     <td class="px-4 py-3">
                                         {{
-                                            imovel.bairro?.city?.province?.name
+                                            property.neighborhood?.city?.province?.name
                                         }}
                                     </td>
 
                                     <td>
                                         <Link
                                             :href="
-                                                route('imovel.image.all', {
-                                                    imovel: imovel?.slug,
+                                                route('property.image.all', {
+                                                    property: property?.slug,
                                                 })
                                             "
                                             class="w-fit flex items-center justify-center text-white bg-slate-600 hover:bg-slate-700 focus:ring-4 focus:ring-slate-300 font-medium rounded text-sm px-4 py-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800"
@@ -342,7 +342,7 @@ function closeDeleteImovelModal() {
                                     <td class="py-3">
                                         <button
                                             type="button"
-                                            @click="openViewImovelModal(imovel)"
+                                            @click="openViewPropertyModal(property)"
                                             class="flex items-center justify-center text-white bg-blue-900 hover:bg-blue-950 focus:ring-4 focus:ring-slate-300 font-medium rounded text-sm px-4 py-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800"
                                         >
                                             <svg
@@ -363,8 +363,8 @@ function closeDeleteImovelModal() {
                                         <Link
                                             type="button"
                                             :href="
-                                                route('imovel.edit', {
-                                                    imovel: imovel.slug,
+                                                route('property.edit', {
+                                                    property: property.slug,
                                                 })
                                             "
                                             class="w-fit flex items-center justify-center text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded text-sm px-4 py-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800"
@@ -401,7 +401,7 @@ function closeDeleteImovelModal() {
                                         <button
                                             type="button"
                                             @click="
-                                                openDeleteImovelModal(imovel)
+                                                openDeletePropertyModal(property)
                                             "
                                             class="w-fit flex items-center justify-center text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-slate-300 font-medium rounded text-sm px-4 py-2 dark:bg-slate-600 dark:hover:bg-slate-700 focus:outline-none dark:focus:ring-slate-800"
                                         >
@@ -444,8 +444,8 @@ function closeDeleteImovelModal() {
                             <span
                                 class="font-semibold text-gray-900 dark:text-white"
                                 >{{
-                                    `${imovels.meta.from ?? 0}-${
-                                        imovels.meta.to ?? 0
+                                    `${properties.meta.from ?? 0}-${
+                                        properties.meta.to ?? 0
                                     }`
                                 }}</span
                             >
@@ -453,7 +453,7 @@ function closeDeleteImovelModal() {
                             <span
                                 class="font-semibold text-gray-900 dark:text-white"
                             >
-                                {{ imovels.meta.total }}</span
+                                {{ properties.meta.total }}</span
                             >
                         </span>
                         <ul class="inline-flex items-stretch -space-x-px">
@@ -516,17 +516,17 @@ function closeDeleteImovelModal() {
                     </nav>
                 </div>
             </div>
-            <ViewImovel
-                v-if="editingImovel"
-                :imovel="editingImovel"
-                :openModal="editingImovelTrigger"
-                :close="closeViewImovelModal"
+            <ViewProperty
+                v-if="editingProperty"
+                :property="editingProperty"
+                :openModal="editingPropertyTrigger"
+                :close="closeViewPropertyModal"
             />
-            <DeleteImovel
-                v-if="deletingImovel"
-                :imovel="deletingImovel"
-                :openModal="deletingImovelTrigger"
-                :close="closeDeleteImovelModal"
+            <DeleteProperty
+                v-if="deletingProperty"
+                :property="deletingProperty"
+                :openModal="deletingPropertyTrigger"
+                :close="closeDeletePropertyModal"
             />
         </template>
     </AuthenticatedLayout>

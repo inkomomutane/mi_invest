@@ -4,15 +4,12 @@ namespace App\Actions\User;
 
 use App\Models\User;
 use App\Support\Enums\SystemRoles;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsController;
 
 class UpdateUser
 {
-    use AsController;
-
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -25,9 +22,9 @@ class UpdateUser
         );
     }
 
-    public function asController(User $user)
+    public function __invoke(User $user, Request $request)
     {
-        $validated = request()->validate([
+        $validated = $request->validate([
             'name' => ['required', 'string'],
             'email' => ['required', 'string', 'email', Rule::unique(User::class, 'email')->ignore($user->id, 'id')],
             'contacto' => ['nullable', 'string'],
@@ -41,9 +38,9 @@ class UpdateUser
             $user->syncRoles($validated['role'])
                 ->save();
 
-            flash()->addSuccess('Usuário actualizado com sucesso.');
+            flash()->addSuccess(__('messages.user_updated_success'));
         } catch (\Throwable $th) {
-            flash()->addError('Erro na actualização do usuário.');
+            flash()->addError(__('messages.user_update_error'));
         }
 
         return \redirect()->back();

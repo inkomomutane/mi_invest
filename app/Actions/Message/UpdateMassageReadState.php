@@ -3,14 +3,10 @@
 namespace App\Actions\Message;
 
 use App\Models\Agenda;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class UpdateMassageReadState
 {
-    use AsAction;
-    use AsController;
 
     public function handle(Agenda $agenda, bool $isReaded)
     {
@@ -32,7 +28,7 @@ class UpdateMassageReadState
         ];
     }
 
-    public function asController(Agenda $agenda, ActionRequest $actionRequest)
+    public function __invoke(Agenda $agenda, Request $actionRequest)
     {
 
         return $this->handle($agenda, $actionRequest->is_readed);

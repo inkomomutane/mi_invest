@@ -2,18 +2,16 @@
 
 namespace App\Actions\City;
 
-use App\Models\Cidade;
+use App\Models\City;
 use Illuminate\Validation\Rule;
-use Lorisleiva\Actions\Concerns\AsController;
 
 class UpdateCity
 {
-    use AsController;
 
-    public function asController(Cidade $city)
+    public function __invoke(City $city)
     {
-        $validated = request()->validate([
-            'nome' => ['required', Rule::unique(Cidade::class, 'nome')->ignore($city->id, 'id')],
+        $validated = $request->validate([
+            'nome' => ['required', Rule::unique(City::class, 'nome')->ignore($city->id, 'id')],
             'province_id' => 'required|numeric',
         ]);
 
@@ -21,10 +19,10 @@ class UpdateCity
             $city->nome = $validated['nome'];
             $city->province_id = $validated['province_id'];
             $city->save();
-            flash()->addSuccess('Cidade actualizada com sucesso.');
+            flash()->addSuccess(__('messages.city_updated_success'));
         } catch (\Throwable $th) {
             throw $th;
-            flash()->addError('Erro na actualização da cidade.');
+            flash()->addError(__('messages.action_error'));
         }
 
         return \redirect()->back();

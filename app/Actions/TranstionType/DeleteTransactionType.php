@@ -2,18 +2,14 @@
 
 namespace App\Actions\TranstionType;
 
-use App\Models\ImovelFor;
+use App\Models\PropertyPurpose;
 use App\Support\Enums\SystemRoles;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class DeleteTransactionType
 {
-    use AsAction;
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -24,27 +20,27 @@ class DeleteTransactionType
         );
     }
 
-    public function handle(ImovelFor $imovelFor): bool
+    public function handle(PropertyFor $propertyFor): bool
     {
-        if ($imovelFor->imovels->isEmpty()) {
+        if ($propertyFor->properties->isEmpty()) {
             try {
-                $imovelFor->delete();
-                flash()->addSuccess('Tipo de transação deletada com sucesso.');
+                $propertyFor->delete();
+                flash()->addSuccess(__('messages.action_success'));
 
                 return true;
             } catch (\Throwable $e) {
-                flash()->addError('Erro ao deletar tipo de transação.');
+                flash()->addError(__('messages.action_error'));
 
                 return false;
             }
         } else {
-            flash()->addError('Erro ao deletar: Não pode deletar tipo de transação que esta sendo usado em imóveis!');
+            flash()->addError(__('messages.action_error'));
 
             return false;
         }
     }
 
-    public function AsController(ImovelFor $transactionType)
+    public function __invoke(PropertyFor $transactionType)
     {
         $this->handle($transactionType);
 

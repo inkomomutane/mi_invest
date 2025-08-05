@@ -5,17 +5,13 @@ namespace App\Actions\Province;
 use App\Data\ProvinceData;
 use App\Models\Province;
 use Inertia\Inertia;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
 
 class GetProvinces
 {
-    use AsAction;
-    use AsController;
 
     public function handle(?string $term = null)
     {
-        return ProvinceData::collection(
+        return ProvinceData::collect(
             Province::query()
                 ->when($term, function ($query, $search) {
                     $query->where('name', 'like', '%'.$search.'%');
@@ -24,7 +20,7 @@ class GetProvinces
         );
     }
 
-    public function AsController(): \Inertia\Response
+    public function __invoke(): \Inertia\Response
     {
         return Inertia::render('Province/Index', [
             'provinces' => $this->handle(request()->search),

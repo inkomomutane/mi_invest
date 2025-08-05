@@ -111,7 +111,7 @@ const createCity = () => {
             ></path>
         </svg>
 
-        <span class="mx-4">Nova cidade</span>
+        <span class="mx-4">Nova city</span>
     </button>
 
     <Modal :show="addCity" @close="closeCreateCityModal">
@@ -140,7 +140,7 @@ const createCity = () => {
                 <h3
                     class="mb-4 text-xl font-medium text-gray-900 dark:text-white"
                 >
-                    Nova cidade
+                    Nova city
                 </h3>
                 <form class="space-y-6" @submit.prevent="createCity">
                     <div>
@@ -156,7 +156,7 @@ const createCity = () => {
                             ref="nameInput"
                             id="nome"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                            placeholder="Nome da cidade"
+                            placeholder="Nome da city"
                         />
                         <span class="text-sm text-red-500 font-medium">{{
                             form.errors.nome

@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use App\Actions\Authorization\GetRolesBellowAuthenticatedUser;
-use App\Actions\Imovel\CountNotApprovedImovels;
-use App\Actions\Imovel\ImovelTrashCount;
+use App\Actions\Property\CountNotApprovedProperties;
+use App\Actions\Property\PropertyTrashCount;
 use App\Actions\Message\MessageCount;
 use App\Actions\Page\GetPage;
 use App\Data\RoleData;
@@ -42,10 +42,10 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user()?->load(['roles', 'media'])->getData(),
             ],
             'messages' => flash()->render([], 'array'),
-            'roles' => RoleData::collection(GetRolesBellowAuthenticatedUser::run()),
+            'roles' => RoleData::collect(GetRolesBellowAuthenticatedUser::run()),
             'mails' => MessageCount::run(),
-            'trash' => ImovelTrashCount::run($request->user()),
-            'notAprrovedImovels' => CountNotApprovedImovels::run($request->user()),
+            'trash' => PropertyTrashCount::run($request->user()),
+            'notAprrovedProperties' => CountNotApprovedProperties::run($request->user()),
             'globals' => GetPage::run()->getData(),
             'site' => config('app.url'),
             'ziggy' => function () use ($request) {

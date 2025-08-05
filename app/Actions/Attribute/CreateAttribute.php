@@ -4,26 +4,18 @@ namespace App\Actions\Attribute;
 
 use App\Models\Attribute;
 use Illuminate\Http\RedirectResponse;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class CreateAttribute
 {
-    use AsAction;
-    use AsController;
-
-    public function rules(): array
+    public function __invoke(Request $request): RedirectResponse
     {
-        return [
+        $request->validate([
             'name' => 'required|unique:attributes,name',
             'description' => 'required|string',
             'image' => 'required',
-        ];
-    }
+        ]);
 
-    public function asController(ActionRequest $request): RedirectResponse
-    {
         try {
             \DB::beginTransaction();
             $attribute = Attribute::create([
@@ -34,9 +26,9 @@ class CreateAttribute
                 $attribute->addMedia($request->image[0])->toMediaCollection('attributes', 'attributes');
             }
             \DB::commit();
-            flash()->addSuccess('Attributo criado com sucesso.');
+            flash()->addSuccess(__('messages.attribute_created_success'));
         } catch (\Exception $exception) {
-            flash()->addError('Erro ao criar attributo.');
+            flash()->addError(__('messages.attribute_create_error'));
         }
 
         return \redirect()->back();

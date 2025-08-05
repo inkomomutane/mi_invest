@@ -5,15 +5,12 @@ namespace App\Actions\Website;
 use App\Mail\SendMessagesMail;
 use App\Models\Agenda;
 use App\Models\User;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
+
 use Mail;
 
 class SendMessage
 {
-    use AsAction;
-    use AsController;
 
     public function handle(Agenda $agenda): bool
     {
@@ -41,12 +38,12 @@ class SendMessage
         ];
     }
 
-    public function asController(ActionRequest $actionRequest)
+    public function __invoke(Request $actionRequest)
     {
         $message = collect($actionRequest->all())
-            ->put('corretor_id', User::first()->id)
+            ->put('broker_id', User::first()->id)
             ->put('data_hora', now())
-            ->put('imovel_id', null)->toArray();
+            ->put('property_id', null)->toArray();
 
         if ($this->handle(Agenda::create($message))) {
             return back()->with('success', 'A sua mensagem foi enviada com sucesso');

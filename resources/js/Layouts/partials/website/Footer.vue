@@ -1459,7 +1459,7 @@
                     class="inline-block text-orange-600 underline transition hover:text-orange-600/75 dark:text-orange-500 dark:hover:text-orange-500/75"
                     :href="route('website.policy')"
                 >
-                    Políticas de privacidade
+                    Políticas de privacity
                 </a>
             </p>
 

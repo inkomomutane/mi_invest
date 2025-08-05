@@ -2,19 +2,15 @@
 
 namespace App\Actions\TranstionType;
 
-use App\Data\TransactionTypeData;
-use App\Models\ImovelFor;
+use App\Data\PropertyPurposeData;
+use App\Models\PropertyPurpose;
 use App\Support\Enums\SystemRoles;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class CreateTransactionType
 {
-    use AsAction;
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -25,23 +21,23 @@ class CreateTransactionType
         );
     }
 
-    public function handle(TransactionTypeData $transactionTypeData)
+    public function handle(PropertyPurposeData $transactionTypeData)
     {
-        return ImovelFor::create($transactionTypeData->all());
+        return PropertyPurpose::create($transactionTypeData->all());
     }
 
     public function rules()
     {
         return [
-            'name' => 'required|unique:imovel_fors,name',
-            'slug_text' => 'required|unique:imovel_fors,slug_text',
+            'name' => 'required|unique:property_fors,name',
+            'slug_text' => 'required|unique:property_fors,slug_text',
         ];
     }
 
-    public function AsController(ActionRequest $request)
+    public function __invoke(Request $request)
     {
-        $this->handle(TransactionTypeData::from($request->validated()));
-        flash()->addSuccess('Tipo de transação criada com sucesso.');
+        $this->handle(PropertyPurposeData::from($request->validated()));
+        flash()->addSuccess(__('messages.action_success'));
 
         return \redirect()->back();
     }

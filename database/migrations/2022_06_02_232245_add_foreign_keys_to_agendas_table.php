@@ -14,7 +14,7 @@ class AddForeignKeysToAgendasTable extends Migration
     public function up()
     {
         Schema::table('agendas', function (Blueprint $table) {
-            $table->foreign(['corretor_id'], 'fk_agendas_users1')->references(['id'])->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign(['broker_id'], 'fk_agendas_users1')->references(['id'])->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 

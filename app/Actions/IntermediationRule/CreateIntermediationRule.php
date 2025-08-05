@@ -4,14 +4,12 @@ namespace App\Actions\IntermediationRule;
 
 use App\Models\IntermediationRule;
 use App\Support\Enums\SystemRoles;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class CreateIntermediationRule
 {
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -31,7 +29,7 @@ class CreateIntermediationRule
         ];
     }
 
-    public function AsController(ActionRequest $actionRequest)
+    public function __invoke(Request $actionRequest)
     {
         try {
             IntermediationRule::create([
@@ -40,9 +38,9 @@ class CreateIntermediationRule
                 'percentage' => $actionRequest->percentage,
             ]);
 
-            flash()->addSuccess('Regra de intermediação criada com sucesso');
+            flash()->addSuccess(__('messages.action_success'));
         } catch (\Throwable $th) {
-            flash()->addError('Erro ao criar regra de intermediação.');
+            flash()->addError(__('messages.intermediation_rule_create_error'));
         }
 
         return \redirect()->back();

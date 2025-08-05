@@ -5,16 +5,12 @@ namespace App\Actions\Page;
 use App\Models\Page;
 use App\Support\Enums\SystemRoles;
 use Inertia\Inertia;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class GetPage
 {
-    use AsAction;
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -33,7 +29,7 @@ class GetPage
         return $page;
     }
 
-    public function asController()
+    public function __invoke()
     {
         return Inertia::render('Page/Index', [
             'pageData' => $this->handle()->load('media')->getData(),

@@ -4,14 +4,12 @@ namespace App\Actions\IntermediationRule;
 
 use App\Models\IntermediationRule;
 use App\Support\Enums\SystemRoles;
-use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsController;
+use Illuminate\Http\Request;
 
 class UpdateIntermediationRule
 {
-    use AsController;
 
-    public function authorize(ActionRequest $request): bool
+    public function authorize(Request $request): bool
     {
         /** @var User $user */
         $user = $request->user();
@@ -31,7 +29,7 @@ class UpdateIntermediationRule
         ];
     }
 
-    public function AsController(IntermediationRule $intermediation, ActionRequest $actionRequest)
+    public function __invoke(IntermediationRule $intermediation, Request $actionRequest)
     {
         try {
             $intermediation->name = $actionRequest->name;
@@ -39,9 +37,9 @@ class UpdateIntermediationRule
             $intermediation->percentage = $actionRequest->percentage;
             $intermediation->save();
 
-            flash()->addSuccess('Regra de intermediação actualizada com sucesso');
+            flash()->addSuccess(__('messages.action_success'));
         } catch (\Throwable $th) {
-            flash()->addError('Erro ao actualizar regra de intermediação.');
+            flash()->addError(__('messages.intermediation_rule_update_error'));
         }
 
         return \redirect()->back();
