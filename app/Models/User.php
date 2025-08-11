@@ -2,49 +2,31 @@
 
 namespace App\Models;
 
-use App\Data\UserData;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Kalnoy\Nestedset\NodeTrait;
-use Laravel\Sanctum\HasApiTokens;
-use Spatie\LaravelData\WithData;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, HasRoles, InteractsWithMedia, Notifiable;
-    use NodeTrait;
-    use WithData;
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'name',
         'email',
         'password',
-        'contact',
-        'location',
-        'active',
-        'created_by_id',
     ];
-
-    protected $appends = [
-        'avatar',
-    ];
-
-    protected $dataClass = UserData::class;
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $hidden = [
         'password',
@@ -52,61 +34,15 @@ class User extends Authenticatable implements HasMedia
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    public function schedules()
+    protected function casts(): array
     {
-        return $this->hasMany(Schedule::class, 'broker_id');
-    }
-
-    public function properties()
-    {
-        return $this->hasMany(Property::class, 'broker_id');
-    }
-
-    public function receivedMessages()
-    {
-        return $this->hasMany(Message::class, 'to_id');
-    }
-
-    public function sentMessages()
-    {
-        return $this->hasMany(Message::class, 'from_id');
-    }
-
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this->addMediaConversion('thumb')->width('200')->nonQueued();
-    }
-
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('avatars')->withResponsiveImages()->singleFile();
-    }
-
-    public function getAvatarAttribute()
-    {
-        return $this->getFirstMedia('avatars');
-    }
-
-    public static function last()
-    {
-        return static::all()->last();
-    }
-
-    public function createdBy()
-    {
-        return $this->belongsTo(User::class, 'created_by_id');
-    }
-
-    public function createdUsers()
-    {
-        return $this->hasMany(User::class, 'created_by_id');
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 }

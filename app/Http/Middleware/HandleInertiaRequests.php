@@ -2,27 +2,26 @@
 
 namespace App\Http\Middleware;
 
-use App\Actions\Authorization\GetRolesBellowAuthenticatedUser;
-use App\Actions\Property\CountNotApprovedProperties;
-use App\Actions\Property\PropertyTrashCount;
-use App\Actions\Message\MessageCount;
-use App\Actions\Page\GetPage;
-use App\Data\RoleData;
+use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
-use Tightenco\Ziggy\Ziggy;
+use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
     /**
-     * The root template that is loaded on the first page visit.
+     * The root template that's loaded on the first page visit.
+     *
+     * @see https://inertiajs.com/server-side-setup#root-template
      *
      * @var string
      */
     protected $rootView = 'app';
 
     /**
-     * Determine the current asset version.
+     * Determines the current asset version.
+     *
+     * @see https://inertiajs.com/asset-versioning
      */
     public function version(Request $request): ?string
     {
@@ -32,27 +31,26 @@ class HandleInertiaRequests extends Middleware
     /**
      * Define the props that are shared by default.
      *
+     * @see https://inertiajs.com/shared-data
+     *
      * @return array<string, mixed>
      */
     public function share(Request $request): array
     {
+        [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
-        return array_merge(parent::share($request), [
+        return [
+            ...parent::share($request),
+            'name' => config('app.name'),
+            'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
-                'user' => $request->user()?->load(['roles', 'media'])->getData(),
+                'user' => $request->user(),
             ],
-            'messages' => flash()->render([], 'array'),
-            'roles' => RoleData::collect(GetRolesBellowAuthenticatedUser::run()),
-            'mails' => MessageCount::run(),
-            'trash' => PropertyTrashCount::run($request->user()),
-            'notAprrovedProperties' => CountNotApprovedProperties::run($request->user()),
-            'globals' => GetPage::run()->getData(),
-            'site' => config('app.url'),
-            'ziggy' => function () use ($request) {
-                return array_merge((new Ziggy)->toArray(), [
-                    'location' => $request->url(),
-                ]);
-            },
-        ]);
+            'ziggy' => [
+                ...(new Ziggy)->toArray(),
+                'location' => $request->url(),
+            ],
+            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+        ];
     }
 }
