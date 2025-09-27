@@ -3,10 +3,10 @@
 namespace App\Http\Middleware;
 
 use App\Actions\Authorization\GetRolesBellowAuthenticatedUser;
-use App\Actions\Property\CountNotApprovedProperties;
-use App\Actions\Property\PropertyTrashCount;
 use App\Actions\Message\MessageCount;
 use App\Actions\Page\GetPage;
+use App\Actions\Property\CountNotApprovedProperties;
+use App\Actions\Property\PropertyTrashCount;
 use App\Data\RoleData;
 use Illuminate\Http\Request;
 use Inertia\Middleware;

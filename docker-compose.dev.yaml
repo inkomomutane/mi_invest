@@ -1,0 +1,16 @@
+services:
+   web_processor:
+         image: nginx:latest
+         ports:
+           - "80:80"
+         volumes:
+              - ./:/var/www/html
+              - ./docker/nginx:/etc/nginx
+   application:
+         build:
+            args:
+               USER: www-data
+               UID: 1000
+            dockerfile: ./docker/php/Dockerfile
+         volumes:
+           - ./:/var/www/html

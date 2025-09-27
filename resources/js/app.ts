@@ -7,6 +7,10 @@ import { createApp, h } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 import { initializeTheme } from './composables/useAppearance';
 
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+import { i18n } from '@/lib/utils';
+
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
@@ -16,6 +20,8 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .component('VueDatePicker', VueDatePicker)
+            .use(i18n)
             .mount(el);
     },
     progress: {

@@ -1,5 +1,8 @@
 import { AppPageProps } from '@/types/index';
 
+// Import generated types
+/// <reference path="./generated.d.ts" />
+
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
     interface ImportMetaEnv {

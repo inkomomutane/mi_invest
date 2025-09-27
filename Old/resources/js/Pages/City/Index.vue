@@ -2,7 +2,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, router } from "@inertiajs/vue3";
 
-import { Cities } from "@/types/index";
+import { Cities } from "@/types";
 import { ref, watch, PropType } from "vue";
 import Flasher from "@/helprs";
 import { FlasherResponse } from "@flasher/flasher";

@@ -10,7 +10,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use Laravel\Sanctum\Sanctum;
 
 class AppServiceProvider extends ServiceProvider
 {

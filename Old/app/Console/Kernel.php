@@ -2,10 +2,10 @@
 
 namespace App\Console;
 
-use App\Actions\ApproveAllProperties;
 use App\Actions\Commands\BackupEmptyGoogleTrash;
 use App\Actions\Commands\SeedUsersTree;
-use App\Actions\SitemapGeneratorCommand;
+use App\Console\Commands\ApproveAllProperties;
+use App\Console\Commands\SitemapGeneratorCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 

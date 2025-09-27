@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Neighborhood;
 use App\Models\City;
+use App\Models\Neighborhood;
 use Illuminate\Database\Seeder;
 
 class NeighborhoodSeeder extends Seeder
