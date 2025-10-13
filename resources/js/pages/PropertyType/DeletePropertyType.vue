@@ -34,7 +34,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.delete(route('propertytype.delete', {
+    form.delete(route('property-type.delete', {
         propertyType: props.propertyType?.id,
     }), {
         preserveState: true,
@@ -54,9 +54,9 @@ const submit = () => {
             <DialogDescription>
                 {{ $t('Are you sure you want to delete this property type?') }}
                 <div v-if="propertyType.icon?.original_url" class="mt-2">
-                    <img 
-                        :src="propertyType.icon.original_url" 
-                        :alt="propertyType.name" 
+                    <img
+                        :src="propertyType.icon.original_url"
+                        :alt="propertyType.name"
                         class="w-12 h-12 object-cover rounded border inline-block mr-2"
                     />
                     <strong>"{{ propertyType.name }}"</strong>

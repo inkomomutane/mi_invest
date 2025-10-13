@@ -1,5 +1,6 @@
-import type { LucideIcon } from 'lucide-vue-next';
+import {GraduationCap, LucideIcon} from 'lucide-vue-next';
 import type { Config } from 'ziggy-js';
+import {t} from "@/lib/utils";
 
 export interface Auth {
     user: User;
@@ -12,9 +13,10 @@ export interface BreadcrumbItem {
 
 export interface NavItem {
     title: string;
+    routeName: string;
     href: string;
     icon?: LucideIcon;
-    isActive?: boolean;
+    adminOnly?: boolean;
 }
 
 export interface PaginatedData {

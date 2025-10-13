@@ -28,7 +28,7 @@ const props = defineProps({
 const searchTerm = ref('');
 watch(searchTerm, (value) => {
     router.visit(
-        route('propertytype.all', {
+        route('property-type.all', {
             search: value ?? '',
         }),
         {
@@ -67,7 +67,7 @@ const columns = [
         header: ({ column }) => h(VHeader, { column, title: t('Icon') }),
         cell: (info) => {
             const iconUrl = info.getValue();
-            return iconUrl 
+            return iconUrl
                 ? h('img', { src: iconUrl, alt: 'Property Type Icon', class: 'w-8 h-8 object-cover rounded' })
                 : h('span', { class: 'text-gray-400' }, 'No icon');
         },
@@ -104,10 +104,9 @@ const columns = [
 <template>
     <Head :title="$t('Property Types')" />
     <AppLayout>
-
         <div class="">
-            <div class="mx-auto flex h-full flex-1 flex-col gap-4 rounded-xl">
-                <Card class="rounded-sm shadow-none">
+            <div class="mx-auto flex h-full flex-1 flex-col gap-4 rounded-0">
+                <Card class="rounded-[1px] shadow-none">
                     <CardHeader class="flex flex-col items-center justify-between space-y-3 p-4 md:flex-row md:space-x-4 md:space-y-0">
                         <div class="relative w-full max-w-sm items-center">
                             <Input v-model="searchTerm" id="search" type="text" :placeholder="$t('Search') + '...'" class="pl-10" />

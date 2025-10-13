@@ -37,7 +37,7 @@ const form = useForm({
 
 const submit = () => {
     form.patch(
-        route('businessrule.update', {
+        route('business-rule.update', {
             businessRule: props.businessRule.id as number,
         }),
         {

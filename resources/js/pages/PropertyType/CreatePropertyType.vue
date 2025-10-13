@@ -41,7 +41,7 @@ const handleFileChange = (event: Event) => {
 };
 
 const submit = () => {
-    form.post(route('propertytype.store'), {
+    form.post(route('property-type.store'), {
         preserveState: true,
         onSuccess: () => {
             props.close();
@@ -77,7 +77,7 @@ const submit = () => {
                             />
                             <InputError :message="form.errors.name" class="mt-2" />
                         </div>
-                        
+
                         <div class="grid w-full items-center gap-1.5">
                             <Label for="images" class="text-sm font-medium text-gray-700 dark:text-gray-300">
                                 {{ $t('Icons') }}
@@ -95,7 +95,7 @@ const submit = () => {
                             <p class="text-sm text-gray-500">{{ $t('Select one or more icon images (max 15MB each)') }}</p>
                             <InputError :message="form.errors.images" class="mt-2" />
                         </div>
-                        
+
                         <div v-if="form.images.length > 0" class="grid gap-2">
                             <Label class="text-sm font-medium text-gray-700 dark:text-gray-300">
                                 {{ $t('Selected Files') }}:

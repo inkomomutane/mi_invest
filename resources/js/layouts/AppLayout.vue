@@ -32,14 +32,14 @@ onMounted(() => {
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-            <div class="max-w-9xl mx-auto w-full px-4 py-8 sm:px-6 lg:px-12">
-      <div class="overflow-hidden">
-         <div class="grid grid-cols-1">
-                  <div class="p-4 md:px-8">
-                <slot />
-        </div>
-         </div>
-        </div>
+        <div class="max-w-9xl mx-auto w-full px-4 py-8 sm:px-6 lg:px-12  h-full bg-zinc-100 dark:bg-zinc-950">
+            <div class="overflow-hidden">
+                <div class="grid grid-cols-1">
+                    <div class="p-4 md:px-8">
+                        <slot/>
+                    </div>
+                </div>
+            </div>
         </div>
     </AppLayout>
 </template>

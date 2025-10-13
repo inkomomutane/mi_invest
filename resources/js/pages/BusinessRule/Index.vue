@@ -28,7 +28,7 @@ const props = defineProps({
 const searchTerm = ref('');
 watch(searchTerm, (value) => {
     router.visit(
-        route('businessrule.all', {
+        route('business-rule.all', {
             search: value ?? '',
         }),
         {
@@ -97,7 +97,7 @@ const columns = [
 
         <div class="">
             <div class="mx-auto flex h-full flex-1 flex-col gap-4 rounded-xl">
-                <Card class="rounded-sm shadow-none">
+                <Card class="rounded-[1px] shadow-none">
                     <CardHeader class="flex flex-col items-center justify-between space-y-3 p-4 md:flex-row md:space-x-4 md:space-y-0">
                         <div class="relative w-full max-w-sm items-center">
                             <Input v-model="searchTerm" id="search" type="text" :placeholder="$t('Search') + '...'" class="pl-10" />

@@ -6,8 +6,8 @@ use App\Actions\BusinessRule\GetBusinessRules;
 use App\Actions\BusinessRule\UpdateBusinessRule;
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard/business-rules', GetBusinessRules::class)->name('businessrule.all');
-    Route::post('dashboard/business-rule', CreateBusinessRule::class)->name('businessrule.store');
-    Route::match(['put', 'patch'], 'dashboard/business-rule/{businessRule}', UpdateBusinessRule::class)->name('businessrule.update');
-    Route::delete('dashboard/business-rule/{businessRule}', DeleteBusinessRule::class)->name('businessrule.delete');
+    Route::get('dashboard/business-rules', GetBusinessRules::class)->name('business-rule.all');
+    Route::post('dashboard/business-rule', CreateBusinessRule::class)->name('business-rule.store');
+    Route::match(['put', 'patch'], 'dashboard/business-rule/{businessRule}', UpdateBusinessRule::class)->name('business-rule.update');
+    Route::delete('dashboard/business-rule/{businessRule}', DeleteBusinessRule::class)->name('business-rule.delete');
 });

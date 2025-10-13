@@ -30,7 +30,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('businessrule.store'), {
+    form.post(route('business-rule.store'), {
         preserveState: true,
         onSuccess: () => {
             props.close();

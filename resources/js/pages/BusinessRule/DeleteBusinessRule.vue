@@ -34,7 +34,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.delete(route('businessrule.delete', {
+    form.delete(route('business-rule.delete', {
         businessRule: props.businessRule?.id,
     }), {
         preserveState: true,

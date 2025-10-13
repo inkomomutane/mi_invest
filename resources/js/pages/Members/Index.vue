@@ -125,7 +125,7 @@ const columns = [
         </Card>
          <div class="mx-auto max-w-screen-xl">
             <div class="mx-auto flex h-full max-w-7xl flex-1 flex-col gap-4 rounded-xl">
-                <Card class="rounded-sm shadow-none">
+                <Card class="rounded-[1px] shadow-none">
                     <CardHeader class="flex flex-col items-center justify-between space-y-3 p-4 md:flex-row md:space-x-4 md:space-y-0">
                         <div class="relative w-full max-w-sm items-center">
                             <Input v-model="searchTerm" id="search" type="text" :placeholder="$t('Search') + '...'" class="pl-10" />
