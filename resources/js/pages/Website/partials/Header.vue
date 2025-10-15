@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+import AppLogoIcon from "@/components/AppLogoIcon.vue";
+import {Input} from "@/components/ui/input";
 </script>
 
 <template>
@@ -19,7 +21,9 @@
 
                     <div class="flex items-center relative">
 
-                        <a href="#" class="font-sans antialiased text-sm text-current block py-1 font-semibold">Mi invest</a>
+                        <a href="#" class="font-sans antialiased text-sm text-current block py-1 font-semibold">
+                            <AppLogoIcon class-name="w-16" />
+                        </a>
 
                         <!-- Desktop Menu -->
 
@@ -166,8 +170,6 @@
                     <p class="font-sans antialiased text-base md:text-lg text-stone-600 mb-12 mx-auto text-center max-w-xl">
                         The time is now for it to be okay to be great. People in this world shun people for being great.
                         For being a bright color.</p>
-
-
                 </div>
             </div>
         </div>
