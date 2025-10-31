@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\User;
 
 use App\Models\User;
-use Lorisleiva\Actions\Concerns\AsAction;
 
 class UserTreeInIdArray
 {
-    use AsAction;
 
-    public function handle(User $user)
+    public static function handle(User $user): array
     {
         return User::whereDescendantOf(id: $user->id, andSelf: true)->get()->pluck('id')->toArray();
     }

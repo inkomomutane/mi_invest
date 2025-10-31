@@ -2,21 +2,21 @@
 
 namespace App\Actions\Property;
 
-use App\Http\Requests\UpdatePropertyRequest;
+use App\Data\PropertyData;
 use App\Models\Property;
 
 class UpdateProperty
 {
 
-    public function __invoke(Property $property, UpdatePropertyRequest $actionRequest)
+    public function __invoke(Property $property, PropertyData $propertyData)
     {
-        $data = collect($actionRequest->all())
+        $data = collect($propertyData->all())
             ->put('published_at', now())
             ->except('images')->toArray();
         try {
             $property->update($data);
             if (request()->hasFile('images')) {
-                foreach ($actionRequest->images as $image) {
+                foreach ($propertyData->images as $image) {
                     $property->addMedia($image)->toMediaCollection('posts', 'posts');
                 }
             }

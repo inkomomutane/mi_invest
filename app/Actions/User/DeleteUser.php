@@ -25,11 +25,10 @@ class DeleteUser
     {
         $user->active = $status;
         $user->save();
-
         return $user->active;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'status' => ['required', 'boolean'],

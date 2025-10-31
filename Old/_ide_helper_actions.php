@@ -756,7 +756,7 @@ class GetStatuses
 class UpdateStatus
 {
 }
-namespace App\Actions\TranstionType;
+namespace App\Actions\TransactionType;
 
 /**
  * @method static \Lorisleiva\Actions\Decorators\JobDecorator|\Lorisleiva\Actions\Decorators\UniqueJobDecorator makeJob(\App\Data\TransactionTypeData $transactionTypeData)

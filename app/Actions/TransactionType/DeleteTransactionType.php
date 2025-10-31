@@ -1,29 +1,27 @@
 <?php
 
-namespace App\Actions\TranstionType;
+namespace App\Actions\TransactionType;
 
+use App\Models\TransactionType;
+use App\Models\User;
 use App\Support\Enums\SystemRoles;
-use Illuminate\Http\Request;
 
 class DeleteTransactionType
 {
 
-    public function authorize(Request $request): bool
+    public function authorize(User $user): bool
     {
-        /** @var User $user */
-        $user = $request->user();
-
         return $user->hasAnyRole(
             SystemRoles::SUPERADMIN,
             SystemRoles::ADMIN
         );
     }
 
-    public function handle(PropertyFor $propertyFor): bool
+    public function handle(TransactionType $transactionType): bool
     {
-        if ($propertyFor->properties->isEmpty()) {
+        if ($transactionType->properties->isEmpty()) {
             try {
-                $propertyFor->delete();
+                $transactionType->delete();
                 flash()->addSuccess(__('messages.action_success'));
 
                 return true;
@@ -39,10 +37,10 @@ class DeleteTransactionType
         }
     }
 
-    public function __invoke(PropertyFor $transactionType)
+    public function __invoke(TransactionType $transactionType): \Illuminate\Http\RedirectResponse
     {
+        abort_if(!$this->authorize(auth()->user()), 403);
         $this->handle($transactionType);
-
         return redirect()->back();
     }
 }

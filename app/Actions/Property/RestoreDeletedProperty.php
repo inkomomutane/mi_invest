@@ -3,14 +3,15 @@
 namespace App\Actions\Property;
 
 use App\Models\Property;
+use Illuminate\Http\RedirectResponse;
 
 class RestoreDeletedProperty
 {
 
-    public function __invoke(int $property)
+    public function __invoke(int $property): RedirectResponse
     {
         /** @var Property $property */
-        $property = Property::onlyTrashed()->whereId($property)->first();
+        $property = Property::onlyTrashed()->whereId($property)->firstOrFail();
 
         if (! is_null($property) && $property->trashed()) {
             try {

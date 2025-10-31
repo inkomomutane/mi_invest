@@ -2,7 +2,7 @@
 
 namespace App\Actions\Property;
 
-use App\Actions\UserTreeInIdArray;
+use App\Actions\User\UserTreeInIdArray;
 use App\Data\PropertyData;
 use App\Models\Property;
 use App\Models\User;

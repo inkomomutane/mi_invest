@@ -24,12 +24,12 @@ class CreateUser
         );
     }
 
-    public function handle(array $userData)
+    public function handle(array $userData): User
     {
         $user = User::create([
             'name' => $userData['name'],
             'email' => $userData['email'],
-            'contacto' => $userData['contacto'],
+            'contact' => $userData['contact'],
             'password' => Hash::make('12345678'),
             'created_by_id' => Auth::user()->id,
         ]);
@@ -46,12 +46,12 @@ class CreateUser
         return [
             'name' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'unique:users,email'],
-            'contacto' => ['nullable', 'string'],
+            'contact' => ['nullable', 'string'],
             'role' => ['required', 'numeric'],
         ];
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validate($this->rules());
 

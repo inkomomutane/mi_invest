@@ -13,32 +13,28 @@ class UserData extends Data
         public readonly ?int $id,
         public readonly ?string $name,
         public readonly ?string $email,
-        public readonly ?string $contacto,
+        public readonly ?string $contact,
         public readonly ?string $location,
-        public readonly ?bool $active,
-        public readonly Lazy|null|RoleData $role,
+        public readonly ?bool   $active,
+        public readonly ?string $role,
         /** @var MediaData * */
         public Lazy|null|MediaData $logo,
     ) {
     }
 
-    public static function fromModel(User $user)
+    public static function fromModel(User $user): UserData
     {
         return new self(
             id: $user->id,
             name: $user->name,
             email: $user->email,
-            contacto: $user->contacto,
+            contact: $user->contact,
             location: $user->location,
             active: $user->active,
+            role: $user->roles()?->first()?->name ?? null,
             logo: Lazy::whenLoaded('media', $user, fn () => ! is_null($user->getFirstMedia('avatars')) ?
             MediaData::fromModel($user->getFirstMedia('avatars')) :
-            null),
-            role: Lazy::whenLoaded(
-                'roles',
-                $user,
-                fn () => is_null($user->roles()->first()) ? null : RoleData::fromModel($user->roles()->first())
-            )
+            null)
         );
     }
 }

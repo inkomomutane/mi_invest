@@ -3,7 +3,6 @@
 namespace App\Actions\Property;
 
 use App\Actions\Website\SendMessage;
-use App\Models\Agenda;
 use App\Models\Property;
 use Illuminate\Http\Request;
 

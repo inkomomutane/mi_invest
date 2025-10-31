@@ -16,7 +16,7 @@ class PropertyTypeData extends Data
     ) {
     }
 
-    public static function fromModel(PropertyType $propertyType)
+    public static function fromModel(PropertyType $propertyType): PropertyTypeData
     {
         return new self(
             id: $propertyType->id,

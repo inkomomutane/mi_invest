@@ -2,7 +2,6 @@
 
 namespace App\Actions\User;
 
-use App\Actions\UserTreeInIdArray;
 use App\Data\UserData;
 use App\Models\User;
 use App\Support\Enums\SystemRoles;
@@ -30,7 +29,7 @@ class GetUsers
     public function handle(?string $term = null)
     {
 
-        if (Auth::user()->hasRole(SystemRoles::SUPERADMIN)) {
+        if (Auth::user()?->hasRole(SystemRoles::SUPERADMIN)) {
             return UserData::collect(
                 User::query()
                     ->when($term, function ($query, $search) {
@@ -41,7 +40,7 @@ class GetUsers
             );
         }
 
-        if (Auth::user()->hasRole(SystemRoles::ADMIN)) {
+        if (Auth::user()?->hasRole(SystemRoles::ADMIN)) {
             return UserData::collect(
                 User::query()
                     ->when($term, function ($query, $search) {
@@ -61,7 +60,7 @@ class GetUsers
                     $query->where('name', 'like', '%'.$search.'%');
                     $query->with('roles');
                 })->with('roles')
-                ->whereIn('id', UserTreeInIdArray::run(Auth::user()->load('createdUsers')))
+                ->whereIn('id', UserTreeInIdArray::handle(Auth::user()?->load('createdUsers')))
                 ->whereNot('id', Auth::user()->id)
                 ->orderBy('created_at', 'desc')->paginate(5)->withQueryString()
         );

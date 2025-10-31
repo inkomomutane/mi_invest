@@ -19,5 +19,6 @@ require __DIR__.'/auth.php';
 Route::get('todos-imoveis', GetImovels::class)->name('imoveis');
 
 foreach (new FilesystemIterator(__DIR__.'/dashboard') as $fileinfo) {
+
     require $fileinfo->getPathname();
 }

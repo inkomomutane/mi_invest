@@ -60,6 +60,13 @@ export const AppRoutes: NavItem[]  = [
         adminOnly: false,
     },
     {
+        title: t('Transaction type'),
+        href: route('transaction.type.all'),
+        icon: FileWarning,
+        routeName: 'transaction.type.all',
+        adminOnly: false,
+    },
+    {
         title: t('Status'),
         href: route('status.all'),
         icon: FileWarning,

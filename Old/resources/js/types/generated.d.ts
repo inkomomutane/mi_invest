@@ -173,7 +173,7 @@ declare namespace App.Data {
     export type TransactionTypeData = {
         id: number | null;
         name: string;
-        slug_text: string;
+        prefix: string;
     };
     export type UserChildrenData = {
         id: number | null;
@@ -183,7 +183,7 @@ declare namespace App.Data {
         id: number | null;
         name: string | null;
         email: string | null;
-        contacto: string | null;
+        contact: string | null;
         location: string | null;
         active: boolean | null;
         role: any | App.Data.RoleData | null;

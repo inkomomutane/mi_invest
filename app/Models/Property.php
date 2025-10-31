@@ -57,8 +57,8 @@ class Property extends Model implements HasMedia
         'approved_at' => 'datetime',
         'for_rent' => 'boolean',
         'approved' => 'boolean',
-        'price' => 'decimal:2',
-        'area' => 'decimal:2',
+        'price' => 'string',
+        'area' => 'string',
     ];
 
     // Relationships
