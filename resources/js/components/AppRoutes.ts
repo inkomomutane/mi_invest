@@ -1,5 +1,15 @@
 import type { NavItem } from '@/types';
-import { FileWarning , LayoutGrid, Users,MapPinned ,Building2  } from 'lucide-vue-next';
+import {
+    FileWarning,
+    LayoutGrid,
+    Handshake,
+    MapPinned,
+    Building2,
+    House,
+    Building,
+    Briefcase,
+    BriefcaseBusiness, Loader2
+} from 'lucide-vue-next';
 import {t} from "@/lib/utils"
 
 export const AppRoutes: NavItem[]  = [
@@ -34,14 +44,14 @@ export const AppRoutes: NavItem[]  = [
     {
         title: t('Intermediation rules'),
         href: route('intermediation-rule.all'),
-        icon: FileWarning   ,
+        icon: Handshake    ,
         routeName: 'intermediation-rule.all',
         adminOnly: false,
     },
     {
         title: t('Neighborhood'),
         href: route('neighborhood.all'),
-        icon: FileWarning   ,
+        icon: House   ,
         routeName: 'neighborhood.all',
         adminOnly: false,
     },
@@ -55,21 +65,21 @@ export const AppRoutes: NavItem[]  = [
     {
         title: t('Property type'),
         href: route('property-type.all'),
-        icon: FileWarning,
+        icon: Building,
         routeName: 'property-type.all',
         adminOnly: false,
     },
     {
         title: t('Transaction type'),
         href: route('transaction.type.all'),
-        icon: FileWarning,
+        icon: BriefcaseBusiness,
         routeName: 'transaction.type.all',
         adminOnly: false,
     },
     {
         title: t('Status'),
         href: route('status.all'),
-        icon: FileWarning,
+        icon: Loader2,
         routeName: 'status.all',
         adminOnly: false,
     },

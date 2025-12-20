@@ -10,7 +10,7 @@ use Spatie\LaravelData\Lazy;
 class TransactionTypeData extends Data
 {
     public function __construct(
-        public int $id,
+        public ?int $id =null,
         public ?string $name = null,
         public ?string $prefix = null,
         public Lazy|MediaData $icon,
