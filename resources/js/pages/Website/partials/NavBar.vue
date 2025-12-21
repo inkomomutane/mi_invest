@@ -1,25 +1,29 @@
 <script setup lang="ts">
-import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from 'lucide-vue-next'
-import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    NavigationMenuTrigger,
-    navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu'
-// eslint-disable-next-line import/no-named-default
+ import {cn} from "@/lib/utils";
+ import AppLogo from "@/components/AppLogo.vue";
+ import AppLogoIcon from "@/components/AppLogoIcon.vue";
 
 
+ defineProps({
+     sticky: {
+         type: Boolean,
+         default: false
+     }
+ })
 </script>
 
 <template>
-    <nav class="bg-white  w-full    border-b border-default">
+    <nav :class="cn('bg-white  w-full    border-b border-default',{
+         'sticky top-0 z-10': sticky
+    })">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Flowbite Logo" />
-                <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">Flowbite</span>
+            <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <div class="flex h-7 size-12 items-center justify-center rounded-md ">
+                    <AppLogoIcon class="size-5 fill-current text-white dark:text-black" />
+                </div>
+                <div class="ml-1 grid flex-1 text-left text-sm">
+                    <span class="mb-0.5 truncate leading-tight font-semibold">Mi-invest</span>
+                </div>
             </a>
             <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary" aria-controls="navbar-default" aria-expanded="false">
                 <span class="sr-only">Open main menu</span>

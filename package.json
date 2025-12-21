@@ -11,6 +11,7 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.19.0",
+        "@faker-js/faker": "^10.1.0",
         "@types/node": "^22.13.5",
         "@vue/eslint-config-typescript": "^14.3.0",
         "eslint": "^9.17.0",
@@ -36,6 +37,9 @@
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "concurrently": "^9.0.1",
+        "currency.js": "^2.0.4",
+        "embla-carousel-auto-scroll": "^8.6.0",
+        "embla-carousel-autoplay": "^8.6.0",
         "embla-carousel-vue": "^8.6.0",
         "laravel-vite-plugin": "^2.0.0",
         "lucide-vue-next": "^0.468.0",

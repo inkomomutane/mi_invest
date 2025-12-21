@@ -18,8 +18,6 @@ export const i18n = createI18n({
 });
 
 
-
-
 export const t = (key: keyof MessageSchema): string => {
     return i18n.global.t(key as string);
 };

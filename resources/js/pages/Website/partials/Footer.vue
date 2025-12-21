@@ -4,7 +4,7 @@ import AppLogoIcon from "@/components/AppLogoIcon.vue";
 </script>
 
 <template>
-    <footer class="bg-[#fff]">
+    <footer class="bg-[#efefef] border-t">
         <div class="mx-auto max-w-screen-2xl pb-6 pt-10 md:py-10 sm:px-6 lg:px-16">
             <div class="w-full grid grid-cols-1 md:grid-cols-12 px-6 md:py-8 md:px-0 gap-8">
                 <div class="md:col-span-4">

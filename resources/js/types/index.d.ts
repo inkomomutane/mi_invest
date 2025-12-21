@@ -86,3 +86,12 @@ export interface User {
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;
+export interface Property {
+    id?:string;
+    name: string;
+    address?: string,
+    description?: string,
+    price:string,
+    category: string,
+    url: string,
+}
