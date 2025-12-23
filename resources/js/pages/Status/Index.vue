@@ -15,7 +15,6 @@ import VTable from '@/components/VTable/VTable.vue';
 import VHeader from '@/components/VTable/VHeader.vue';
 import VCell from '@/components/VTable/VCell.vue';
 import Delete from './DeleteStatus.vue';
-
 const props = defineProps({
     statuses: {
         type: Object,

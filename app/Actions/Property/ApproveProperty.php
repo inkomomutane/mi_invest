@@ -6,7 +6,8 @@ use App\Models\Property;
 use Auth;
 
 class ApproveProperty
-{public function handle(Property $property): bool
+{
+    public function handle(Property $property): bool
     {
         try {
             $property->approved = true;
@@ -21,6 +22,5 @@ class ApproveProperty
             return false;
         }
 
-        return false;
     }
 }

@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { useForm } from '@inertiajs/vue3';
 import { PropType, ref } from 'vue';
 import InputError from '@/components/InputError.vue';
+import { t } from "@/lib/utils"
 
 const props = defineProps({
     transactionType: {
@@ -69,7 +70,7 @@ const submit = () => {
     <Dialog @update:open="props.close" :open="props.openModal">
         <DialogScrollContent class="max-w-2xl">
             <DialogHeader>
-                <DialogTitle>{{ $t('Edit transaction type') }}</DialogTitle>
+                <DialogTitle>{{ t('Edit transaction type') }}</DialogTitle>
             </DialogHeader>
             <div>
                 <form @submit.prevent="submit">

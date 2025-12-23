@@ -45,7 +45,7 @@ watch(() => form.name, (newName) => {
             .replace(/\s+/g, '-')
             .replace(/-+/g, '-')
             .trim();
-        
+
         // Only update if user hasn't manually changed the slug
         if (!form.slug_text || form.slug_text === autoSlug) {
             form.slug_text = autoSlug;

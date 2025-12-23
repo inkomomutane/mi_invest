@@ -69,7 +69,7 @@ const submit = () => {
                             />
                             <InputError :message="form.errors.name" class="mt-2" />
                         </div>
-                        
+
                         <div class="grid w-full items-center gap-1.5">
                             <Label for="city" class="text-sm font-medium text-gray-700 dark:text-gray-300">
                                 {{ $t('City') }}

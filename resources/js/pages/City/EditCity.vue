@@ -15,7 +15,7 @@ import { useForm } from '@inertiajs/vue3';
 import { PropType } from 'vue';
 import InputError from '@/components/InputError.vue';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
+import { t } from "@/lib/utils"
 const props = defineProps({
     city: {
         type: Object as PropType<App.Data.CityData>,

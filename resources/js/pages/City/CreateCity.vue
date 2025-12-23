@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { useForm } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
+import { t } from "@/lib/utils"
 const props = defineProps({
     close: {
         type: Function,
@@ -69,7 +69,7 @@ const submit = () => {
                             />
                             <InputError :message="form.errors.name" class="mt-2" />
                         </div>
-                        
+
                         <div class="grid w-full items-center gap-1.5">
                             <Label for="province" class="text-sm font-medium text-gray-700 dark:text-gray-300">
                                 {{ $t('Province') }}

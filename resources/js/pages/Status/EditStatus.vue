@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { useForm } from '@inertiajs/vue3';
 import { PropType } from 'vue';
 import InputError from '@/components/InputError.vue';
-
+import { t } from "@/lib/utils"
 const props = defineProps({
     status: {
         type: Object as PropType<App.Data.StatusData>,

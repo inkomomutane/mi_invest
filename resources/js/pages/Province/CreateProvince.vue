@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { useForm } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
-
+import { t } from "@/lib/utils"
 const props = defineProps({
     close: {
         type: Function,
