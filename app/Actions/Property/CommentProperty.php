@@ -11,15 +11,15 @@ class CommentProperty
     public function rules(): array
     {
         return [
-            'nome' => ['nullable', 'string', 'max:125'],
-            'comentario' => ['nullable', 'string', 'max:125'],
+            'name' => ['nullable', 'string', 'max:125'],
+            'comment' => ['nullable', 'string', 'max:125'],
         ];
     }
 
     public function __invoke(Property $property, Request $actionRequest)
     {
         try {
-            $property->comentarios()->create($actionRequest->all());
+            $property->comments()->create($actionRequest->all());
 
             return back()->with('success', 'Comentário enviado com sucesso')->withHeaders(['#comments']);
         } catch (\Throwable $th) {

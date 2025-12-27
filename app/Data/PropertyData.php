@@ -3,6 +3,7 @@
 namespace App\Data;
 
 use App\Models\Property;
+use Illuminate\Support\Carbon;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Lazy;
 
@@ -10,41 +11,41 @@ use Spatie\LaravelData\Lazy;
 class PropertyData extends Data
 {
     public function __construct(
-        public Lazy|null|int $id,
-        public Lazy|null|string $title,
-        public Lazy|null|string $description,
-        public Lazy|null|string $details,
-        public Lazy|null|int $bathrooms,
-        public Lazy|null|string $price,
-        public Lazy|null|int $year,
-        public Lazy|null|int $floors,
-        public Lazy|null|string $area,
-        public Lazy|null|int $bedrooms,
-        public Lazy|null|int $suites,
-        public Lazy|null|int $garages,
-        public Lazy|null|int $pools,
-        public Lazy|null|string $address,
-        public Lazy|null|string $map,
-        public Lazy|null|int $views,
-        public Lazy|null|ConditionData $condition,
-        public Lazy|null|NeighborhoodData $neighborhood,
-        public Lazy|null|PropertyTypeData $propertyType,
-        public Lazy|null|StatusData $status,
-        public Lazy|null|UserData $broker,
-        public Lazy|null|string $slug,
-        public Lazy|null|bool $forRent,
-        public Lazy|null|BusinessRuleData $businessRule,
-        public Lazy|null|PropertyPurposeData $propertyPurpose,
-        public Lazy|null|IntermediationRuleData $intermediationRule,
+        public Lazy|null|int       $id,
+        public Lazy|null|string    $title,
+        public Lazy|null|string    $description,
+        public Lazy|null|string    $details,
+        public Lazy|null|int       $bathrooms,
+        public Lazy|null|string    $price,
+        public Lazy|null|int       $year,
+        public Lazy|null|int       $floors,
+        public Lazy|null|string    $area,
+        public Lazy|null|int       $bedrooms,
+        public Lazy|null|int       $suites,
+        public Lazy|null|int       $garages,
+        public Lazy|null|int       $pools,
+        public Lazy|null|string    $address,
+        public Lazy|null|string    $map,
+        public Lazy|null|int       $views,
+        public string|null         $condition,
+        public string|null         $neighborhood,
+        public string|null         $propertyType,
+        public string|null         $status,
+        public string|null         $broker,
+        public string|null         $slug,
+        public null|bool           $forRent,
+        public string|null         $businessRule,
+        public string|null         $propertyPurpose,
+        public string|null         $intermediationRule,
         public Lazy|null|MediaData $media,
         public Lazy|null|MediaData $images,
-        public Lazy|null|bool $approved,
-        public Lazy|null|string $approvedAt,
-        public Lazy|null|UserData $approvedBy,
+        public null|bool           $approved,
+        public null|string|Carbon  $approvedAt,
+        public string|null         $approvedBy,
     ) {
     }
 
-    public static function fromModel(Property $property)
+    public static function fromModel(Property $property): PropertyData
     {
         return new self(
             id: $property->id,
@@ -63,23 +64,23 @@ class PropertyData extends Data
             address: $property->address,
             map: $property->map,
             views: $property->views,
-            condition: Lazy::whenLoaded('condition', $property, fn () => $property->condition->getData()),
-            neighborhood: Lazy::whenLoaded('neighborhood', $property, fn () => $property->neighborhood->getData()),
-            propertyType: Lazy::whenLoaded('propertyType', $property, fn () => $property->propertyType->getData()),
-            status: Lazy::whenLoaded('status', $property, fn () => $property->status->getData()),
-            broker: Lazy::whenLoaded('broker', $property, fn () => $property->broker->getData()),
+            condition: $property->condition?->name,
+            neighborhood: $property->neighborhood?->name,
+            propertyType: $property->propertyType?->name,
+            status:$property->status?->name,
+            broker: $property->broker?->name,
             slug: $property->slug,
             forRent: $property->for_rent,
-            businessRule: Lazy::whenLoaded('businessRule', $property, fn () => $property->businessRule->getData()),
-            propertyPurpose: Lazy::whenLoaded('propertyPurpose', $property, fn () => $property->propertyPurpose->getData()),
-            intermediationRule: Lazy::whenLoaded('intermediationRule', $property, fn () => $property->intermediationRule->getData()),
+            businessRule: $property->businessRule?->name,
+            propertyPurpose:$property->propertyPurpose?->name,
+            intermediationRule: $property->intermediationRule?->name,
             media: Lazy::whenLoaded('media', $property, fn () => ! is_null($property->getFirstMedia('images')) ?
             MediaData::fromModel($property->getFirstMedia('images')) :
             null),
             images: Lazy::whenLoaded('media', $property, fn () => MediaData::collect($property->getMedia('images'))),
             approved: $property->approved,
-            approvedAt: $property->approved_at?->toDateTimeString(),
-            approvedBy: Lazy::whenLoaded('approvedBy', $property, fn () => $property->approvedBy?->getData()),
+            approvedAt: $property->approved_at,
+            approvedBy: $property->approvedBy?->name,
         );
     }
 }

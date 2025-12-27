@@ -142,10 +142,10 @@ const columns = [
             </div>
         </div>
     </AppLayout>
-    <Create v-if="crudManagerRef.isModalOpen" :provinces="provinces" :openModal="crudManagerRef.isModalOpen" :close="crudManagerRef.close" />
+    <Create v-if="crudManagerRef.isModalOpen"  :openModal="crudManagerRef.isModalOpen" :close="crudManagerRef.close" />
     <Edit
         v-if="editManagerRef.isModalOpen"
-        :provinces="provinces"
+
         :openModal="editManagerRef.isModalOpen"
         :close="editManagerRef.close"
         :city="editManagerRef.model"

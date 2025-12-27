@@ -2,7 +2,7 @@
 
 namespace App\Actions\Property;
 
-use App\Models\Comentario;
+use App\Models\Comment;
 use App\Models\Property;
 use App\Models\Rating;
 use App\Support\Enums\SystemRoles;
@@ -26,21 +26,19 @@ class ApprovePropertyDeletion
 
     public function __invoke(int $property)
     {
-        /** @var Property $property */
-        $property = Property::onlyTrashed()->whereId($property)->first();
+        /** @var Property $propertyModel */
+        $propertyModel = Property::onlyTrashed()->whereId($property)->firstOrFail();
 
-        if (! is_null($property) && $property->trashed()) {
+        if ($propertyModel->trashed()) {
             try {
-                Rating::whereIn('id', $property->ratings->pluck('id'))->delete();
-                Comentario::whereIn('id', $property->comentarios->pluck('id'))->delete();
-                $property->forceDelete();
+                Rating::whereIn('id', $propertyModel->ratings->pluck('id'))->delete();
+                Comment::whereIn('id', $propertyModel->comments->pluck('id'))->delete();
+                $propertyModel->forceDelete();
                 flash()->addSuccess(__('messages.action_success'));
 
                 return to_route('property.all.trash');
             } catch (\Throwable $e) {
-                throw $e;
                 flash()->addError(__('messages.action_error'));
-
                 return to_route('property.all.trash');
             }
         } else {

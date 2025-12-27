@@ -3,14 +3,20 @@ import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn,t } from '@/lib/utils';
-import {  ChevronsUpDown } from 'lucide-vue-next';
-import { computed, ref, watch } from 'vue';
+import {  ChevronUp,ChevronDown } from 'lucide-vue-next';
+import {computed, PropType, ref, watch} from 'vue';
+
+type AlignmentData = 'end'|'start';
 
 const props = defineProps({
   options: {
     type: Array,
     default: () => [],
   },
+    alignment: {
+       type:  Object as PropType<AlignmentData>,
+        default: 'start'
+    },
   reduce: {
     type: Function,
     default: (option: any) => option,
@@ -77,28 +83,31 @@ const open = ref(false);
 <template>
   <Popover v-model:open="open">
     <PopoverTrigger as-child>
-      <Button
-        id="select-44"
-        variant="outline"
-        :disabled="disabled"
-        role="combobox"
-        :aria-expanded="open"
-        :class="cn('w-full min-w-32 justify-between bg-background px-3 font-normal hover:bg-background', props.class)"
-      >
-        <template v-if="selectedValue">
-          <span class="flex min-w-0 items-center gap-2">
+         <slot name="trigger">
+             <Button
+                 id="select-44"
+                 variant="outline"
+                 :disabled="disabled"
+                 role="combobox"
+                 :aria-expanded="open"
+                 :class="cn('w-full min-w-32 justify-between bg-background px-3 font-normal hover:bg-background',props.class)"
+             >
+                 <template v-if="selectedValue">
+          <span class="flex min-w-0 items-center gap-2 text-black">
             <span class="truncate">{{ getLabel(selectedValue) }}</span>
           </span>
-        </template>
-        <template v-else>
-          <span class="text-muted-foreground">{{ placeholder }}</span>
-        </template>
-        <ChevronsUpDown :size="16" :stroke-width="2" class="shrink-0 text-muted-foreground/80" aria-hidden="true" />
-      </Button>
+                 </template>
+                 <template v-else>
+                     <span class="text-muted-foreground">{{ placeholder }}</span>
+                 </template>
+                 <ChevronUp v-if="open" :size="16" :stroke-width="2" class="shrink-0 text-muted-foreground/80" aria-hidden="true" />
+                 <ChevronDown v-else :size="16" :stroke-width="2" class="shrink-0 text-muted-foreground/80" aria-hidden="true"/>
+             </Button>
+         </slot>
     </PopoverTrigger>
     <PopoverContent
       class="w-full min-w-[var(--reka-popper-anchor-width)] rounded-md border bg-popover p-0 text-xs text-popover-foreground shadow-lg"
-      align="start"
+      :align="props.alignment"
     >
       <Command>
         <CommandInput class="ring-none outline-hidden" :placeholder="placeholder" />
@@ -129,7 +138,6 @@ const open = ref(false);
                       '!min-w-72',
                       'outline-[0.5px] outline-gray-200/80 dark:outline-zinc-900/90 first-letter:uppercase',
                     ],
-                    props.class,
                   )
                 "
               >

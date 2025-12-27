@@ -118,6 +118,5 @@ import { ChevronRight,ChevronLeft } from 'lucide-vue-next';
             </Carousel>
         </div>
     </section>
-
     <Footer/>
 </template>

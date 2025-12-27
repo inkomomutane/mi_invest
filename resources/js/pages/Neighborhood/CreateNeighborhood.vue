@@ -14,6 +14,10 @@ import { Input } from '@/components/ui/input';
 import { useForm } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {crudManager, t} from "@/lib/utils";
+import AsyncSelect from "@/components/Select/AsyncSelect.vue";
+import {ref} from "vue";
+import CreateCity from "@/pages/City/CreateCity.vue";
 
 const props = defineProps({
     close: {
@@ -24,16 +28,13 @@ const props = defineProps({
         type: Boolean,
         required: true,
     },
-    cities: {
-        type: Array<App.Data.CityData>,
-        required: true,
-    },
 });
 
 const form = useForm({
     name: '',
     city_id: null,
 });
+const crudManagerRef = ref(crudManager());
 
 const submit = () => {
     form.post(route('neighborhood.store'), {
@@ -74,18 +75,22 @@ const submit = () => {
                             <Label for="city" class="text-sm font-medium text-gray-700 dark:text-gray-300">
                                 {{ $t('City') }}
                             </Label>
-                            <Select v-model="form.city_id">
-                                <SelectTrigger class="w-full">
-                                    <SelectValue :placeholder="$t('Select City')" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectItem :value="city.id" v-for="city in props.cities" :key="city.id">
-                                            {{ city.name }}
-                                        </SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
+                            <AsyncSelect
+                                :placeholder="t('Select')"
+                                :reduce="(option) => option.id"
+                                :get-label="(option) => option.name"
+                                :route-name="('cities-json')"
+                                :mapper="item => ({
+                                          id: item.id,
+                                          title: item.name,
+                                          subtitle:  '',
+                                          slug:  '',
+                                          notes:  '',
+                                          trailer: '',
+                                        })"
+                                :create-new="() => crudManagerRef.open()"
+                                v-model="form.city_id"
+                            />
                             <InputError :message="form.errors.city_id" class="mt-2" />
                         </div>
                     </div>
@@ -103,4 +108,5 @@ const submit = () => {
             </DialogFooter>
         </DialogScrollContent>
     </Dialog>
+    <CreateCity  :close="crudManagerRef.close" :open-modal="crudManagerRef.isModalOpen" v-if="crudManagerRef.isModalOpen"  />
 </template>

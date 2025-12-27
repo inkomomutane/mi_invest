@@ -78,7 +78,7 @@
     "Hello!": "Olá!",
     "Hide": "Esconder",
     "Hide :name": "Esconder :name",
-    "Home": "Lar",
+    "Home": "Início",
     "HTTP Version Not Supported": "Versão HTTP não suportada",
     "I'm a teapot": "eu sou um bule",
     "If you did not create an account, no further action is required.": "Se não criou uma conta, ignore este e-mail.",
@@ -227,5 +227,16 @@
     "Web Server is Down": "Servidor Web está fora do ar",
     "Whoops!": "Ops!",
     "Yes": "Sim",
-    "You are receiving this email because we received a password reset request for your account.": "Recebeu esse e-mail porque foi solicitada a redefinição da palavra-passe da sua conta."
+    "You are receiving this email because we received a password reset request for your account.": "Recebeu esse e-mail porque foi solicitada a redefinição da palavra-passe da sua conta.",
+    "Property": "Propriedade",
+    "Properties": "Propriedades",
+    "About Us": "Sobre nós",
+    "Terms of Service": "Termos de Serviço",
+    "Privacy Policy": "Política de Privacidade",
+    "Help": "Ajuda",
+    "Contact Us": "Contate-nos",
+    "Results": "Resultados"
+
+
+
 }

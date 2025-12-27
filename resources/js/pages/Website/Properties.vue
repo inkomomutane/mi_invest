@@ -5,9 +5,9 @@
   import  {faker } from "@faker-js/faker";
   import {NUMBER} from "@/lib/helpers";
   import Property from "@/components/Property.vue";
-  import {ChevronRight} from "lucide-vue-next";
+  import {ChevronRight, Search} from "lucide-vue-next";
   import {Button} from "@/components/ui/button";
-  import { t} from "@/lib/utils"
+  import {cn, t} from "@/lib/utils"
   import {
       Select,
       SelectContent,
@@ -27,105 +27,75 @@
       NumberFieldInput,
   } from "@/components/ui/number-field";
   import {InputGroup, InputGroupAddon, InputGroupInput} from "@/components/ui/input-group";
+  import SyncSelect from "@/components/Select/SyncSelect.vue";
+  import {Label} from "@/components/ui/label";
+  import {useForm} from "@inertiajs/vue3";
   defineProps<{}>()
+  const form = useForm({
+      min_area: null,
+      max_are: null,
+      min_price: null,
+      max_price: null,
+      location: '',
+      type: null,
+      property_for: null,
+  })
 </script>
 
 <template>
     <NavBar  />
     <div class="bg-white sticky top-0  z-10">
         <div class="max-w-screen-xl mx-auto px-8 pt-4 ">
-             <div class="flex flex-wrap gap-4">
-                 <Select>
-                     <SelectTrigger class="w-[180px] mt-0">
-                         <SelectValue :placeholder="t('Property type')" />
-                     </SelectTrigger>
-                     <SelectContent>
-                         <SelectGroup>
-                             <SelectLabel>Fruits</SelectLabel>
-                             <SelectItem value="apple">
-                                 Apple
-                             </SelectItem>
-                             <SelectItem value="banana">
-                                 Banana
-                             </SelectItem>
-                             <SelectItem value="blueberry">
-                                 Blueberry
-                             </SelectItem>
-                             <SelectItem value="grapes">
-                                 Grapes
-                             </SelectItem>
-                             <SelectItem value="pineapple">
-                                 Pineapple
-                             </SelectItem>
-                         </SelectGroup>
-                     </SelectContent>
-                 </Select>
-                 <Select>
-                     <SelectTrigger class="w-[180px] mt-0">
-                         <SelectValue :placeholder="t('Localization')" />
-                     </SelectTrigger>
-                     <SelectContent>
-                         <SelectGroup>
-                             <SelectLabel>Fruits</SelectLabel>
-                             <SelectItem value="apple">
-                                 Apple
-                             </SelectItem>
-                             <SelectItem value="banana">
-                                 Banana
-                             </SelectItem>
-                             <SelectItem value="blueberry">
-                                 Blueberry
-                             </SelectItem>
-                             <SelectItem value="grapes">
-                                 Grapes
-                             </SelectItem>
-                             <SelectItem value="pineapple">
-                                 Pineapple
-                             </SelectItem>
-                         </SelectGroup>
-                     </SelectContent>
-                 </Select>
-                 <Select>
-                     <SelectTrigger class="w-[180px] mt-0">
-                         <SelectValue :placeholder="t('Condition')" />
-                     </SelectTrigger>
-                     <SelectContent>
-                         <SelectGroup>
-                             <SelectLabel>Fruits</SelectLabel>
-                             <SelectItem value="apple">
-                                 Apple
-                             </SelectItem>
-                             <SelectItem value="banana">
-                                 Banana
-                             </SelectItem>
-                             <SelectItem value="blueberry">
-                                 Blueberry
-                             </SelectItem>
-                             <SelectItem value="grapes">
-                                 Grapes
-                             </SelectItem>
-                             <SelectItem value="pineapple">
-                                 Pineapple
-                             </SelectItem>
-                         </SelectGroup>
-                     </SelectContent>
-                 </Select>
-                 <NumberField id="age" :default-value="18" :min="0">
-                     <NumberFieldContent>
-                         <NumberFieldInput  :placeholder="t('To')" />
-                     </NumberFieldContent>
-                 </NumberField>
-                  <div class="w-full flex flex-row gap-3">
-                      <Input :placeholder="t('Search')" />
-                      <Button>
-                          {{ t('Search') }}
-                      </Button>
-                  </div>
+             <div class="flex flex-row gap-4">
+                 <div class="md:basis-4/12">
+                     <Input class="p-5 border-2 border-zinc-800/50 focus-visible:border-zinc-800 rounded-sm " :placeholder="t('What are you looking for?')"/>
+                 </div>
+                 <div class="hidden md:block md:basis-2/12">
+                     <SyncSelect
+                         :class="cn('p-5 border-2 border-zinc-800/50 focus-visible:border-zinc-800 rounded-sm focus-visible:ring-none focus-visible:outline-none')"
+                         :options="[
+                                                    'Rent',
+                                                    'Buy',
+                                                    'Short stay',
+                                             ]"
+                         :placeholder="t('For')"
+                     />
+                 </div>
+                 <div class="hidden md:block md:basis-2/12">
+                     <SyncSelect
+                         :class="cn('p-5 border-2 border-zinc-800/50 focus-visible:border-zinc-800 rounded-sm focus-visible:ring-none focus-visible:outline-none')"
+                         alignment="end"
+                         :options="[
+                                            'Condominium',
+                                            'House',
+                                            'Apartment',
+                                            'Land',
+                                            'Commercial',
+                                        ]"
+                         :placeholder="t('Property type')"
+                     />
+                 </div>
+                 <div>
+                     <Button variant="outline" class="p-5 border-2 border-zinc-800/50 focus-visible:border-zinc-800 rounded-sm focus-visible:ring-none focus-visible:outline-none">
+                          {{ t("Filters") }}
+                     </Button>
+                 </div>
+                 <div class="md:basis-4/12">
+                     <Button class="w-full  px-4 py-5 rounded-sm flex flex-row justify-between border-2">
+                         <div class="flex items-center gap-2">
+                             <Search/>
+                             {{ t("Search") }}
+                         </div>
+                     </Button>
+                 </div>
              </div>
+
+
+
             <div class="flex items-center mb-5 justify-between">
                 <div  class="flex flex-row">
                     <h2 class="tracking-tight dark:text-gray-50 font-bold  uppercase border-l-2   border-l-black dark:border-white/50 pl-2  ">
-                        Results
+                        {{ t("Results") }}
                     </h2>
                     <ChevronRight class="opacity-50"/>
                 </div>

@@ -2,7 +2,6 @@
 import {
     Dialog,
     DialogClose,
-    DialogContent,
     DialogFooter,
     DialogHeader,
     DialogScrollContent,
@@ -14,7 +13,11 @@ import { Input } from '@/components/ui/input';
 import { useForm } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { t } from "@/lib/utils"
+import {crudManager, t} from "@/lib/utils"
+import AsyncSelect from "@/components/Select/AsyncSelect.vue";
+import {ref} from "vue";
+import {App} from "@/types/generated";
+import CreateProvince from "@/pages/Province/CreateProvince.vue";
 const props = defineProps({
     close: {
         type: Function,
@@ -24,16 +27,13 @@ const props = defineProps({
         type: Boolean,
         required: true,
     },
-    provinces: {
-        type: Array<App.Data.ProvinceData>,
-        required: true,
-    },
 });
 
 const form = useForm({
     name: '',
     province_id: null,
 });
+const crudManagerRef = ref(crudManager());
 
 const submit = () => {
     form.post(route('city.store'), {
@@ -74,18 +74,23 @@ const submit = () => {
                             <Label for="province" class="text-sm font-medium text-gray-700 dark:text-gray-300">
                                 {{ $t('Province') }}
                             </Label>
-                            <Select v-model="form.province_id">
-                                <SelectTrigger class="w-full">
-                                    <SelectValue :placeholder="$t('Select Province')" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectItem :value="province.id" v-for="province in props.provinces" :key="province.id">
-                                            {{ province.name }}
-                                        </SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
+
+                            <AsyncSelect
+                                :placeholder="t('Select')"
+                                :reduce="(option) => option.id"
+                                :get-label="(option) => option.name"
+                                :route-name="('provinces-json')"
+                                :mapper="item => ({
+                                          id: item.id,
+                                          title: item.name,
+                                          subtitle:  '',
+                                          slug:  '',
+                                          notes:  '',
+                                          trailer: '',
+                                        })"
+                                :create-new="() => crudManagerRef.open()"
+                                v-model="form.province_id"
+                            />
                             <InputError :message="form.errors.province_id" class="mt-2" />
                         </div>
                     </div>
@@ -103,4 +108,6 @@ const submit = () => {
             </DialogFooter>
         </DialogScrollContent>
     </Dialog>
+
+    <CreateProvince  :close="crudManagerRef.close" :open-modal="crudManagerRef.isModalOpen" v-if="crudManagerRef.isModalOpen"  />
 </template>
