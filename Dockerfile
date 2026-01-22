@@ -11,7 +11,7 @@ RUN npm install -g npm
 
 # Learn more about the Server Side Up PHP Docker Images at:
 # https://serversideup.net/open-source/docker-php/
-FROM serversideup/php:8.2-fpm-nginx-bookworm AS base
+FROM serversideup/php:8.4-fpm-nginx-bookworm AS base
 
 ## Uncomment if you need to install additional PHP extensions
 USER root
@@ -72,7 +72,6 @@ RUN composer dump-autoload
 RUN npm install
 
 RUN npm run build && \
-    npm run build:ssr && \
     rm -rf /var/www/html/node_modules && \
     rm -rf /var/www/html/public/hot && \
     rm -rf /var/www/html/.github && \
