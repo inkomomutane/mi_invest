@@ -1,8 +1,6 @@
 services:
   php:
     image: localhost:5000/mi_invest:latest
-    depends_on:
-      - database
     environment:
       PHP_OPCACHE_ENABLE: "1"
       AUTORUN_ENABLED: "true" # 👈 Remove this line if you don't want Laravel Automations
@@ -11,6 +9,7 @@ services:
       LOG_OUTPUT_LEVEL: debug
     networks:
       - traefik_public
+      - shared_mysql_database
     volumes:
       - "storage_private:/var/www/html/storage/app/private/"
       - "./backup:/var/www/html/storage/app/public/"
@@ -38,7 +37,7 @@ services:
         - "traefik.enable=true"
 
         # HTTPS Router
-        - "traefik.http.routers.php.rule=Host(`mimovel.com`) || Host(`www.mimovel.com`) || Host(`m.mimovel.com`) || Host(`web.mimovel.com`)"
+        - "traefik.http.routers.php.rule=Host(`mi-invest.com`) || Host(`www.mi-invest.com`) || Host(`m.mi-invest.com`) || Host(`web.mi-invest.com`)"
         - "traefik.http.routers.php.entrypoints=websecure"
         - "traefik.http.routers.php.tls=true"
         - "traefik.http.routers.php.tls.certresolver=le"
@@ -57,7 +56,7 @@ services:
         - "traefik.http.services.php.loadbalancer.server.port=8080"
 
         # Optional: HTTP to HTTPS redirect
-        - "traefik.http.routers.php-http.rule=Host(`mimovel.com`) || Host(`www.mimovel.com`) || Host(`m.mimovel.com`) || Host(`web.mimovel.com`)"
+        - "traefik.http.routers.php-http.rule=Host(`mi-invest.com`) || Host(`www.mi-invest.com`) || Host(`m.mi-invest.com`) || Host(`web.mi-invest.com`)"
         - "traefik.http.routers.php-http.entrypoints=web"
         - "traefik.http.routers.php-http.middlewares=php-https-redirect"
         - "traefik.http.middlewares.php-https-redirect.redirectscheme.scheme=https"
@@ -73,6 +72,7 @@ services:
     stop_signal: SIGTERM
     networks:
       - traefik_public
+      - shared_mysql_database
     volumes:
       - "storage_private:/var/www/html/storage/app/private/"
       - "./backup:/var/www/html/storage/app/public/"
@@ -97,43 +97,13 @@ services:
         window: 120s
       labels:
         - "traefik.enable=false"
-  database:
-    image: mysql:8.0
-    secrets:
-      - db_password
-    environment:
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_password
-      MYSQL_DATABASE: mimovel
-      MYSQL_USER: mimovel_user
-      MYSQL_PASSWORD_FILE: /run/secrets/db_password
-    volumes:
-      - db_data:/var/lib/mysql
-    networks:
-      - traefik_public
-    deploy:
-      replicas: 1
-      update_config:
-        failure_action: rollback
-        parallelism: 1
-        delay: 5s
-        order: start-first
-      rollback_config:
-        parallelism: 1
-        order: stop-first
-      restart_policy:
-        condition: any
-        delay: 10s
-        max_attempts: 3
-        window: 120s
 volumes:
   storage_private:
   storage_sessions:
   storage_logs:
   storage_svg:
-  db_data:
 networks:
   traefik_public:
     external: true
-secrets:
-  db_password:
+  shared_mysql_database:
     external: true
