@@ -5,7 +5,7 @@ on:
       - main
 jobs:
   buildApp:
-    name: Build app to server
+    name: Deploy application
     runs-on: ubuntu-latest
     steps:
       - name: install dependencies via composer
