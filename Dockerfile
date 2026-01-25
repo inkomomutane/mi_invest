@@ -71,7 +71,7 @@ RUN composer dump-autoload
 
 RUN npm install
 
-RUN npm run build && \
+RUN npm run build:ssr && \
     rm -rf /var/www/html/node_modules && \
     rm -rf /var/www/html/public/hot && \
     rm -rf /var/www/html/.github && \
