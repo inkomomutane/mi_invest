@@ -33,33 +33,32 @@ services:
         max_attempts: 3
         window: 120s
       labels:
-        # Enable Traefik
         - "traefik.enable=true"
+        # HTTPS Router (namespaced)
+        - "traefik.http.routers.mi_invest_php.rule=Host(`mi-invest.com`) || Host(`www.mi-invest.com`) || Host(`m.mi-invest.com`) || Host(`web.mi-invest.com`)"
+        - "traefik.http.routers.mi_invest_php.entrypoints=websecure"
+        - "traefik.http.routers.mi_invest_php.tls=true"
+        - "traefik.http.routers.mi_invest_php.tls.certresolver=le"
+        - "traefik.http.services.mi_invest_php.loadbalancer.server.scheme=http"
 
-        # HTTPS Router
-        - "traefik.http.routers.php.rule=Host(`mi-invest.com`) || Host(`www.mi-invest.com`) || Host(`m.mi-invest.com`) || Host(`web.mi-invest.com`)"
-        - "traefik.http.routers.php.entrypoints=websecure"
-        - "traefik.http.routers.php.tls=true"
-        - "traefik.http.routers.php.tls.certresolver=le"
-        #- "traefik.http.services.php.loadbalancer.server.scheme=https"
-        - "traefik.http.services.php.loadbalancer.server.scheme=http"
+        # URL replacement middleware (namespaced)
+        - "traefik.http.middlewares.mi_invest_https_replace.replacepathregex.regex=http://([^/]+)"
+        - "traefik.http.middlewares.mi_invest_https_replace.replacepathregex.replacement=https://$$1"
 
+        # Headers middleware (namespaced)
+        - "traefik.http.middlewares.mi_invest_php_headers.headers.customrequestheaders.X-Forwarded-Proto=https"
 
-        # URL replacement middleware
-        - "traefik.http.middlewares.https-replace.replacepathregex.regex=http://([^/]+)"
-        - "traefik.http.middlewares.https-replace.replacepathregex.replacement=https://$$1"
-        # Headers middleware
-        - "traefik.http.middlewares.php-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
-        # Chain middlewares
-        - "traefik.http.routers.php.middlewares=php-headers,https-replace"
-        # Service port (THIS IS WHAT WAS MISSING!)
-        - "traefik.http.services.php.loadbalancer.server.port=8080"
+        # Chain middlewares on the router (use the namespaced router)
+        - "traefik.http.routers.mi_invest_php.middlewares=mi_invest_php_headers,mi_invest_https_replace"
 
-        # Optional: HTTP to HTTPS redirect
-        - "traefik.http.routers.php-http.rule=Host(`mi-invest.com`) || Host(`www.mi-invest.com`) || Host(`m.mi-invest.com`) || Host(`web.mi-invest.com`)"
-        - "traefik.http.routers.php-http.entrypoints=web"
-        - "traefik.http.routers.php-http.middlewares=php-https-redirect"
-        - "traefik.http.middlewares.php-https-redirect.redirectscheme.scheme=https"
+        # Service port (namespaced)
+        - "traefik.http.services.mi_invest_php.loadbalancer.server.port=8080"
+
+        # Optional: HTTP to HTTPS redirect router (namespaced)
+        - "traefik.http.routers.mi_invest_php_http.rule=Host(`mi-invest.com`) || Host(`www.mi-invest.com`) || Host(`m.mi-invest.com`) || Host(`web.mi-invest.com`)"
+        - "traefik.http.routers.mi_invest_php_http.entrypoints=web"
+        - "traefik.http.routers.mi_invest_php_http.middlewares=mi_invest_php_https_redirect"
+        - "traefik.http.middlewares.mi_invest_php_https_redirect.redirectscheme.scheme=https"
   workers:
     image: localhost:5000/mi_invest:latest
     command: ["php", "/var/www/html/artisan", "queue:work", "--tries=3"]
